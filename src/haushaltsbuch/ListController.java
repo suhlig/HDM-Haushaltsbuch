@@ -1,15 +1,12 @@
 package haushaltsbuch;
 
 import java.io.IOException;
-import java.util.Map.Entry;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.json.JSONObject;
 
 /**
  * Controller for listing entries
@@ -23,18 +20,9 @@ public class ListController extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		
-		System.out.println("Environment:");
-		for (Entry<String, String> entry : System.getenv().entrySet()) {
-			System.out.println(entry.getKey() + "=" + entry.getValue());
-		}
-
 		try {
-			JSONObject obj = new JSONObject(System.getenv("VCAP_SERVICES"));
-			String uri = obj.getJSONArray("elephantsql").getJSONObject(0).getJSONObject("credentials").getString("uri");
-
-			System.out.println("Using URI " + uri);
-
-			_repository = new JdbcRepository(uri);
+			Credentials credentials = new Credentials(System.getenv("VCAP_SERVICES"));
+			_repository = new JdbcRepository(credentials.getURI(), credentials.getUser(), credentials.getPassword());
 		} catch (Exception e) {
 			e.printStackTrace(System.err);
 			System.err.println("Falling back to mock repo");
