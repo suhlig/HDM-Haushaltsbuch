@@ -1,0 +1,9 @@
+---
+applications:
+- name: HDM-Haushaltsbuch
+  memory: 128M
+  host: haushaltsbuch
+  domain: eu-gb.mybluemix.net
+  instances: 1
+  services:
+  - elephantsql

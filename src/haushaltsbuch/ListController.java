@@ -1,0 +1,53 @@
+package haushaltsbuch;
+
+import java.io.IOException;
+import java.util.Map.Entry;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONObject;
+
+/**
+ * Controller for listing entries
+ */
+@WebServlet("/list")
+public class ListController extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	private Repository _repository;
+
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		
+		System.out.println("Environment:");
+		for (Entry<String, String> entry : System.getenv().entrySet()) {
+			System.out.println(entry.getKey() + "=" + entry.getValue());
+		}
+
+		try {
+			JSONObject obj = new JSONObject(System.getenv("VCAP_SERVICES"));
+			String uri = obj.getJSONArray("elephantsql").getJSONObject(0).getJSONObject("credentials").getString("uri");
+
+			System.out.println("Using URI " + uri);
+
+			_repository = new JdbcRepository(uri);
+		} catch (Exception e) {
+			e.printStackTrace(System.err);
+			System.err.println("Falling back to mock repo");
+			_repository = new TransientRepository();
+		}
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	    request.setAttribute("entries", _repository.getEntries());
+	    response.setContentType("text/html");
+	    request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+	}
+}
