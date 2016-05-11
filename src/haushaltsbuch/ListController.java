@@ -24,9 +24,9 @@ public class ListController extends HttpServlet {
 			Credentials credentials = new Credentials(System.getenv("VCAP_SERVICES"));
 			_repository = new JdbcRepository(credentials.getURI(), credentials.getUser(), credentials.getPassword());
 		} catch (Exception e) {
+			System.err.println("Error initializing: ");
 			e.printStackTrace(System.err);
-			System.err.println("Falling back to mock repo");
-			_repository = new TransientRepository();
+			throw new ServletException(e);
 		}
 	}
 
@@ -35,7 +35,7 @@ public class ListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setAttribute("entries", _repository.getEntries());
-	    response.setContentType("text/html");
+	    response.setContentType("text/html; charset=utf-8");
 	    request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
 	}
 }

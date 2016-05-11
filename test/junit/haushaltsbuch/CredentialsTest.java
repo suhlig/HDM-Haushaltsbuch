@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import haushaltsbuch.Credentials;
+import haushaltsbuch.Credentials.ParseException;
 
 public class CredentialsTest {
 	private final static String VCAP_SERVICES = "{"
@@ -25,7 +26,7 @@ public class CredentialsTest {
 	private Credentials _subject;
 	
 	@Before
-	public void setup() {
+	public void setup() throws ParseException {
 		_subject = new Credentials(VCAP_SERVICES);
 	}
 	
@@ -44,4 +45,23 @@ public class CredentialsTest {
 		assertEquals("bar", _subject.getPassword());
 	}
 
+	@Test
+	public void testEmpty() {
+		try {
+			new Credentials("");
+			fail("Did not throw exception");
+		} catch (ParseException e) {
+			// ok
+		}
+	}
+
+	@Test
+	public void testBogus() {
+		try {
+			new Credentials("this is not proper JSON");
+			fail("Did not throw exception");
+		} catch (ParseException e) {
+			// ok
+		}
+	}
 }
