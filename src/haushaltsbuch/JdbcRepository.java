@@ -13,14 +13,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
-public class JdbcRepository implements Repository {
-	private Connection _conn;
+public class JdbcRepository implements EntryRepository {
+	private Connection _connection;
 	private EntryMapper _entryMapper;
 	private static final String TABLE_NAME = "entries";
 
 	public JdbcRepository(String url, String user, String password) throws ClassNotFoundException, SQLException {
 		_entryMapper = new EntryMapper();
-		_conn = connect(url, user, password);
+		_connection = connect(url, user, password);
 
 		if (!isTableExisting()) {
 			createTable();
@@ -81,7 +81,7 @@ public class JdbcRepository implements Repository {
 	public void insert(Entry entry) throws SQLException {
 		PreparedStatement stmt = null;
 		try {
-			stmt = _conn.prepareStatement(MessageFormat.format(
+			stmt = _connection.prepareStatement(MessageFormat.format(
 					"INSERT INTO {0} (id, src_dest, description, value, category, payment_type) VALUES (?, ?, ?, ?, ?, ?)",
 					TABLE_NAME));
 
@@ -108,7 +108,7 @@ public class JdbcRepository implements Repository {
 		Statement stmt = null;
 
 		try {
-			stmt = _conn.createStatement();
+			stmt = _connection.createStatement();
 			stmt.executeUpdate(sql);
 		} finally {
 			tryClose(stmt);
@@ -116,18 +116,18 @@ public class JdbcRepository implements Repository {
 	}
 
 	private boolean isTableExisting() throws SQLException {
-		return _conn.getMetaData().getTables(null, null, TABLE_NAME, null).next();
+		return _connection.getMetaData().getTables(null, null, TABLE_NAME, null).next();
 	}
 
 	@Override
-	public List<Entry> getEntries() {
+	public List<Entry> getAll() {
 		ArrayList<Entry> entries = new ArrayList<Entry>();
 
 		Statement st = null;
 		ResultSet rs = null;
 
 		try {
-			st = _conn.createStatement();
+			st = _connection.createStatement();
 			rs = st.executeQuery(MessageFormat.format(
 					"SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0}",
 					TABLE_NAME));
