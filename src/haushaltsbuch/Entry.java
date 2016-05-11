@@ -3,12 +3,19 @@ package haushaltsbuch;
 import java.math.BigDecimal;
 import java.util.Date;
 
-public interface Entry {
-	String getPaymentType();
-	String getCategory();
-	BigDecimal getValue();
-	String getDescription();
-	String getSrcDst();
-	Date getEntryDate();
-	String getId();
+public interface Entry
+{
+  String getCategory();
+
+  String getDescription();
+
+  Date getEntryDate();
+
+  String getId();
+
+  String getPaymentType();
+
+  String getSrcDst();
+
+  BigDecimal getValue();
 }
