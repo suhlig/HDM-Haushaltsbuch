@@ -12,11 +12,14 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
+import haushaltsbuch.EntryRepository;
+import haushaltsbuch.InsertException;
 
 public class JdbcRepository implements EntryRepository
 {
+
   private interface Block
   {
     void call(Entry result, ResultSet rs) throws SQLException;
@@ -31,16 +34,32 @@ public class JdbcRepository implements EntryRepository
     }
   }
 
-  private static final String TABLE_NAME = "entries";
-  private static final String CREATE_TABLE = "CREATE TABLE {0} (id character varying(36) NOT NULL, created_at timestamp without time zone DEFAULT now() NOT NULL, src_dest character varying(255) NOT NULL, description character varying(255) NOT NULL, value bigint NOT NULL, category character varying(255) NOT NULL, payment_type character varying(255) NOT NULL);";
-  private static final String ALTER_TABLE = "ALTER TABLE ONLY {0}  ADD CONSTRAINT {0}_pkey PRIMARY KEY (id);";
-  private static final String SELECT = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0} WHERE id=''{1}''";
+  public static final String TABLE_NAME = "entries";
+
+  private static final String CREATE_TABLE =
+    // @formatter:off
+		"CREATE TABLE {0} ("
+			+ "id character varying(36) NOT NULL CHECK (char_length(id) = 36), "
+			+ "created_at timestamp without time zone DEFAULT now() NOT NULL, "
+			+ "src_dest character varying(255) NOT NULL CHECK (char_length(src_dest) >= 3), "
+			+ "description character varying(255) NOT NULL CHECK (char_length(description) >= 3), "
+			+ "value bigint NOT NULL, "
+			+ "category character varying(255) NOT NULL, "
+			+ "payment_type character varying(255) NOT NULL CHECK (char_length(payment_type) >= 3)"
+		+ ")";
+		// @formatter:on
+
+  private static final String ADD_CONSTRAINT_PKEY = "ALTER TABLE ONLY {0} ADD CONSTRAINT {0}_pkey PRIMARY KEY (id)";
+  private static final String CREATE_INDEX = "CREATE UNIQUE INDEX id_idx ON {0} (id);";
+
+  private static final String SELECT_BY_ID = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0} WHERE id=''{1}''";
+  private static final String SELECT_ALL = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0}";
   private static final String INSERT = "INSERT INTO {0} (id, src_dest, description, value, category, payment_type) VALUES (?, ?, ?, ?, ?, ?)";
 
-  private Connection _connection;
-  private EntryMapper _entryMapper;
+  private final Connection _connection;
+  private final EntryMapper _entryMapper;
 
-  public JdbcRepository(String url, String user, String password) throws ClassNotFoundException, SQLException
+  public JdbcRepository(String url, String user, String password) throws ClassNotFoundException, SQLException, InsertException
   {
     _entryMapper = new EntryMapper();
     _connection = connect(url, user, password);
@@ -48,13 +67,31 @@ public class JdbcRepository implements EntryRepository
     if (!isTableExisting())
     {
       createTable();
+      createIndex();
       insertOpeningBalance();
     }
   }
 
   @Override
-  public Entry delete(String id)
+  public void close()
   {
+    if (null != _connection)
+      try
+      {
+        _connection.close();
+      }
+      catch (SQLException e)
+      {
+        e.printStackTrace(System.err);
+      }
+  }
+
+  @Override
+  public Entry delete(String id) throws DeleteException
+  {
+    if (null == id)
+      throw new DeleteException("Identification missing");
+
     return find(id, new Block()
     {
       @Override
@@ -93,12 +130,10 @@ public class JdbcRepository implements EntryRepository
     try
     {
       st = _connection.createStatement();
-      rs = st.executeQuery(MessageFormat.format("SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0}", TABLE_NAME));
+      rs = st.executeQuery(MessageFormat.format(SELECT_ALL, TABLE_NAME));
 
       while (rs.next())
-      {
         result.add(_entryMapper.map(rs));
-      }
     }
     catch (SQLException e)
     {
@@ -117,15 +152,22 @@ public class JdbcRepository implements EntryRepository
   }
 
   @Override
-  public void insert(Entry entry) throws SQLException
+  public String insert(Entry entry) throws InsertException
   {
+    final String id;
     PreparedStatement stmt = null;
     try
     {
       stmt = _connection.prepareStatement(MessageFormat.format(INSERT, TABLE_NAME));
-      _entryMapper.map(entry, stmt);
+      id = _entryMapper.map(entry, stmt);
       stmt.executeUpdate();
-      System.out.println(MessageFormat.format("Inserted record with id = {0} ", entry.getId()));
+      System.out.println(MessageFormat.format("Inserted record with id = {0} ", id));
+
+      return id;
+    }
+    catch (SQLException e)
+    {
+      throw new InsertException(entry, e);
     }
     finally
     {
@@ -145,10 +187,15 @@ public class JdbcRepository implements EntryRepository
     return connection;
   }
 
+  private void createIndex() throws SQLException
+  {
+    executeUpdate(MessageFormat.format(CREATE_INDEX, TABLE_NAME));
+  }
+
   private void createTable() throws SQLException
   {
     executeUpdate(MessageFormat.format(CREATE_TABLE, TABLE_NAME));
-    executeUpdate(MessageFormat.format(ALTER_TABLE, TABLE_NAME));
+    executeUpdate(MessageFormat.format(ADD_CONSTRAINT_PKEY, TABLE_NAME));
   }
 
   private void executeUpdate(String sql) throws SQLException
@@ -174,7 +221,7 @@ public class JdbcRepository implements EntryRepository
     try
     {
       st = _connection.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-      rs = st.executeQuery(MessageFormat.format(SELECT, TABLE_NAME, id));
+      rs = st.executeQuery(MessageFormat.format(SELECT_BY_ID, TABLE_NAME, id));
 
       if (rs.next())
       {
@@ -199,7 +246,7 @@ public class JdbcRepository implements EntryRepository
     return null;
   }
 
-  private void insertOpeningBalance() throws SQLException
+  private void insertOpeningBalance() throws InsertException
   {
     insert(new Entry()
     {
@@ -224,7 +271,7 @@ public class JdbcRepository implements EntryRepository
       @Override
       public String getId()
       {
-        return UUID.randomUUID().toString();
+        return null;
       }
 
       @Override
@@ -236,7 +283,7 @@ public class JdbcRepository implements EntryRepository
       @Override
       public String getSrcDst()
       {
-        return "";
+        return "thin air";
       }
 
       @Override

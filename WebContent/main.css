@@ -1,0 +1,40 @@
+// based on http://necolas.github.io/normalize.css
+
+html {
+  background: #fff;
+  color: #333;
+  font: 16px/1.4 Open Sans, Helvetica, Arial, sans-serif;
+}
+
+body {
+  padding: 20px 40px;
+  margin: 0 auto;
+}
+
+a {
+  color: #e3695f;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus,
+a:active {
+  text-decoration: underline;
+}
+
+h1,
+h2 {
+  line-height: 1.2;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+p {
+  margin: 1em 0;
+}
+
+@media screen and (max-width: 540px) {
+  body {
+    padding: 20px;
+    font-size: 0.875em;
+  }
+}

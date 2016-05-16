@@ -7,18 +7,18 @@
 <head>
 <title>Hinzufügen</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="https://necolas.github.io/normalize.css/4.1.1/normalize.css">
+<link rel="stylesheet" href="main.css">
 </head>
 <body>
   <%@include file="_menu.jspf"%>
   <h1>Haushaltsbuch</h1>
   <h2>Neuen Eintrag hinzufügen</h2>
 
+  ${message}
+
   <form method="POST" action="insert">
     <table>
-      <tr>
-        <th>id</th>
-        <td>${entry.id}</td>
-      </tr>
       <tr>
         <th>srcDst</th>
         <td><input type="text" name="srcDst" value="${entry.srcDst}" /></td>

@@ -20,8 +20,23 @@ In Eclipse, this file is also editable in the "Servers" view as `server.env`.
 Add the currently logged on user as a new (password-less) PostgreSQL user:
 
   ```
+  # create a user
   $ postgres -c "createuser --createdb --no-superuser --no-createrole $USER"
+  
+  # start postgres
+  $ PGDATA=/usr/local/var/postgres postgres
+  
+  # create the user's database (prereq for tests)
+  $ createdb
+  
+  # create the database
   $ createdb haushaltsbuch
   ```
 
 If the database URL is specified without a host component (e.g. `postgres:///haushaltsbuch`), a local domain socket will be used for the Postgres connection. This avoids having to provide a separate password for the TCP connection.
+
+The entry in server.env would then be this:
+
+```
+VCAP_SERVICES={"elephantsql":[{"credentials":{"uri":"postgres:///haushaltsbuch"}}]}
+```

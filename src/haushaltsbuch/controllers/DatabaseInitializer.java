@@ -3,17 +3,17 @@ package haushaltsbuch.controllers;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import haushaltsbuch.Credentials;
-import haushaltsbuch.persistence.EntryRepository;
+import haushaltsbuch.ElephantSqlConfig;
+import haushaltsbuch.EntryRepository;
 import haushaltsbuch.persistence.JdbcRepository;
 
 @WebListener
 public class DatabaseInitializer implements ServletContextListener
 {
   @Override
-  public void contextDestroyed(ServletContextEvent ignored)
+  public void contextDestroyed(ServletContextEvent event)
   {
-    // unused
+    ((EntryRepository) event.getServletContext().getAttribute(EntryRepository.CTX_ATTR_NAME)).close();
   }
 
   @Override
@@ -21,7 +21,7 @@ public class DatabaseInitializer implements ServletContextListener
   {
     try
     {
-      Credentials credentials = new Credentials(System.getenv("VCAP_SERVICES"));
+      ElephantSqlConfig credentials = new ElephantSqlConfig(System.getenv("VCAP_SERVICES"));
       EntryRepository repository = new JdbcRepository(credentials.getURI(), credentials.getUser(), credentials.getPassword());
       event.getServletContext().setAttribute(EntryRepository.CTX_ATTR_NAME, repository);
     }

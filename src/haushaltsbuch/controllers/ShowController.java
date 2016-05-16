@@ -16,8 +16,10 @@ public class ShowController extends BaseController
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
     Entry entry = getRepository().find(request.getQueryString());
+
     request.setAttribute("entry", entry);
     response.setContentType("text/html; charset=utf-8");
+
     request.getRequestDispatcher("WEB-INF/jsp/show.jsp").include(request, response);
   }
 }

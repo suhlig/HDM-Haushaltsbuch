@@ -2,14 +2,13 @@ package haushaltsbuch.controllers;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.sql.SQLException;
 import java.util.Date;
-import java.util.UUID;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
+import haushaltsbuch.InsertException;
 
 @WebServlet("/insert")
 public class InsertController extends BaseController
@@ -19,7 +18,7 @@ public class InsertController extends BaseController
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    Entry entry = getEntry(request);
+    Entry entry = produce(request);
     request.setAttribute("entry", entry);
 
     response.setContentType("text/html; charset=utf-8");
@@ -29,25 +28,30 @@ public class InsertController extends BaseController
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    Entry entry = getEntry(request);
+    Entry entry = produce(request);
+    request.setAttribute("entry", entry);
 
     try
     {
-      getRepository().insert(entry);
-      request.setAttribute("entry", entry);
+      String id = getRepository().insert(entry);
+
+      request.setAttribute("id", id);
       request.setAttribute("message", "Successfully inserted " + entry);
+
+      response.setContentType("text/html; charset=utf-8");
+      request.getRequestDispatcher("WEB-INF/jsp/show.jsp").include(request, response);
     }
-    catch (SQLException e)
+    catch (InsertException e)
     {
       e.printStackTrace(System.err);
-      request.setAttribute("message", "Error inserting entry: " + e.getMessage());
-    }
+      request.setAttribute("message", "Fehler beim Anlegen: " + e.getMessage());
 
-    response.setContentType("text/html; charset=utf-8");
-    request.getRequestDispatcher("WEB-INF/jsp/show.jsp").include(request, response);
+      response.setContentType("text/html; charset=utf-8");
+      request.getRequestDispatcher("WEB-INF/jsp/add.jsp").include(request, response);
+    }
   }
 
-  private Entry getEntry(HttpServletRequest request)
+  private Entry produce(HttpServletRequest request)
   {
     return new Entry()
     {
@@ -72,7 +76,7 @@ public class InsertController extends BaseController
       @Override
       public String getId()
       {
-        return UUID.randomUUID().toString();
+        return null; // mapper will set this upon insert
       }
 
       @Override

@@ -7,6 +7,8 @@
 <head>
 <title>Anzeigen</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" href="https://necolas.github.io/normalize.css/4.1.1/normalize.css">
+<link rel="stylesheet" href="main.css">
 </head>
 
 <body>
@@ -17,7 +19,7 @@
   <table>
     <tr>
       <th>id</th>
-      <td>${entry.id}</td>
+      <td>${id}</td>
     </tr>
     <tr>
       <th>srcDst</th>

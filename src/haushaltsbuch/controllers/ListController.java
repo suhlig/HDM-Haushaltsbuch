@@ -16,6 +16,7 @@ public class ListController extends BaseController
   {
     request.setAttribute("entries", getRepository().getAll());
     response.setContentType("text/html; charset=utf-8");
+
     request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
   }
 }

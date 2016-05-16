@@ -1,8 +1,9 @@
 package haushaltsbuch.controllers;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
-import haushaltsbuch.persistence.EntryRepository;
+import haushaltsbuch.EntryRepository;
 
 public abstract class BaseController extends HttpServlet
 {
@@ -10,7 +11,8 @@ public abstract class BaseController extends HttpServlet
 
   protected EntryRepository getRepository() throws ServletException
   {
-    EntryRepository repository = (EntryRepository) getServletContext().getAttribute(EntryRepository.CTX_ATTR_NAME);
+    ServletContext servletContext = getServletContext();
+    EntryRepository repository = (EntryRepository) servletContext.getAttribute(EntryRepository.CTX_ATTR_NAME);
 
     if (null == repository)
       throw new ServletException("Unable to find the repository");

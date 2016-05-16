@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 
 @WebServlet("/delete")
@@ -15,10 +16,25 @@ public class DeleteController extends BaseController
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    Entry entry = getRepository().delete(request.getParameter("id"));
-    request.setAttribute("entry", entry);
-
     response.setContentType("text/html; charset=utf-8");
-    request.getRequestDispatcher("WEB-INF/jsp/deleted.jsp").include(request, response);
+
+    Entry entry;
+
+    try
+    {
+      String id = request.getParameter("id");
+      entry = getRepository().delete(id);
+
+      request.setAttribute("entry", entry);
+      request.setAttribute("message", "Successfully deleted " + entry);
+
+      request.getRequestDispatcher("WEB-INF/jsp/deleted.jsp").include(request, response);
+    }
+    catch (DeleteException e)
+    {
+      e.printStackTrace(System.err);
+      request.setAttribute("message", "Fehler beim löschen: " + e.getMessage());
+      request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+    }
   }
 }
