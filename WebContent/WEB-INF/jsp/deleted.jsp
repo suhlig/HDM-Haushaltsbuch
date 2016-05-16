@@ -15,8 +15,6 @@
   <h1>Haushaltsbuch</h1>
   <h2>Eintrag wurde gelöscht</h2>
 
-  ${message}
-
   <table style="text-decoration: line-through;">
     <tr>
       <th>id</th>

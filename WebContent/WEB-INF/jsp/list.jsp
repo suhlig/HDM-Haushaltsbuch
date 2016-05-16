@@ -14,6 +14,7 @@
 <body>
   <%@include file="_menu.jspf"%>
   <h1>Haushaltsbuch</h1>
+  
   <h2>Alle ${entries.size()} Einträge</h2>
 
   <table>

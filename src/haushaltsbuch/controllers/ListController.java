@@ -15,8 +15,6 @@ public class ListController extends BaseController
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
     request.setAttribute("entries", getRepository().getAll());
-    response.setContentType("text/html; charset=utf-8");
-
     request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
   }
 }

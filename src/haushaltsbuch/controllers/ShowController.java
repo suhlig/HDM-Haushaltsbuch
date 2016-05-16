@@ -1,6 +1,7 @@
 package haushaltsbuch.controllers;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -15,11 +16,30 @@ public class ShowController extends BaseController
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    Entry entry = getRepository().find(request.getQueryString());
+    String queryString = request.getQueryString();
 
-    request.setAttribute("entry", entry);
-    response.setContentType("text/html; charset=utf-8");
+    if (null == queryString || queryString.isEmpty())
+    {
+      request.setAttribute("error", "Fehlender Identifikator");
+      response.setStatus(400);
+      request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+    }
+    else
+    {
 
-    request.getRequestDispatcher("WEB-INF/jsp/show.jsp").include(request, response);
+      Entry entry = getRepository().find(queryString);
+
+      if (null == entry)
+      {
+        response.setStatus(404);
+        request.setAttribute("error", MessageFormat.format("Eintrag mit dem Identifikator {0} konnte nicht gefunden werden.", queryString));
+        request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+      }
+      else
+      {
+        request.setAttribute("entry", entry);
+        request.getRequestDispatcher("WEB-INF/jsp/show.jsp").include(request, response);
+      }
+    }
   }
 }

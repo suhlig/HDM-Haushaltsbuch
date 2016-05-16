@@ -15,8 +15,6 @@
   <h1>Haushaltsbuch</h1>
   <h2>Neuen Eintrag hinzufügen</h2>
 
-  ${message}
-
   <form method="POST" action="insert">
     <table>
       <tr>

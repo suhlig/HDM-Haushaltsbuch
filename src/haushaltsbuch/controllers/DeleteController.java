@@ -1,6 +1,7 @@
 package haushaltsbuch.controllers;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,25 +17,38 @@ public class DeleteController extends BaseController
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    response.setContentType("text/html; charset=utf-8");
+    String id = request.getParameter("id");
 
-    Entry entry;
-
-    try
+    if (null == id || id.isEmpty())
     {
-      String id = request.getParameter("id");
-      entry = getRepository().delete(id);
-
-      request.setAttribute("entry", entry);
-      request.setAttribute("message", "Successfully deleted " + entry);
-
-      request.getRequestDispatcher("WEB-INF/jsp/deleted.jsp").include(request, response);
-    }
-    catch (DeleteException e)
-    {
-      e.printStackTrace(System.err);
-      request.setAttribute("message", "Fehler beim löschen: " + e.getMessage());
+      request.setAttribute("error", "Fehlender Identifikator");
+      response.setStatus(400);
       request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
     }
+    else
+      try
+      {
+        Entry entry = getRepository().delete(id);
+
+        if (null == entry)
+        {
+          response.setStatus(404);
+          request.setAttribute("error", MessageFormat.format("Eintrag mit dem Identifikator {0} konnte nicht gefunden werden.", id));
+          request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+        }
+        else
+        {
+          request.setAttribute("entry", entry);
+          request.setAttribute("message", MessageFormat.format("Eintrag {0} erfolgreich gelöscht.", entry));
+          request.getRequestDispatcher("WEB-INF/jsp/deleted.jsp").include(request, response);
+        }
+      }
+      catch (DeleteException e)
+      {
+        e.printStackTrace(System.err);
+        request.setAttribute("error", MessageFormat.format("Fehler beim Löschen von {0}: {1}", id, e.getMessage()));
+        response.setStatus(500);
+        request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+      }
   }
 }

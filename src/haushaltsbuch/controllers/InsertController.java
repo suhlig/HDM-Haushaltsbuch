@@ -20,8 +20,6 @@ public class InsertController extends BaseController
   {
     Entry entry = produce(request);
     request.setAttribute("entry", entry);
-
-    response.setContentType("text/html; charset=utf-8");
     request.getRequestDispatcher("WEB-INF/jsp/add.jsp").include(request, response);
   }
 
@@ -37,16 +35,12 @@ public class InsertController extends BaseController
 
       request.setAttribute("id", id);
       request.setAttribute("message", "Successfully inserted " + entry);
-
-      response.setContentType("text/html; charset=utf-8");
       request.getRequestDispatcher("WEB-INF/jsp/show.jsp").include(request, response);
     }
     catch (InsertException e)
     {
       e.printStackTrace(System.err);
-      request.setAttribute("message", "Fehler beim Anlegen: " + e.getMessage());
-
-      response.setContentType("text/html; charset=utf-8");
+      request.setAttribute("error", "Fehler beim Anlegen: " + e.getMessage());
       request.getRequestDispatcher("WEB-INF/jsp/add.jsp").include(request, response);
     }
   }
