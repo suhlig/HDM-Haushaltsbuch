@@ -38,9 +38,7 @@ public class EntryMapper
       @Override
       public String getPaymentType()
       {
-        String paymentType = request.getParameter("paymentType");
-        System.err.println("Inserting entry with PT " + paymentType + " with encoding " + request.getCharacterEncoding());
-        return paymentType;
+        return request.getParameter("paymentType");
       }
 
       @Override
