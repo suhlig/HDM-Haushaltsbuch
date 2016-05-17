@@ -53,7 +53,7 @@ public class DeleteControllerTest extends DeleteController
     doPost(request, response);
 
     verify(request).setAttribute("entry", deletedEntry);
-    verify(request).setAttribute(eq("message"), contains("deleted"));
+    verify(request).setAttribute(eq("message"), contains("gelöscht"));
   }
 
   @Test
@@ -70,7 +70,7 @@ public class DeleteControllerTest extends DeleteController
     doPost(request, response);
 
     verify(response).setStatus(404);
-    verify(request).setAttribute(eq("message"), contains("not find"));
+    verify(request).setAttribute(eq("error"), contains("nicht gefunden"));
   }
 
   @Test
@@ -88,6 +88,6 @@ public class DeleteControllerTest extends DeleteController
     doPost(request, response);
 
     verify(response).setStatus(400);
-    verify(request).setAttribute(eq("message"), contains("issing"));
+    verify(request).setAttribute(eq("error"), contains("ehlender"));
   }
 }

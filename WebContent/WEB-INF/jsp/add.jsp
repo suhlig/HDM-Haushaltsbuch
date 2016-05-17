@@ -15,6 +15,12 @@
   <h1>Haushaltsbuch</h1>
   <h2>Neuen Eintrag hinzufügen</h2>
 
+	<c:if test="${not empty error}">
+	  <div style="color: red;">
+	    ${error}
+	  </div>
+	</c:if>
+  
   <form method="POST" action="insert">
     <table>
       <tr>

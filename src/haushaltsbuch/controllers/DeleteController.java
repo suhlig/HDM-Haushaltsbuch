@@ -23,7 +23,7 @@ public class DeleteController extends BaseController
     {
       request.setAttribute("error", "Fehlender Identifikator");
       response.setStatus(400);
-      request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+      request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
     }
     else
       try
@@ -34,7 +34,7 @@ public class DeleteController extends BaseController
         {
           response.setStatus(404);
           request.setAttribute("error", MessageFormat.format("Eintrag mit dem Identifikator {0} konnte nicht gefunden werden.", id));
-          request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+          request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
         }
         else
         {
@@ -48,7 +48,7 @@ public class DeleteController extends BaseController
         e.printStackTrace(System.err);
         request.setAttribute("error", MessageFormat.format("Fehler beim Löschen von {0}: {1}", id, e.getMessage()));
         response.setStatus(500);
-        request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
       }
   }
 }

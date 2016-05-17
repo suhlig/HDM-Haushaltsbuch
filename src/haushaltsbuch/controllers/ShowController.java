@@ -22,18 +22,17 @@ public class ShowController extends BaseController
     {
       request.setAttribute("error", "Fehlender Identifikator");
       response.setStatus(400);
-      request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+      request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
     }
     else
     {
-
       Entry entry = getRepository().find(queryString);
 
       if (null == entry)
       {
         response.setStatus(404);
         request.setAttribute("error", MessageFormat.format("Eintrag mit dem Identifikator {0} konnte nicht gefunden werden.", queryString));
-        request.getRequestDispatcher("WEB-INF/jsp/list.jsp").include(request, response);
+        request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
       }
       else
       {
