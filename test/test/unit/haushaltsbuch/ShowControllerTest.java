@@ -44,7 +44,7 @@ public class ShowControllerTest extends ShowController
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
-    when(request.getQueryString()).thenReturn("42");
+    when(request.getParameter("id")).thenReturn("42");
     when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(mock(RequestDispatcher.class));
 
     Entry shownEntry = mock(Entry.class);
@@ -61,7 +61,7 @@ public class ShowControllerTest extends ShowController
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
-    when(request.getQueryString()).thenReturn("42");
+    when(request.getParameter("id")).thenReturn("42");
     when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(mock(RequestDispatcher.class));
 
     when(_repository.find("42")).thenReturn(null);
@@ -78,7 +78,7 @@ public class ShowControllerTest extends ShowController
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
-    // query string not set
+    // id parameter not set
     when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(mock(RequestDispatcher.class));
 
     Entry deletedEntry = mock(Entry.class);

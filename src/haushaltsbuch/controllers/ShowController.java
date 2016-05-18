@@ -16,9 +16,9 @@ public class ShowController extends BaseController
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    String queryString = request.getQueryString();
+    String id = request.getParameter("id");
 
-    if (null == queryString || queryString.isEmpty())
+    if (null == id || id.isEmpty())
     {
       request.setAttribute("error", "Fehlender Identifikator");
       response.setStatus(400);
@@ -26,12 +26,12 @@ public class ShowController extends BaseController
     }
     else
     {
-      Entry entry = getRepository().find(queryString);
+      Entry entry = getRepository().find(id);
 
       if (null == entry)
       {
         response.setStatus(404);
-        request.setAttribute("error", MessageFormat.format("Eintrag mit dem Identifikator {0} konnte nicht gefunden werden.", queryString));
+        request.setAttribute("error", MessageFormat.format("Eintrag mit dem Identifikator {0} konnte nicht gefunden werden.", id));
         request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
       }
       else
