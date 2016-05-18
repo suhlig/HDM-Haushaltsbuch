@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
 <title>Liste</title>
@@ -20,28 +21,33 @@
   <table>
     <thead>
       <tr>
-        <th>id</th>
-        <th>srcDst</th>
-        <th>description</th>
-        <th>value</th>
-        <th>category</th>
-        <th>paymentType</th>
+        <th>Wertstellung</th>
+        <th>Quelle / Ziel</th>
+        <th>Beschreibung</th>
+        <th>Wert</th>
+        <th>Kategorie</th>
+        <th>Zahlungstyp</th>
+        <th>Aktion</th>
       </tr>
     </thead>
 
     <tbody>
       <c:forEach items="${entries}" var="entry">
         <tr>
-          <td><a href="show?${entry.id}">${entry.id}</a></td>
+          <td><fmt:formatDate pattern="yyyy-MM-dd" value="${entry.entryDate}" /></td>
           <td>${entry.srcDst}</td>
           <td>${entry.description}</td>
           <td>${entry.value}€</td>
           <td>${entry.category}</td>
           <td>${entry.paymentType}</td>
           <td>
-            <%-- see http://stackoverflow.com/a/33880971 --%>
+            <a href="show?id=${entry.id}">Details</a>
+            <%-- http://stackoverflow.com/a/33880971 --%>
             <form method="post" action="delete" class="inline">
-              <button type="submit" name="id" value="${entry.id}" class="link-button">Delete!</button>
+              <%-- Just a pseudo-link to have sensible text in the status bar --%>
+              <a href="delete?id=${entry.id}">
+                <button type="submit" name="id" value="${entry.id}" class="link-button">Delete</button>
+              </a>
             </form>
           </td>
         </tr>

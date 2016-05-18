@@ -24,23 +24,23 @@
   <form method="POST" action="insert">
     <table>
       <tr>
-        <th>srcDst</th>
+        <th>Quelle / Ziel</th>
         <td><input type="text" name="srcDst" value="${entry.srcDst}" /></td>
       </tr>
       <tr>
-        <th>description</th>
+        <th>Beschreibung</th>
         <td><input type="text" name="description" value="${entry.description}" /></td>
       </tr>
       <tr>
-        <th>value</th>
+        <th>Wert</th>
         <td><input type="text" name="value" value="${entry.value}" /></td>
       </tr>
       <tr>
-        <th>category</th>
+        <th>Kategorie</th>
         <td><input type="text" name="category" value="${entry.category}" /></td>
       </tr>
       <tr>
-        <th>paymentType</th>
+        <th>Zahlungstyp</th>
         <td><input type="text" name="paymentType" value="${entry.paymentType}" /></td>
       </tr>
       <tr>
@@ -51,3 +51,4 @@
   </form>
 </body>
 </html>
+

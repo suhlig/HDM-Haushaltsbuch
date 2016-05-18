@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <head>
 <title>Anzeigen</title>
@@ -18,27 +19,31 @@
 
   <table>
     <tr>
-      <th>id</th>
+      <th>Identifikation</th>
       <td>${id}</td>
     </tr>
     <tr>
-      <th>srcDst</th>
+       <th>Wertstellung</th>
+      <td><fmt:formatDate pattern="yyyy-MM-dd" value="${entry.entryDate}" /></td>
+    </tr>
+    <tr>
+       <th>Quelle / Ziel</th>
       <td>${entry.srcDst}</td>
     </tr>
     <tr>
-      <th>description</th>
+       <th>Beschreibung</th>
       <td>${entry.description}</td>
     </tr>
     <tr>
-      <th>value</th>
+       <th>Wert</th>
       <td>${entry.value}€</td>
     </tr>
     <tr>
-      <th>category</th>
+       <th>Kategorie</th>
       <td>${entry.category}</td>
     </tr>
     <tr>
-      <th>paymentType</th>
+       <th>Zahlungstyp</th>
       <td>${entry.paymentType}</td>
     </tr>
   </table>
