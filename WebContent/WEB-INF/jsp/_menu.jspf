@@ -1,13 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
-<c:if test="${not empty message}">
-  <div style="color: green;">
-    ${message}
-  </div>
-</c:if>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<h2>Navigation</h2>
+<h1>HDM Haushaltsbuch</h1>
 
-<ul>
-  <li><a href="insert">Neu</a></li>
-  <li><a href="list">Liste</a></li>
+<ul class="navbar">
+  <li><a href=".">Home</a></li>
+  <li><a href="list">Alle</a></li>
+  <li><a href="insert">Neu…</a></li>
 </ul>
+
+<p>
+	<c:if test="${not empty message}">
+	  <div style="color: green;">
+	    ${message}
+	  </div>
+	</c:if>
+</p>

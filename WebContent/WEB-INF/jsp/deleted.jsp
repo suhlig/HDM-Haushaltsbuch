@@ -7,13 +7,13 @@
 <head>
 <title>Gelöscht</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<base href="<c:url value="/"/>"/>
 <link rel="stylesheet" href="https://necolas.github.io/normalize.css/4.1.1/normalize.css">
 <link rel="stylesheet" href="main.css">
 </head>
 <body>
   <%@include file="_menu.jspf"%>
   <h1>Haushaltsbuch</h1>
-  <h2>Eintrag wurde gelöscht</h2>
 
   <table style="text-decoration: line-through;">
     <tr>

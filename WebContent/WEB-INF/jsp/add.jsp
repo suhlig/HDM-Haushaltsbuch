@@ -9,10 +9,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" href="https://necolas.github.io/normalize.css/4.1.1/normalize.css">
 <link rel="stylesheet" href="main.css">
+<base href="<c:url value="/"/>"/>
 </head>
 <body>
   <%@include file="_menu.jspf"%>
-  <h1>Haushaltsbuch</h1>
+
   <h2>Neuen Eintrag hinzufügen</h2>
 
 	<c:if test="${not empty error}">
@@ -21,7 +22,7 @@
 	  </div>
 	</c:if>
   
-  <form method="POST" action="insert">
+  <form method="POST">
     <table>
       <tr>
         <th>Quelle / Ziel</th>
