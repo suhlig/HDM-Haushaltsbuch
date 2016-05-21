@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
 import haushaltsbuch.InsertException;
 
-@WebServlet("/insert")
+@WebServlet("/new")
 public class InsertController extends BaseController
 {
   private static final long serialVersionUID = 1L;
