@@ -7,7 +7,7 @@
 <head>
 <title>Hinzufügen</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link rel="stylesheet" href="https://necolas.github.io/normalize.css/4.1.1/normalize.css">
+<link rel="stylesheet" href="normalize-4.1.1.css">
 <link rel="stylesheet" href="main.css">
 <base href="<c:url value="/"/>"/>
 </head>
