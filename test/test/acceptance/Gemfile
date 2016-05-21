@@ -1,0 +1,9 @@
+source 'https://rubygems.org'
+
+gem 'selenium-webdriver'
+gem 'rake'
+gem 'minitest'
+
+group :test do
+  gem 'pry-byebug'
+end
