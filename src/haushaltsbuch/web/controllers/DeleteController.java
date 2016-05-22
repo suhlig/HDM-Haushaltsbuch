@@ -35,14 +35,14 @@ public class DeleteController extends BaseController
         if (null == entry)
         {
           response.setStatus(404);
-          request.setAttribute("error", MessageFormat.format("Eintrag mit dem Identifikator {0} konnte nicht gefunden werden.", id));
+          request.setAttribute("error", MessageFormat.format("Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id));
           setTitle(request, "Fehler beim Löschen");
           setView(request, "error.jsp");
         }
         else
         {
           request.setAttribute("entry", entry);
-          request.setAttribute("message", MessageFormat.format("Eintrag {0} erfolgreich gelöscht.", entry));
+          request.setAttribute("message", "Eintrag gelöscht.");
           setTitle(request, "Eintrag gelöscht");
           setView(request, "deleted.jsp");
         }

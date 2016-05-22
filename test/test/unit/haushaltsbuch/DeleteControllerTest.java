@@ -70,7 +70,7 @@ public class DeleteControllerTest extends DeleteController
     doPost(request, response);
 
     verify(response).setStatus(404);
-    verify(request).setAttribute(eq("error"), contains("nicht gefunden"));
+    verify(request).setAttribute(eq("error"), contains("gefunden"));
   }
 
   @Test

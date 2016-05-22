@@ -56,6 +56,6 @@ class TestNew < MiniTest::Test
 
     message = @driver.first(xpath: '//*[@id="message"]')
     assert(message.displayed?)
-    assert_includes(message.text, 'erfolgreich gelöscht')
+    assert_includes(message.text, 'gelöscht')
   end
 end
