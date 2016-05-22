@@ -23,7 +23,9 @@ public class ContentTypeFilter implements Filter
     if (null == request.getCharacterEncoding())
       request.setCharacterEncoding("UTF-8");
 
-    response.setContentType("text/html; charset=utf-8");
+    if (null == response.getContentType())
+      response.setContentType("text/html; charset=utf-8");
+
     response.setLocale(Locale.GERMANY);
 
     chain.doFilter(request, response);
