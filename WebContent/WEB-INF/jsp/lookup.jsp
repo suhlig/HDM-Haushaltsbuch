@@ -16,11 +16,11 @@
 
   <h2>Eintrag suchen</h2>
 
-	<c:if test="${not empty error}">
-	  <p id="error" style="color: red;">
-	    ${error}
-	  </p>
-	</c:if>
+  <c:if test="${not empty error}">
+    <p id="error" style="color: red;">
+      ${error}
+    </p>
+  </c:if>
   
   <form id="lookup" method="POST">
     <table>
@@ -36,4 +36,3 @@
   </form>
 </body>
 </html>
-

@@ -44,12 +44,13 @@
           <td>${entry.paymentType}</td>
           <td>
             <a href="show?id=${entry.id}">Details</a>
+
             <%-- http://stackoverflow.com/a/33880971 --%>
             <form method="post" action="delete" class="inline">
               <%-- Just a pseudo-link to have sensible text in the status bar --%>
               <a href="delete?id=${entry.id}">
-			          <input type="hidden" name="id" value="${entry.id}"/>
-                <button type="submit" class="link-button">Delete!</button>
+                <input type="hidden" name="id" value="${entry.id}"/>
+                <button type="submit" class="link-button">Delete</button>
               </a>
             </form>
           </td>
@@ -57,6 +58,5 @@
       </c:forEach>
     </tbody>
   </table>
-
 </body>
 </html>

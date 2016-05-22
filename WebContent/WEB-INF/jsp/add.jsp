@@ -16,11 +16,11 @@
 
   <h2>Neuen Eintrag hinzufügen</h2>
 
-	<c:if test="${not empty error}">
-	  <p id="error" style="color: red;">
-	    ${error}
-	  </p>
-	</c:if>
+  <c:if test="${not empty error}">
+    <p id="error" style="color: red;">
+      ${error}
+    </p>
+  </c:if>
   
   <form id="new" method="POST">
     <table>
@@ -52,4 +52,3 @@
   </form>
 </body>
 </html>
-

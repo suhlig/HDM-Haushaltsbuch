@@ -50,11 +50,11 @@
     <tr>
        <th></th>
       <td>
-	      <%-- http://stackoverflow.com/a/33880971 --%>
-	      <form method="post" action="delete" class="inline">
-	        <input type="hidden" name="id" value="${entry.id}"/>
+        <%-- http://stackoverflow.com/a/33880971 --%>
+        <form method="post" action="delete" class="inline">
+          <input type="hidden" name="id" value="${entry.id}"/>
           <button type="submit" >Delete!</button>
-	      </form>
+        </form>
       </td>
     </tr>
   </table>
