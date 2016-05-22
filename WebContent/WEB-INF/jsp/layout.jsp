@@ -32,6 +32,6 @@
 		  </p>
 		</c:if>
 		
-		<jsp:include page="${view}"></jsp:include>
+	  <jsp:include page="${view}"></jsp:include>
 	</body>
 </html>
