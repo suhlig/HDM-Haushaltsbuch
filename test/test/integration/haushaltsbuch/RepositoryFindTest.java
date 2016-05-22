@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import haushaltsbuch.Entry;
+import haushaltsbuch.EntryRepository;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
@@ -18,7 +19,7 @@ import test.helpers.TestEntry;
 
 public class RepositoryFindTest
 {
-  private JdbcRepository _subject;
+  private EntryRepository _subject;
   private TestDatabase _database;
   private TestEntry _testEntry;
 

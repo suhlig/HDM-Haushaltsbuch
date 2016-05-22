@@ -4,14 +4,14 @@ import static org.junit.Assert.fail;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import haushaltsbuch.InsertException;
+import haushaltsbuch.EntryRepository;
 import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
 import test.helpers.TestEntry;
 
 public class RepositoryDeleteTest
 {
-  private JdbcRepository _subject;
+  private EntryRepository _subject;
   private TestDatabase _database;
   private TestEntry _testEntry;
 

@@ -1,4 +1,4 @@
-package haushaltsbuch.controllers;
+package haushaltsbuch.web.controllers;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

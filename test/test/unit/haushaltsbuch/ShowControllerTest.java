@@ -18,7 +18,7 @@ import org.mockito.Mockito;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.controllers.ShowController;
+import haushaltsbuch.web.controllers.ShowController;
 
 public class ShowControllerTest extends ShowController
 {

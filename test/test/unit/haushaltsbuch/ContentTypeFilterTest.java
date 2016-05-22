@@ -12,7 +12,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import org.junit.Before;
 import org.junit.Test;
-import haushaltsbuch.controllers.ContentTypeFilter;
+import haushaltsbuch.web.ContentTypeFilter;
 
 public class ContentTypeFilterTest
 {

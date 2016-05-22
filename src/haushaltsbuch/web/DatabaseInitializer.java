@@ -1,9 +1,8 @@
-package haushaltsbuch.controllers;
+package haushaltsbuch.web;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import haushaltsbuch.ElephantSqlConfig;
 import haushaltsbuch.EntryRepository;
 import haushaltsbuch.persistence.JdbcRepository;
 

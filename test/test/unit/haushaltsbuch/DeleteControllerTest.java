@@ -18,7 +18,7 @@ import org.mockito.Mockito;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.controllers.DeleteController;
+import haushaltsbuch.web.controllers.DeleteController;
 
 public class DeleteControllerTest extends DeleteController
 {

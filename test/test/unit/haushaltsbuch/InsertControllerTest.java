@@ -19,8 +19,8 @@ import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
 import haushaltsbuch.InsertException;
-import haushaltsbuch.controllers.EntryMapper;
-import haushaltsbuch.controllers.InsertController;
+import haushaltsbuch.web.EntryMapper;
+import haushaltsbuch.web.controllers.InsertController;
 
 public class InsertControllerTest extends InsertController
 {

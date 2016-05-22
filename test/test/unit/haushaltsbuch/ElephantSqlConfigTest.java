@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
-import haushaltsbuch.ElephantSqlConfig;
-import haushaltsbuch.ElephantSqlConfig.ParseException;
+import haushaltsbuch.web.ElephantSqlConfig;
+import haushaltsbuch.web.ElephantSqlConfig.ParseException;
 
 public class ElephantSqlConfigTest
 {

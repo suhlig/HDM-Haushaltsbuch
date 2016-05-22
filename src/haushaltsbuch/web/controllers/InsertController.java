@@ -1,4 +1,4 @@
-package haushaltsbuch.controllers;
+package haushaltsbuch.web.controllers;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
 import haushaltsbuch.InsertException;
+import haushaltsbuch.web.EntryMapper;
 
 @WebServlet("/new")
 public class InsertController extends BaseController

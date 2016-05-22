@@ -1,4 +1,4 @@
-package haushaltsbuch.controllers;
+package haushaltsbuch.web;
 
 import java.math.BigDecimal;
 import java.util.Date;

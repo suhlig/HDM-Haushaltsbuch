@@ -1,4 +1,4 @@
-package haushaltsbuch;
+package haushaltsbuch.web;
 
 import java.net.URI;
 import org.json.JSONException;
