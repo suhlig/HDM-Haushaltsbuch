@@ -21,7 +21,7 @@ public class InsertController extends BaseController
   {
     request.setAttribute("entry", _entryMapper.map(request));
     setTitle(request, "Neuen Eintrag hinzufügen");
-    setView(request, "add.jsp");
+    setView(request, "new.jsp");
   }
 
   @Override
@@ -48,7 +48,7 @@ public class InsertController extends BaseController
 
       setError(request, e.getMessage());
       setTitle(request, "Fehler beim Anlegen");
-      setView(request, "add.jsp");
+      setView(request, "new.jsp");
     }
   }
 
