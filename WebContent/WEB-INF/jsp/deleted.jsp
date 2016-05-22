@@ -13,7 +13,7 @@
 </head>
 <body>
   <%@include file="_menu.jspf"%>
-  <h1>Haushaltsbuch</h1>
+  <h1>Eintrag gelöscht</h1>
 
   <table style="text-decoration: line-through;">
     <tr>

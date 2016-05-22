@@ -16,12 +16,12 @@
 <body>
   <%@include file="_menu.jspf"%>
 
-  <h2>Eintrag anzeigen</h2>
+  <h2>Eintrag</h2>
 
-  <table>
+  <table class="entry">
     <tr>
       <th>Identifikation</th>
-      <td>${id}</td>
+      <td class="id">${entry.id}</td>
     </tr>
     <tr>
        <th>Wertstellung</th>

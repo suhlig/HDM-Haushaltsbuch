@@ -10,10 +10,8 @@
   <li><a href="new">Neu…</a></li>
 </ul>
 
-<p>
-	<c:if test="${not empty message}">
-	  <div style="color: green;">
-	    ${message}
-	  </div>
-	</c:if>
-</p>
+<c:if test="${not empty message}">
+  <p id="message" style="color: green;">
+    ${message}
+  </p>
+</c:if>
