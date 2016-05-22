@@ -48,10 +48,3 @@ class TestIndex < MiniTest::Test
     assert_equal 'HDM Haushaltsbuch', @driver.title
   end
 end
-
-__END__
-
-# element = driver.find_element(:name, 'q')
-# element.send_keys "Hello WebDriver!"
-# element.submit
-@driver.find_element(xpath: '/html/body/table/tbody/tr/td').displayed?

@@ -48,7 +48,8 @@
             <form method="post" action="delete" class="inline">
               <%-- Just a pseudo-link to have sensible text in the status bar --%>
               <a href="delete?id=${entry.id}">
-                <button type="submit" name="id" value="${entry.id}" class="link-button">Delete</button>
+			          <input type="hidden" name="id" value="${entry.id}"/>
+                <button type="submit" class="link-button">Delete!</button>
               </a>
             </form>
           </td>
