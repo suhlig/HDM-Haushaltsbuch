@@ -22,6 +22,35 @@ public final class TestEntry implements Entry
   private String _category = DEFAULT_CATEGORY;
 
   @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+      return true;
+
+    if (obj == null)
+      return false;
+
+    if (getClass() != obj.getClass())
+      return false;
+
+    if (!(obj instanceof Entry))
+      return false;
+
+    Entry other = (Entry) obj;
+
+    if (_id == null)
+    {
+      if (other.getId() != null)
+        return false;
+    }
+    else
+      if (!_id.equals(other.getId()))
+        return false;
+
+    return true;
+  }
+
+  @Override
   public String getCategory()
   {
     return _category;
@@ -51,11 +80,6 @@ public final class TestEntry implements Entry
     return _paymentType;
   }
 
-  public String getSrcDest()
-  {
-    return _srcDest;
-  }
-
   @Override
   public String getSrcDst()
   {
@@ -66,6 +90,17 @@ public final class TestEntry implements Entry
   public BigDecimal getValue()
   {
     return BigDecimal.valueOf(_value);
+  }
+
+  @Override
+  public int hashCode()
+  {
+    final int prime = 31;
+    int result = 1;
+
+    result = prime * result + (_id == null ? 0 : _id.hashCode());
+
+    return result;
   }
 
   public void setCategory(String category)
@@ -102,4 +137,5 @@ public final class TestEntry implements Entry
   {
     _value = value;
   }
+
 }

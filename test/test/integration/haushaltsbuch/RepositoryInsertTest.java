@@ -9,7 +9,7 @@ import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
 import test.helpers.TestEntry;
 
-public class JdbcRepositoryTest
+public class RepositoryInsertTest
 {
   private JdbcRepository _subject;
   private TestDatabase _database;
@@ -28,38 +28,6 @@ public class JdbcRepositoryTest
   {
     _subject.close();
     _database.tearDown();
-  }
-
-  @Test
-  public void testDelete()
-  {
-    // fail("Not yet implemented");
-  }
-
-  @Test
-  public void testDeleteNull() throws Exception
-  {
-    try
-    {
-      _subject.delete(null);
-      fail("Should have failed");
-    }
-    catch (Exception e)
-    {
-      // ok
-    }
-  }
-
-  @Test
-  public void testFind()
-  {
-    // fail("Not yet implemented");
-  }
-
-  @Test
-  public void testGetAll()
-  {
-    // fail("Not yet implemented");
   }
 
   @Test
