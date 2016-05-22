@@ -7,6 +7,7 @@
 <ul class="navbar">
   <li><a href=".">Home</a></li>
   <li><a href="all">Alle</a></li>
+  <li><a href="lookup">Nachschlagen</a></li>
   <li><a href="new">Neu…</a></li>
 </ul>
 

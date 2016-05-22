@@ -1,0 +1,26 @@
+require 'minitest/autorun'
+require 'selenium-webdriver'
+
+#
+# Test the new page
+#
+class TestNew < MiniTest::Test
+  def setup
+    @driver = Selenium::WebDriver.for :chrome
+  end
+
+  def teardown
+    @driver.quit unless failure
+  end
+
+  def test_lookup_non_existing
+    @driver.navigate.to 'http://localhost:9080/hhb/lookup'
+
+    lookup_form = @driver.first(id: 'lookup')
+    assert(lookup_form.displayed?)
+
+    lookup_form.first(name: 'id').send_keys('4711')
+
+    lookup_form.submit
+  end
+end
