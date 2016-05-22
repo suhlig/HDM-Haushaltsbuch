@@ -1,7 +1,6 @@
 package haushaltsbuch.web.controllers;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -36,7 +35,7 @@ public class InsertController extends BaseController
       String id = repository.insert(entry);
 
       request.setAttribute("entry", repository.find(id)); // read back so that we know generated fields, too
-      request.setAttribute("message", MessageFormat.format("Eintrag {0} erfolgreich angelegt.", entry));
+      request.setAttribute("message", "Eintrag erfolgreich angelegt.");
 
       setTitle(request, "Eintrag hinzugefügt");
       setView(request, "show.jsp");
@@ -45,7 +44,7 @@ public class InsertController extends BaseController
     {
       e.printStackTrace(System.err);
 
-      request.setAttribute("error", e.getMessage());
+      setError(request, e.getMessage());
       request.setAttribute("entry", entry);
       setTitle(request, "Fehler beim Anlegen");
       setView(request, "add.jsp");

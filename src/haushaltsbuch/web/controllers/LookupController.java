@@ -25,7 +25,7 @@ public class LookupController extends BaseController
 
     if (null == id || id.isEmpty())
     {
-      request.setAttribute("error", "Identifikator fehlt");
+      setError(request, "Identifikator fehlt");
       request.setAttribute("id", id);
       response.setStatus(400);
 

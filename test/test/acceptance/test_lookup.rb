@@ -25,6 +25,6 @@ class TestNew < MiniTest::Test
 
     error = @driver.first(xpath: '//*[@id="error"]')
     assert(error.displayed?)
-    assert_includes(error.text, 'konnte nicht gefunden werden')
+    assert_includes(error.text, 'kein Eintrag')
   end
 end

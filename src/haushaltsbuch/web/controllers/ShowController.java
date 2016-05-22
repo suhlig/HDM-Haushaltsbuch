@@ -1,7 +1,6 @@
 package haushaltsbuch.web.controllers;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,10 +19,9 @@ public class ShowController extends BaseController
 
     if (null == id || id.isEmpty())
     {
-      request.setAttribute("error", "Fehlender Identifikator");
+      setError(request, "Fehlender Identifikator");
       response.setStatus(400);
       setTitle(request, "Fehler");
-      setView(request, "error.jsp");
     }
     else
     {
@@ -32,9 +30,8 @@ public class ShowController extends BaseController
       if (null == entry)
       {
         response.setStatus(404);
-        request.setAttribute("error", MessageFormat.format("Eintrag mit dem Identifikator {0} konnte nicht gefunden werden.", id));
+        setError(request, "Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id);
         setTitle(request, "Fehler");
-        setView(request, "error.jsp");
       }
       else
       {

@@ -1,7 +1,6 @@
 package haushaltsbuch.web.controllers;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,11 +20,9 @@ public class DeleteController extends BaseController
 
     if (null == id || id.isEmpty())
     {
-      request.setAttribute("error", "fehlender");
-      response.setStatus(400);
-
+      setError(request, "fehlender Identifikator");
       setTitle(request, "Fehler beim Löschen");
-      setView(request, "error.jsp");
+      response.setStatus(400);
     }
     else
       try
@@ -35,9 +32,8 @@ public class DeleteController extends BaseController
         if (null == entry)
         {
           response.setStatus(404);
-          request.setAttribute("error", MessageFormat.format("Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id));
+          setError(request, "Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id);
           setTitle(request, "Fehler beim Löschen");
-          setView(request, "error.jsp");
         }
         else
         {
@@ -50,10 +46,9 @@ public class DeleteController extends BaseController
       catch (DeleteException e)
       {
         e.printStackTrace(System.err);
-        request.setAttribute("error", MessageFormat.format("Fehler beim Löschen von {0}: {1}", id, e.getMessage()));
-        response.setStatus(500);
+        setError(request, "Fehler beim Löschen von {0}: {1}", id, e.getMessage());
         setTitle(request, "Fehler beim Löschen");
-        setView(request, "error.jsp");
+        response.setStatus(500);
       }
   }
 }

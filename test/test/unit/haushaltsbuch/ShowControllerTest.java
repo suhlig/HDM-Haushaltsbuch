@@ -69,7 +69,7 @@ public class ShowControllerTest extends ShowController
     doGet(request, response);
 
     verify(response).setStatus(404);
-    verify(request).setAttribute(eq("error"), contains("nicht gefunden"));
+    verify(request).setAttribute(eq("error"), contains("ein Eintrag"));
   }
 
   @Test

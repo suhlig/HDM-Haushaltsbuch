@@ -1,5 +1,6 @@
 package haushaltsbuch.web.controllers;
 
+import java.text.MessageFormat;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +20,11 @@ public abstract class BaseController extends HttpServlet
       throw new ServletException("Unable to find the repository");
 
     return repository;
+  }
+
+  protected void setError(HttpServletRequest request, String error, Object... args)
+  {
+    request.setAttribute("error", MessageFormat.format(error, args));
   }
 
   protected void setTitle(HttpServletRequest request, String title)
