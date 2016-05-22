@@ -20,6 +20,12 @@
 		
     <h1>${title}</h1>
 		
+		<c:if test="${not empty error}">
+		  <p id="error" style="color: red;">
+		    ${error}
+		  </p>
+		</c:if>
+
 		<c:if test="${not empty message}">
 		  <p id="message" style="color: green;">
 		    ${message}
