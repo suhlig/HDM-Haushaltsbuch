@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
+import haushaltsbuch.EntryRepository;
 import haushaltsbuch.InsertException;
 
 @WebServlet("/new")
@@ -27,13 +28,13 @@ public class InsertController extends BaseController
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
     Entry entry = _entryMapper.map(request);
-    request.setAttribute("entry", entry);
+    EntryRepository repository = getRepository();
 
     try
     {
-      String id = getRepository().insert(entry);
+      String id = repository.insert(entry);
 
-      request.setAttribute("id", id);
+      request.setAttribute("entry", repository.find(id)); // read back so that we know generated fields, too
       request.setAttribute("message", MessageFormat.format("Eintrag {0} erfolgreich angelegt.", entry));
       request.getRequestDispatcher("WEB-INF/jsp/show.jsp").include(request, response);
     }
@@ -41,6 +42,7 @@ public class InsertController extends BaseController
     {
       e.printStackTrace(System.err);
       request.setAttribute("error", "Fehler beim Anlegen: " + e.getMessage());
+      request.setAttribute("entry", entry);
       request.getRequestDispatcher("WEB-INF/jsp/add.jsp").include(request, response);
     }
   }

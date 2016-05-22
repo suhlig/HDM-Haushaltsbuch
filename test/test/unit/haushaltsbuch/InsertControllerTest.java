@@ -55,10 +55,12 @@ public class InsertControllerTest extends InsertController
     when(_mockEntryMapper.map(request)).thenReturn(insertEntry);
     when(_repository.insert(insertEntry)).thenReturn("4711");
 
+    Entry readbackEntry = mock(Entry.class);
+    when(_repository.find("4711")).thenReturn(readbackEntry);
+
     doPost(request, response);
 
-    verify(request).setAttribute(eq("id"), eq("4711"));
-    verify(request).setAttribute(eq("entry"), eq(insertEntry));
+    verify(request).setAttribute(eq("entry"), eq(readbackEntry));
     verify(request).setAttribute(eq("message"), contains("angelegt"));
   }
 }
