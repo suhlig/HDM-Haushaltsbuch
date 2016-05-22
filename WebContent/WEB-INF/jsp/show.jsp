@@ -47,6 +47,16 @@
        <th>Zahlungstyp</th>
       <td>${entry.paymentType}</td>
     </tr>
+    <tr>
+       <th></th>
+      <td>
+	      <%-- http://stackoverflow.com/a/33880971 --%>
+	      <form method="post" action="delete" class="inline">
+	        <input type="hidden" name="id" value="${entry.id}"/>
+          <button type="submit" >Delete!</button>
+	      </form>
+      </td>
+    </tr>
   </table>
 </body>
 </html>
