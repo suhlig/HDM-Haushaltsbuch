@@ -22,6 +22,7 @@ public class DeleteController extends BaseController
     {
       setError(request, "fehlender Identifikator");
       setTitle(request, "Fehler beim Löschen");
+
       response.setStatus(400);
     }
     else
@@ -31,9 +32,10 @@ public class DeleteController extends BaseController
 
         if (null == entry)
         {
-          response.setStatus(404);
           setError(request, "Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id);
           setTitle(request, "Fehler beim Löschen");
+
+          response.setStatus(404);
         }
         else
         {
@@ -49,6 +51,7 @@ public class DeleteController extends BaseController
         e.printStackTrace(System.err);
         setError(request, "Fehler beim Löschen von {0}: {1}", id, e.getMessage());
         setTitle(request, "Fehler beim Löschen");
+
         response.setStatus(500);
       }
   }

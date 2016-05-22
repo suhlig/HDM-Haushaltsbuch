@@ -44,8 +44,9 @@ public class InsertController extends BaseController
     {
       e.printStackTrace(System.err);
 
-      setError(request, e.getMessage());
       request.setAttribute("entry", entry);
+
+      setError(request, e.getMessage());
       setTitle(request, "Fehler beim Anlegen");
       setView(request, "add.jsp");
     }

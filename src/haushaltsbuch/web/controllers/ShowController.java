@@ -20,8 +20,9 @@ public class ShowController extends BaseController
     if (null == id || id.isEmpty())
     {
       setError(request, "Fehlender Identifikator");
-      response.setStatus(400);
       setTitle(request, "Fehler");
+
+      response.setStatus(400);
     }
     else
     {
@@ -29,9 +30,10 @@ public class ShowController extends BaseController
 
       if (null == entry)
       {
-        response.setStatus(404);
         setError(request, "Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id);
         setTitle(request, "Fehler");
+
+        response.setStatus(404);
       }
       else
       {
