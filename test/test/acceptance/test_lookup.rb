@@ -2,7 +2,7 @@ require 'minitest/autorun'
 require 'selenium-webdriver'
 
 #
-# Test the new page
+# Test the entry lookup
 #
 class TestNew < MiniTest::Test
   def setup
