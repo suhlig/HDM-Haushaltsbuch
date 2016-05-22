@@ -38,7 +38,8 @@ public class DeleteController extends BaseController
         else
         {
           request.setAttribute("entry", entry);
-          request.setAttribute("message", "Eintrag gelöscht.");
+
+          setMessage(request, "Eintrag gelöscht.");
           setTitle(request, "Eintrag gelöscht");
           setView(request, "deleted.jsp");
         }

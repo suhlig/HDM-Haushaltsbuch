@@ -35,7 +35,7 @@ public class InsertController extends BaseController
       String id = repository.insert(entry);
 
       request.setAttribute("entry", repository.find(id)); // read back so that we know generated fields, too
-      request.setAttribute("message", "Eintrag erfolgreich angelegt.");
+      setMessage(request, "Eintrag erfolgreich angelegt.");
 
       setTitle(request, "Eintrag hinzugefügt");
       setView(request, "show.jsp");

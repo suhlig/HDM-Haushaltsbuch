@@ -27,13 +27,18 @@ public abstract class BaseController extends HttpServlet
     request.setAttribute("error", MessageFormat.format(error, args));
   }
 
-  protected void setTitle(HttpServletRequest request, String title)
+  protected void setMessage(HttpServletRequest request, String message, Object... args)
   {
-    request.setAttribute("title", title);
+    request.setAttribute("message", MessageFormat.format(message, args));
   }
 
-  protected void setView(HttpServletRequest request, String view)
+  protected void setTitle(HttpServletRequest request, String title, Object... args)
   {
-    request.setAttribute("view", view);
+    request.setAttribute("title", MessageFormat.format(title, args));
+  }
+
+  protected void setView(HttpServletRequest request, String view, Object... args)
+  {
+    request.setAttribute("view", MessageFormat.format(view, args));
   }
 }
