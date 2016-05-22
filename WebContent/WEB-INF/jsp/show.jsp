@@ -16,7 +16,7 @@
   </tr>
   <tr>
      <th>Beschreibung</th>
-    <td>${entry.description}</td>
+    <td class="description">${entry.description}</td>
   </tr>
   <tr>
      <th>Wert</th>
