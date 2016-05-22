@@ -22,7 +22,8 @@ public class ShowController extends BaseController
     {
       request.setAttribute("error", "Fehlender Identifikator");
       response.setStatus(400);
-      request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
+      setTitle(request, "Fehler");
+      setView(request, "error.jsp");
     }
     else
     {
@@ -32,12 +33,14 @@ public class ShowController extends BaseController
       {
         response.setStatus(404);
         request.setAttribute("error", MessageFormat.format("Eintrag mit dem Identifikator {0} konnte nicht gefunden werden.", id));
-        request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
+        setTitle(request, "Fehler");
+        setView(request, "error.jsp");
       }
       else
       {
         request.setAttribute("entry", entry);
-        request.getRequestDispatcher("WEB-INF/jsp/show.jsp").include(request, response);
+        setTitle(request, "Eintrag");
+        setView(request, "show.jsp");
       }
     }
   }

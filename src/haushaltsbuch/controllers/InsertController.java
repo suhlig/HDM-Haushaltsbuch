@@ -19,9 +19,9 @@ public class InsertController extends BaseController
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    Entry entry = _entryMapper.map(request);
-    request.setAttribute("entry", entry);
-    request.getRequestDispatcher("WEB-INF/jsp/add.jsp").include(request, response);
+    request.setAttribute("entry", _entryMapper.map(request));
+    setTitle(request, "Neuen Eintrag hinzufügen");
+    setView(request, "add.jsp");
   }
 
   @Override
@@ -36,14 +36,18 @@ public class InsertController extends BaseController
 
       request.setAttribute("entry", repository.find(id)); // read back so that we know generated fields, too
       request.setAttribute("message", MessageFormat.format("Eintrag {0} erfolgreich angelegt.", entry));
-      request.getRequestDispatcher("WEB-INF/jsp/show.jsp").include(request, response);
+
+      setTitle(request, "Eintrag hinzugefügt");
+      setView(request, "show.jsp");
     }
     catch (InsertException e)
     {
       e.printStackTrace(System.err);
-      request.setAttribute("error", "Fehler beim Anlegen: " + e.getMessage());
+
+      request.setAttribute("error", e.getMessage());
       request.setAttribute("entry", entry);
-      request.getRequestDispatcher("WEB-INF/jsp/add.jsp").include(request, response);
+      setTitle(request, "Fehler beim Anlegen");
+      setView(request, "add.jsp");
     }
   }
 

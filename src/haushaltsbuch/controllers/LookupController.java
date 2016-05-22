@@ -14,7 +14,8 @@ public class LookupController extends BaseController
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    request.getRequestDispatcher("WEB-INF/jsp/lookup.jsp").include(request, response);
+    setTitle(request, "Eintrag nachschlagen");
+    setView(request, "lookup.jsp");
   }
 
   @Override
@@ -24,10 +25,12 @@ public class LookupController extends BaseController
 
     if (null == id || id.isEmpty())
     {
-      request.setAttribute("error", "Fehlender Identifikator");
+      request.setAttribute("error", "Identifikator fehlt");
       request.setAttribute("id", id);
       response.setStatus(400);
-      request.getRequestDispatcher("WEB-INF/jsp/lookup.jsp").include(request, response);
+
+      setTitle(request, "Fehler beim Nachschlagen");
+      setView(request, "lookup.jsp");
     }
     else
       response.sendRedirect("show?id=" + id);

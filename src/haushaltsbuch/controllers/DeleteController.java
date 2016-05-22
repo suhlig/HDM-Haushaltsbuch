@@ -21,9 +21,11 @@ public class DeleteController extends BaseController
 
     if (null == id || id.isEmpty())
     {
-      request.setAttribute("error", "Fehlender Identifikator");
+      request.setAttribute("error", "fehlender");
       response.setStatus(400);
-      request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
+
+      setTitle(request, "Fehler beim Löschen");
+      setView(request, "error.jsp");
     }
     else
       try
@@ -34,13 +36,15 @@ public class DeleteController extends BaseController
         {
           response.setStatus(404);
           request.setAttribute("error", MessageFormat.format("Eintrag mit dem Identifikator {0} konnte nicht gefunden werden.", id));
-          request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
+          setTitle(request, "Fehler beim Löschen");
+          setView(request, "error.jsp");
         }
         else
         {
           request.setAttribute("entry", entry);
           request.setAttribute("message", MessageFormat.format("Eintrag {0} erfolgreich gelöscht.", entry));
-          request.getRequestDispatcher("WEB-INF/jsp/deleted.jsp").include(request, response);
+          setTitle(request, "Eintrag gelöscht");
+          setView(request, "deleted.jsp");
         }
       }
       catch (DeleteException e)
@@ -48,7 +52,8 @@ public class DeleteController extends BaseController
         e.printStackTrace(System.err);
         request.setAttribute("error", MessageFormat.format("Fehler beim Löschen von {0}: {1}", id, e.getMessage()));
         response.setStatus(500);
-        request.getRequestDispatcher("WEB-INF/jsp/error.jsp").include(request, response);
+        setTitle(request, "Fehler beim Löschen");
+        setView(request, "error.jsp");
       }
   }
 }

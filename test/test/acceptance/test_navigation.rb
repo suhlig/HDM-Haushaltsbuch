@@ -15,32 +15,32 @@ class TestNavigation < MiniTest::Test
   end
 
   def test_new
-    link_new = @driver.find_element(xpath: "//a[@href='new']")
+    link_new = @driver.first(xpath: "//a[@href='new']")
     assert(link_new.displayed?)
 
     link_new.click
 
-    form = @driver.find_element(xpath: '/html/body/form')
+    form = @driver.first(xpath: '/html/body/form')
     assert(form.displayed?)
   end
 
   def test_list
-    list = @driver.find_element(xpath: "//a[@href='all']")
+    list = @driver.first(xpath: "//a[@href='all']")
     assert(list.displayed?)
 
     list.click
 
-    table = @driver.find_element(xpath: '/html/body/table')
+    table = @driver.first(xpath: '/html/body/table')
     assert(table.displayed?)
   end
 
   def test_lookup
-    lookup = @driver.find_element(xpath: "//a[@href='lookup']")
+    lookup = @driver.first(xpath: "//a[@href='lookup']")
     assert(lookup.displayed?)
 
     lookup.click
 
-    form = @driver.find_element(xpath: '/html/body/form')
+    form = @driver.first(xpath: '/html/body/form')
     assert(form.displayed?)
   end
 end

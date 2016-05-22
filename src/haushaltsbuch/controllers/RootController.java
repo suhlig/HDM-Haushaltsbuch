@@ -6,16 +6,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/all")
-public class ListController extends BaseController
+@WebServlet("/index.jsp")
+public class RootController extends BaseController
 {
   private static final long serialVersionUID = 1L;
 
-  @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    request.setAttribute("entries", getRepository().getAll());
-    setTitle(request, "Alle Einträge");
-    setView(request, "list.jsp");
+    setTitle(request, "Home");
+    setView(request, "index.jsp");
   }
 }

@@ -15,16 +15,17 @@ class TestHome < MiniTest::Test
   end
 
   def test_home
-    link_home = @driver.find_element(xpath: "//a[@href='.']")
+    link_home = @driver.first(xpath: "//a[@href='.']")
     assert(link_home.displayed?)
 
     link_home.click
 
-    h1 = @driver.find_element(xpath: '/html/body/h1')
+    h1 = @driver.first(xpath: '/html/body/h1')
     assert(h1.displayed?)
   end
 
   def test_title
-    assert_equal 'HDM Haushaltsbuch', @driver.title
+    assert_equal 'Haushaltsbuch - Home', @driver.title
+    assert_equal 'Home', @driver.first(xpath: '//h1').text
   end
 end
