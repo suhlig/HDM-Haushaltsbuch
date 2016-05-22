@@ -43,7 +43,7 @@ public class DeleteController extends BaseController
 
           setMessage(request, "Eintrag gelöscht.");
           setTitle(request, "Eintrag gelöscht");
-          setView(request, "deleted.jsp");
+          setView(request, "delete.jsp");
         }
       }
       catch (DeleteException e)

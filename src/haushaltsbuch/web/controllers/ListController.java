@@ -16,6 +16,6 @@ public class ListController extends BaseController
   {
     request.setAttribute("entries", getRepository().getAll());
     setTitle(request, "Alle Einträge");
-    setView(request, "list.jsp");
+    setView(request, "all.jsp");
   }
 }
