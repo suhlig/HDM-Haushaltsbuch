@@ -44,6 +44,16 @@ class TestIndex < MiniTest::Test
     assert(table.displayed?)
   end
 
+  def test_lookup
+    lookup = @driver.find_element(xpath: "//a[@href='lookup']")
+    assert(lookup.displayed?)
+
+    lookup.click
+
+    form = @driver.find_element(xpath: '/html/body/form')
+    assert(form.displayed?)
+  end
+
   def test_title
     assert_equal 'HDM Haushaltsbuch', @driver.title
   end

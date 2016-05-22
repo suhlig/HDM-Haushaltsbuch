@@ -22,5 +22,9 @@ class TestNew < MiniTest::Test
     lookup_form.first(name: 'id').send_keys('4711')
 
     lookup_form.submit
+
+    error = @driver.first(xpath: '//*[@id="error"]')
+    assert(error.displayed?)
+    assert_includes(error.text, 'konnte nicht gefunden werden')
   end
 end

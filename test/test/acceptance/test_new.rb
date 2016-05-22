@@ -22,11 +22,14 @@ class TestNew < MiniTest::Test
 
     id = @driver.first(xpath: '//*[@class="id"]')
     assert(id.displayed?)
-    delete(id.text)
+
+    lookup(id.text)
+    delete
   end
 
   def create
     @driver.navigate.to 'http://localhost:9080/hhb/new'
+
     @driver.first(name: 'srcDst').send_keys('acceptance test srcDst')
     @driver.first(name: 'description').send_keys('acceptance test description')
     @driver.first(name: 'value').send_keys(42)
@@ -36,7 +39,7 @@ class TestNew < MiniTest::Test
     @driver.first(id: 'new').submit
   end
 
-  def delete(id)
+  def lookup(id)
     @driver.navigate.to 'http://localhost:9080/hhb/lookup'
 
     lookup_form = @driver.first(id: 'lookup')
@@ -45,7 +48,9 @@ class TestNew < MiniTest::Test
     assert(input.displayed?)
     input.send_keys(id)
     input.submit
+  end
 
+  def delete
     delete_button = @driver.first(xpath: '//input[@name="id"]')
     delete_button.submit
 

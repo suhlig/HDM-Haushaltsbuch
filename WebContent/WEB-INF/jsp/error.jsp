@@ -17,9 +17,9 @@
 
   <h2>Fehler</h2>
 
-  <div style="color: red;">
+  <p id="error" style="color: red;">
     ${error}
-  </div>
+  </p>
 
 </body>
 </html>
