@@ -22,7 +22,7 @@ public class LayoutFilter extends BasicFilter
     chain.doFilter(request, response);
 
     if (hasLayout(request))
-      request.getRequestDispatcher("WEB-INF/jsp/layout.jsp").include(request, response);
+      request.getRequestDispatcher("WEB-INF/jsp/layout.jsp").forward(request, response);
   }
 
   private boolean hasLayout(ServletRequest request)
