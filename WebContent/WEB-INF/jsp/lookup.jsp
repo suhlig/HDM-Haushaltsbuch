@@ -5,7 +5,15 @@
   <table>
     <tr>
       <th>ID</th>
-      <td><input type="text" name="id" value="${id}" /></td>
+      <td>
+        <input type="text"
+               name="id"
+               value="${id}"
+               title="UUID des gesuchten Eintrags"
+               pattern="^[a-z0-9]{8}-([a-z0-9]{4}-){3}[a-z0-9]{12}$"
+               required
+        />
+      </td>
     </tr>
     <tr>
       <th></th>
