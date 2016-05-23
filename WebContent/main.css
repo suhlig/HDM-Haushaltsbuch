@@ -70,7 +70,7 @@ p {
   content: "!"
 }
 
-/* navigation bar */
+/* navigation bar idea from http://www.w3schools.com/css/css_navbar.asp */
 ul.navbar {
     list-style-type: none;
     margin: 0;
@@ -95,5 +95,10 @@ ul.navbar li a {
 }
 
 ul.navbar li a:hover {
-    background-color: #111;
+    background-color: #ddd;
+}
+
+ul.navbar .active {
+  background-color: #e3695f;
+  color: #eee;
 }

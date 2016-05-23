@@ -10,13 +10,18 @@
 		<link rel="stylesheet" href="main.css">
 	</head>
 	
-	<body>		
+	<body>
 		<ul class="navbar">
-		  <li><a href=".">Home</a></li>
-		  <li><a href="all">Alle</a></li>
-		  <li><a href="lookup">Nachschlagen</a></li>
-		  <li><a href="new">Neu…</a></li>
-		</ul>
+    <%-- menu idea from http://stackoverflow.com/a/5928182/3212907 --%>
+    <c:forEach items="${menu}" var="item">
+        <c:set var="view_jsp">${item.value}.jsp</c:set>
+        <li>
+          <a href="${item.value}" class="${"index.jsp" == view && "..jsp" == view_jsp || view == view_jsp ? 'active' : 'none'}">
+            ${item.key}
+          </a>
+        </li>
+    </c:forEach>
+    </ul>
 		
     <h1>${title}</h1>
 		
