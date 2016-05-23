@@ -11,17 +11,7 @@ class TestHome < MiniTest::Test
   end
 
   def teardown
-    @driver.quit
-  end
-
-  def test_home
-    link_home = @driver.first(xpath: "//a[@href='.']")
-    assert(link_home.displayed?)
-
-    link_home.click
-
-    h1 = @driver.first(xpath: '/html/body/h1')
-    assert(h1.displayed?)
+    @driver.quit unless failure
   end
 
   def test_title

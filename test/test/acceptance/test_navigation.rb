@@ -11,7 +11,7 @@ class TestNavigation < MiniTest::Test
   end
 
   def teardown
-    @driver.quit
+    @driver.quit unless failure
   end
 
   def test_new
@@ -22,6 +22,10 @@ class TestNavigation < MiniTest::Test
 
     form = @driver.first(xpath: '/html/body/form')
     assert(form.displayed?)
+
+    active_menu_item = @driver.first(css: '.navbar li .active')
+    assert(active_menu_item.displayed?)
+    assert_includes(active_menu_item.attribute('href'), 'new')
   end
 
   def test_all
@@ -32,6 +36,10 @@ class TestNavigation < MiniTest::Test
 
     table = @driver.first(xpath: '/html/body/table')
     assert(table.displayed?)
+
+    active_menu_item = @driver.first(css: '.navbar li .active')
+    assert(active_menu_item.displayed?)
+    assert_includes(active_menu_item.attribute('href'), 'all')
   end
 
   def test_lookup
@@ -42,5 +50,22 @@ class TestNavigation < MiniTest::Test
 
     form = @driver.first(xpath: '/html/body/form')
     assert(form.displayed?)
+
+    active_menu_item = @driver.first(css: '.navbar li .active')
+    assert(active_menu_item.displayed?)
+    assert_includes(active_menu_item.attribute('href'), 'lookup')
+  end
+
+  def test_home
+    link_home = @driver.first(xpath: "//a[@href='.']")
+    assert(link_home.displayed?)
+
+    link_home.click
+
+    h1 = @driver.first(xpath: '/html/body/h1')
+    assert(h1.displayed?)
+
+    active_menu_item = @driver.first(css: '.navbar li .active')
+    assert(active_menu_item.displayed?)
   end
 end
