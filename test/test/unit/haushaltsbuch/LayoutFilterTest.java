@@ -40,7 +40,7 @@ public class LayoutFilterTest
 
     _subject.doFilter(request, response, chain);
 
-    verify(requestDispatcher).include(request, response);
+    verify(requestDispatcher).forward(request, response);
   }
 
   @Test
@@ -56,7 +56,7 @@ public class LayoutFilterTest
 
     _subject.doFilter(request, response, chain);
 
-    verify(requestDispatcher).include(request, response);
+    verify(requestDispatcher).forward(request, response);
   }
 
   @Test
@@ -72,7 +72,7 @@ public class LayoutFilterTest
 
     _subject.doFilter(request, response, chain);
 
-    verify(requestDispatcher).include(request, response);
+    verify(requestDispatcher).forward(request, response);
   }
 
   @Test
@@ -104,7 +104,7 @@ public class LayoutFilterTest
 
     _subject.doFilter(request, response, chain);
 
-    verify(requestDispatcher).include(request, response);
+    verify(requestDispatcher).forward(request, response);
   }
 
   private Enumeration<String> asEnumeration(String... names)
