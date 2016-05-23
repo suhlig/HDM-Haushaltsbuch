@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
-<html>
+<html lang="de">
 	<head>
 		<title>Haushaltsbuch - ${title}</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -14,9 +14,11 @@
 		<ul class="navbar">
     <%-- menu idea from http://stackoverflow.com/a/5928182/3212907 --%>
     <c:forEach items="${menu}" var="item">
-        <c:set var="view_jsp">${item.value}.jsp</c:set>
+        <c:set var="isRoot">${'index.jsp' == view && '.' == item.value}</c:set>
+        <c:set var="viewJSP">${item.value}.jsp</c:set>
+        <c:set var="isActive">${view == viewJSP}</c:set>
         <li>
-          <a href="${item.value}" class="${'index.jsp' == view && '.' == item.value || view == view_jsp ? 'active' : 'none'}">
+          <a href="${item.value}" class="${(isRoot || isActive) ? 'active' : 'none'}">
             ${item.key}
           </a>
         </li>
