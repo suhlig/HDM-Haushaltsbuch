@@ -9,14 +9,14 @@
 		<link rel="stylesheet" href="normalize-4.1.1.css">
 		<link rel="stylesheet" href="main.css">
 	</head>
-	
+
 	<body>
 		<ul class="navbar">
     <%-- menu idea from http://stackoverflow.com/a/5928182/3212907 --%>
     <c:forEach items="${menu}" var="item">
         <c:set var="view_jsp">${item.value}.jsp</c:set>
         <li>
-          <a href="${item.value}" class="${"index.jsp" == view && "..jsp" == view_jsp || view == view_jsp ? 'active' : 'none'}">
+          <a href="${item.value}" class="${'index.jsp' == view && '.' == item.value || view == view_jsp ? 'active' : 'none'}">
             ${item.key}
           </a>
         </li>
