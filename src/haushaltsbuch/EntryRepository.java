@@ -4,8 +4,6 @@ import java.util.List;
 
 public interface EntryRepository
 {
-  String CTX_ATTR_NAME = "repository";
-
   void close();
 
   Entry delete(String parameter) throws DeleteException;

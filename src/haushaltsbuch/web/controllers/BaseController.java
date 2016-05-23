@@ -10,11 +10,12 @@ import haushaltsbuch.EntryRepository;
 public abstract class BaseController extends HttpServlet
 {
   private static final long serialVersionUID = 1L;
+  public static final String CTX_ATTR_NAME = "repository";
 
   protected EntryRepository getRepository() throws ServletException
   {
     ServletContext servletContext = getServletContext();
-    EntryRepository repository = (EntryRepository) servletContext.getAttribute(EntryRepository.CTX_ATTR_NAME);
+    EntryRepository repository = (EntryRepository) servletContext.getAttribute(BaseController.CTX_ATTR_NAME);
 
     if (null == repository)
       throw new ServletException("Unable to find the repository");

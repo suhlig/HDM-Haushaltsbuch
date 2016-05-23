@@ -18,6 +18,7 @@ import org.mockito.Mockito;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
+import haushaltsbuch.web.controllers.BaseController;
 import haushaltsbuch.web.controllers.DeleteController;
 
 public class DeleteControllerTest extends DeleteController
@@ -33,7 +34,7 @@ public class DeleteControllerTest extends DeleteController
     ServletContext servletContext = mock(ServletContext.class);
 
     when(servletConfig.getServletContext()).thenReturn(servletContext);
-    when(servletContext.getAttribute(EntryRepository.CTX_ATTR_NAME)).thenReturn(_repository);
+    when(servletContext.getAttribute(BaseController.CTX_ATTR_NAME)).thenReturn(_repository);
 
     init(servletConfig);
   }

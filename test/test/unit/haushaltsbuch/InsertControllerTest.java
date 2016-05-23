@@ -20,6 +20,7 @@ import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.web.EntryMapper;
+import haushaltsbuch.web.controllers.BaseController;
 import haushaltsbuch.web.controllers.InsertController;
 
 public class InsertControllerTest extends InsertController
@@ -36,7 +37,7 @@ public class InsertControllerTest extends InsertController
     ServletContext servletContext = mock(ServletContext.class);
 
     when(servletConfig.getServletContext()).thenReturn(servletContext);
-    when(servletContext.getAttribute(EntryRepository.CTX_ATTR_NAME)).thenReturn(_repository);
+    when(servletContext.getAttribute(BaseController.CTX_ATTR_NAME)).thenReturn(_repository);
 
     init(servletConfig);
 
