@@ -24,11 +24,11 @@ class TestNavigation < MiniTest::Test
     assert(form.displayed?)
   end
 
-  def test_list
-    list = @driver.first(xpath: "//a[@href='all']")
-    assert(list.displayed?)
+  def test_all
+    all = @driver.first(xpath: "//a[@href='all']")
+    assert(all.displayed?)
 
-    list.click
+    all.click
 
     table = @driver.first(xpath: '/html/body/table')
     assert(table.displayed?)
