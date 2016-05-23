@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
@@ -46,7 +44,6 @@ public class ShowControllerTest extends ShowController
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     when(request.getParameter("id")).thenReturn("42");
-    when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(mock(RequestDispatcher.class));
 
     Entry shownEntry = mock(Entry.class);
     when(_repository.find("42")).thenReturn(shownEntry);
@@ -63,7 +60,6 @@ public class ShowControllerTest extends ShowController
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     when(request.getParameter("id")).thenReturn("42");
-    when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(mock(RequestDispatcher.class));
 
     when(_repository.find("42")).thenReturn(null);
 
@@ -80,7 +76,6 @@ public class ShowControllerTest extends ShowController
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     // id parameter not set
-    when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(mock(RequestDispatcher.class));
 
     Entry deletedEntry = mock(Entry.class);
     when(_repository.find("42")).thenReturn(deletedEntry);

@@ -46,7 +46,6 @@ public class DeleteControllerTest extends DeleteController
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     when(request.getParameter("id")).thenReturn("42");
-    when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(mock(RequestDispatcher.class));
 
     Entry deletedEntry = mock(Entry.class);
     when(_repository.delete("42")).thenReturn(deletedEntry);
@@ -64,7 +63,6 @@ public class DeleteControllerTest extends DeleteController
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     when(request.getParameter("id")).thenReturn("42");
-    when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(mock(RequestDispatcher.class));
 
     when(_repository.delete("42")).thenReturn(null);
 
