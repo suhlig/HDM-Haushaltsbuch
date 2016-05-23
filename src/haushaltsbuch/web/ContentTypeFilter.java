@@ -2,22 +2,15 @@ package haushaltsbuch.web;
 
 import java.io.IOException;
 import java.util.Locale;
-import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
 @WebFilter("/*")
-public class ContentTypeFilter implements Filter
+public class ContentTypeFilter extends BasicFilter
 {
-  public void destroy()
-  {
-    // this space intentionally left blank
-  }
-
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
   {
     if (null == request.getCharacterEncoding())
@@ -29,10 +22,5 @@ public class ContentTypeFilter implements Filter
     response.setLocale(Locale.GERMANY);
 
     chain.doFilter(request, response);
-  }
-
-  public void init(FilterConfig ignored) throws ServletException
-  {
-    // this space intentionally left blank
   }
 }
