@@ -102,3 +102,11 @@ ul.navbar .active {
   background-color: #e3695f;
   color: #eee;
 }
+
+/* validation */
+input:invalid {
+  outline: 2px solid red;
+}
+input:focus:invalid {
+  color: red;
+}
