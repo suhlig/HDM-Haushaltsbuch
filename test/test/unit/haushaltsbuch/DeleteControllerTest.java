@@ -63,7 +63,6 @@ public class DeleteControllerTest extends DeleteController
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     when(request.getParameter("id")).thenReturn("42");
-
     when(_repository.delete("42")).thenReturn(null);
 
     doPost(request, response);
@@ -80,9 +79,6 @@ public class DeleteControllerTest extends DeleteController
 
     // id parameter not set
     when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(mock(RequestDispatcher.class));
-
-    Entry deletedEntry = mock(Entry.class);
-    when(_repository.delete("42")).thenReturn(deletedEntry);
 
     doPost(request, response);
 
