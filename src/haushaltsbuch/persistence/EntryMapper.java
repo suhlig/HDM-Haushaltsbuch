@@ -26,50 +26,50 @@ public class EntryMapper
 
   public Entry map(ResultSet rs) throws SQLException
   {
-    String _id = rs.getString("id");
-    Date _entry_date = rs.getTimestamp("created_at");
-    String _src_dest = rs.getString("src_dest");
-    String _description = rs.getString("description");
+    String id = rs.getString("id");
+    Date entry_date = rs.getTimestamp("created_at");
+    String src_dest = rs.getString("src_dest");
+    String description = rs.getString("description");
     BigDecimal value = rs.getBigDecimal("value");
-    String _category = rs.getString("category");
-    String _paymentType = rs.getString("payment_type");
+    String category = rs.getString("category");
+    String paymentType = rs.getString("payment_type");
 
-    return new Entry()
+    return new AbstractEntry()
     {
       @Override
       public String getCategory()
       {
-        return _category;
+        return category;
       }
 
       @Override
       public String getDescription()
       {
-        return _description;
+        return description;
       }
 
       @Override
       public Date getEntryDate()
       {
-        return _entry_date;
+        return entry_date;
       }
 
       @Override
       public String getId()
       {
-        return _id;
+        return id;
       }
 
       @Override
       public String getPaymentType()
       {
-        return _paymentType;
+        return paymentType;
       }
 
       @Override
       public String getSrcDst()
       {
-        return _src_dest;
+        return src_dest;
       }
 
       @Override

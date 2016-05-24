@@ -2,9 +2,9 @@ package test.helpers;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import haushaltsbuch.Entry;
+import haushaltsbuch.persistence.AbstractEntry;
 
-public final class TestEntry implements Entry
+public final class TestEntry extends AbstractEntry
 {
   public static final String DEFAULT_ID = "4711";
   public static final int DEFAULT_VALUE = 42;
@@ -20,35 +20,6 @@ public final class TestEntry implements Entry
   private String _paymentType = DEFAULT_PAYMENT_TYPE;
   private String _description = DEFAULT_DESCRIPTION;
   private String _category = DEFAULT_CATEGORY;
-
-  @Override
-  public boolean equals(Object obj)
-  {
-    if (this == obj)
-      return true;
-
-    if (obj == null)
-      return false;
-
-    if (getClass() != obj.getClass())
-      return false;
-
-    if (!(obj instanceof Entry))
-      return false;
-
-    Entry other = (Entry) obj;
-
-    if (_id == null)
-    {
-      if (other.getId() != null)
-        return false;
-    }
-    else
-      if (!_id.equals(other.getId()))
-        return false;
-
-    return true;
-  }
 
   @Override
   public String getCategory()
@@ -90,17 +61,6 @@ public final class TestEntry implements Entry
   public BigDecimal getValue()
   {
     return BigDecimal.valueOf(_value);
-  }
-
-  @Override
-  public int hashCode()
-  {
-    final int prime = 31;
-    int result = 1;
-
-    result = prime * result + (_id == null ? 0 : _id.hashCode());
-
-    return result;
   }
 
   public void setCategory(String category)

@@ -1,10 +1,16 @@
 package test.integration.haushaltsbuch;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import haushaltsbuch.DeleteException;
+import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
+import haushaltsbuch.InsertException;
 import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
 import test.helpers.TestEntry;
@@ -31,9 +37,18 @@ public class RepositoryDeleteTest
   }
 
   @Test
-  public void testDelete()
+  public void testDelete() throws InsertException, DeleteException
   {
-    // fail("Not yet implemented");
+    String id = _subject.insert(_testEntry);
+    Entry inserted = _subject.find(id);
+    assertNotNull(inserted);
+
+    Entry deleted = _subject.delete(id);
+    assertNull(_subject.find(id));
+
+    assertNotNull(deleted);
+    assertEquals(id, deleted.getId());
+    assertEquals(inserted, deleted);
   }
 
   @Test
