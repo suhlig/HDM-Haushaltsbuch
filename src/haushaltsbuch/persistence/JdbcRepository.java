@@ -89,7 +89,7 @@ public class JdbcRepository implements EntryRepository
   @Override
   public Entry delete(String id) throws DeleteException
   {
-    if (null == id)
+    if (null == id || id.isEmpty())
       throw new DeleteException("Identification missing");
 
     return find(id, new Block()

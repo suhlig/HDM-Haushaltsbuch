@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
+import java.util.UUID;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,7 +38,21 @@ public class RepositoryDeleteTest
   }
 
   @Test
-  public void testDelete() throws InsertException, DeleteException
+  public void testDeleteEmptyString() throws Exception
+  {
+    try
+    {
+      _subject.delete("");
+      fail("Should have failed");
+    }
+    catch (Exception e)
+    {
+      // ok
+    }
+  }
+
+  @Test
+  public void testDeleteExisting() throws InsertException, DeleteException
   {
     String id = _subject.insert(_testEntry);
     Entry inserted = _subject.find(id);
@@ -49,6 +64,14 @@ public class RepositoryDeleteTest
     assertNotNull(deleted);
     assertEquals(id, deleted.getId());
     assertEquals(inserted, deleted);
+  }
+
+  @Test
+  public void testDeleteNonExisting() throws InsertException, DeleteException
+  {
+    String id = UUID.randomUUID().toString();
+    assertNull(_subject.find(id));
+    assertNull(_subject.delete(id));
   }
 
   @Test
