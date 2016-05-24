@@ -17,7 +17,7 @@
     </tr>
     <tr>
       <th></th>
-      <td><input type="submit" name="action" value="Suchen" /></td>
+      <td><input type="submit" name="action" value="Nachschlagen" /></td>
     </tr>
   </table>
 </form>
