@@ -1,24 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <form id="new" method="POST">
-<p>
-  <label>Quelle / Ziel
-    <input type="text"
+<table>
+<tr>
+  <th>
+    <label for="entry_srcDst">Quelle / Ziel</label>
+  </th>
+  <td>
+    <input id="entry_srcDst"
+           type="text"
            name="srcDst"
            value="${entry.srcDst}"
            title="Quelle oder Ziel der Buchung"
            placeholder="z.B. Girokonto"
            oninvalid="this.setCustomValidity('Angabe von Quelle oder Ziel ist notwendig')"
            oninput="setCustomValidity('')"
+           required
     />
-  </label>
-  <span class="validation-error" style="color: red;">
-    ${validationErrors['srcDst']}
-  </span>
-</p>
-<p>
-  <label>Beschreibung
-    <input type="text"
+  </td>
+</tr>
+<tr>
+  <th><label for="entry_description">Beschreibung</label>
+  </th>
+  <td>
+    <input id="entry_description"
+           type="text"
            name="description"
            value="${entry.description}"
            title="Beschreibung der Buchung"
@@ -27,11 +33,14 @@
            oninput="setCustomValidity('')"
            required
     />
-   </label>
-</p>
-<p>
-  <label>Wert      
-    <input type="number"
+   </td>
+</tr>
+<tr>
+  <th><label for="entry_value">Wert</label>
+  </th>
+  <td>
+    <input id="entry_value"
+           type="number"
            name="value"
            value="${entry.value}"
            title="Betrag in Euro"
@@ -40,21 +49,28 @@
            oninput="setCustomValidity('')"
            required
     /> €
-  </label>
-</p>
-<p>
-  <label>Kategorie
-    <input type="text"
+  </td>
+</tr>
+<tr>
+  <th><label for="entry_category">Kategorie</label>
+  </th>
+  <td>
+    <input id="entry_category"
+           type="text"
            name="category"
            value="${entry.category}"
            title="Kategorie der Buchung"
            placeholder="z.B. Lebensmittel"
     />
-  </label>
-</p>
-<p>
-  <label>Zahlungstyp
-    <input type="text"
+  </td>
+</tr>
+<tr>
+  <th>
+    <label for="entry_paymentType">Zahlungstyp</label>
+  </th>
+  <td>
+    <input id="entry_paymentType"
+           type="text"
            name="paymentType"
            value="${entry.paymentType}"
            title="Typ der Buchung"
@@ -63,9 +79,13 @@
            oninput="setCustomValidity('')"
            required
     />
-  </label>
-</p>
-<p>
-  <input type="submit" name="action" value="Hinzufügen" />
-</p>
+  </td>
+</tr>
+<tr>
+  <th>
+  </th>
+  <td>
+    <input type="submit" name="action" value="Hinzufügen" />
+</tr>
+</table>
 </form>
