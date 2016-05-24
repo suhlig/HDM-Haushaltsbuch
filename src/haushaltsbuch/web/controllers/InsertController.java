@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.FindException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.web.EntryMapper;
 
@@ -35,7 +35,7 @@ public class InsertController extends BaseController
     {
       String id = repository.insert(entry);
 
-      request.setAttribute("entry", repository.find(id)); // read back so that we know generated fields, too
+      request.setAttribute("entry", repository.lookup(id)); // read back so that we know generated fields, too
       setMessage(request, "Eintrag erfolgreich angelegt.");
 
       setTitle(request, "Eintrag hinzugefügt");
@@ -53,7 +53,7 @@ public class InsertController extends BaseController
 
       response.setStatus(500);
     }
-    catch (FindException e)
+    catch (LookupException e)
     {
       e.printStackTrace(System.err);
 

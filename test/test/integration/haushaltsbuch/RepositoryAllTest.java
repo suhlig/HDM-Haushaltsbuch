@@ -17,7 +17,7 @@ import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
 import test.helpers.TestEntry;
 
-public class RepositoryListTest
+public class RepositoryAllTest
 {
   private EntryRepository _subject;
   private TestDatabase _database;
@@ -41,7 +41,7 @@ public class RepositoryListTest
   @Test
   public void testEmpty()
   {
-    List<Entry> all = _subject.getAll();
+    List<Entry> all = _subject.all();
 
     assertNotNull(all);
     assertFalse(all.isEmpty());
@@ -53,7 +53,7 @@ public class RepositoryListTest
   public void testNonEmpty() throws InsertException
   {
     _subject.insert(_testEntry);
-    List<Entry> all = _subject.getAll();
+    List<Entry> all = _subject.all();
 
     assertEquals("must contain one more after the opening statement", 2, all.size());
     assertEquals(_testEntry.getValue(), all.get(1).getValue());

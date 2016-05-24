@@ -16,7 +16,7 @@ import org.junit.Test;
 import haushaltsbuch.ArgumentException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.FindException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.web.controllers.BaseController;
 import haushaltsbuch.web.controllers.ShowController;
 
@@ -39,7 +39,7 @@ public class ShowControllerTest extends ShowController
   }
 
   @Test
-  public void testShow() throws ServletException, IOException, FindException
+  public void testShow() throws ServletException, IOException, LookupException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
@@ -47,7 +47,7 @@ public class ShowControllerTest extends ShowController
     when(request.getParameter("id")).thenReturn("42");
 
     Entry shownEntry = mock(Entry.class);
-    when(_repository.find("42")).thenReturn(shownEntry);
+    when(_repository.lookup("42")).thenReturn(shownEntry);
 
     doGet(request, response);
 
@@ -55,14 +55,14 @@ public class ShowControllerTest extends ShowController
   }
 
   @Test
-  public void testShowNotExisting() throws ServletException, IOException, FindException
+  public void testShowNotExisting() throws ServletException, IOException, LookupException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     when(request.getParameter("id")).thenReturn("42");
 
-    when(_repository.find("42")).thenReturn(null);
+    when(_repository.lookup("42")).thenReturn(null);
 
     doGet(request, response);
 
@@ -71,7 +71,7 @@ public class ShowControllerTest extends ShowController
   }
 
   @Test
-  public void testShowWithMissingParameter() throws ServletException, IOException, FindException
+  public void testShowWithMissingParameter() throws ServletException, IOException, LookupException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
@@ -79,7 +79,7 @@ public class ShowControllerTest extends ShowController
     // id parameter not set
 
     Entry deletedEntry = mock(Entry.class);
-    when(_repository.find("42")).thenReturn(deletedEntry);
+    when(_repository.lookup("42")).thenReturn(deletedEntry);
 
     doGet(request, response);
 

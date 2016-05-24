@@ -8,9 +8,9 @@ public interface EntryRepository
 
   Entry delete(String parameter) throws DeleteException;
 
-  Entry find(String id) throws FindException;
+  Entry lookup(String id) throws LookupException;
 
-  List<Entry> getAll();
+  List<Entry> all();
 
   String insert(Entry entry) throws InsertException;
 }

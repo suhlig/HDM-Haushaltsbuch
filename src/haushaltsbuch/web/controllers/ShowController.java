@@ -6,7 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
-import haushaltsbuch.FindException;
+import haushaltsbuch.LookupException;
 
 @WebServlet("/show")
 public class ShowController extends BaseController
@@ -31,7 +31,7 @@ public class ShowController extends BaseController
 
       try
       {
-        entry = getRepository().find(id);
+        entry = getRepository().lookup(id);
 
         if (null == entry)
         {
@@ -47,7 +47,7 @@ public class ShowController extends BaseController
           setView(request, "show.jsp");
         }
       }
-      catch (FindException e)
+      catch (LookupException e)
       {
         setError(request, e.getMessage());
         setTitle(request, "Fehler beim Lesen");

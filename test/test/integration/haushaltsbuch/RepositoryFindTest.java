@@ -13,7 +13,7 @@ import org.junit.Before;
 import org.junit.Test;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.FindException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
@@ -45,7 +45,7 @@ public class RepositoryFindTest
   {
     try
     {
-      _subject.find("");
+      _subject.lookup("");
       fail("Should have failed");
     }
     catch (Exception e)
@@ -55,11 +55,11 @@ public class RepositoryFindTest
   }
 
   @Test
-  public void testFindExisting() throws InsertException, FindException
+  public void testFindExisting() throws InsertException, LookupException
   {
     String id = _subject.insert(_testEntry);
 
-    Entry found = _subject.find(id);
+    Entry found = _subject.lookup(id);
 
     assertNotEquals("inserted and read-back entry are different entities", found, _testEntry);
     assertNotEquals("id of inserted entry is not updated", id, _testEntry.getId());
@@ -81,9 +81,9 @@ public class RepositoryFindTest
   }
 
   @Test
-  public void testFindNonExisting() throws FindException
+  public void testFindNonExisting() throws LookupException
   {
-    assertNull(_subject.find(UUID.randomUUID().toString()));
+    assertNull(_subject.lookup(UUID.randomUUID().toString()));
   }
 
   @Test
@@ -91,7 +91,7 @@ public class RepositoryFindTest
   {
     try
     {
-      _subject.find(null);
+      _subject.lookup(null);
       fail("Should have failed");
     }
     catch (Exception e)

@@ -14,7 +14,7 @@ public class ListController extends BaseController
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    request.setAttribute("entries", getRepository().getAll());
+    request.setAttribute("entries", getRepository().all());
     setTitle(request, "Alle Einträge");
     setView(request, "all.jsp");
   }

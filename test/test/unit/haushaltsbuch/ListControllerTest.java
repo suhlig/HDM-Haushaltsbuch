@@ -49,7 +49,7 @@ public class ListControllerTest extends ListController
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     List<Entry> all = Collections.emptyList();
-    when(_repository.getAll()).thenReturn(all);
+    when(_repository.all()).thenReturn(all);
 
     doGet(request, response);
 
@@ -65,7 +65,7 @@ public class ListControllerTest extends ListController
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     List<Entry> all = asList(new TestEntry(), new TestEntry());
-    when(_repository.getAll()).thenReturn(all);
+    when(_repository.all()).thenReturn(all);
 
     doGet(request, response);
 

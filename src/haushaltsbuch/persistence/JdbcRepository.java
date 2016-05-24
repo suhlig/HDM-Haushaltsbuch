@@ -16,7 +16,7 @@ import haushaltsbuch.ArgumentException;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.FindException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
 
 public class JdbcRepository implements EntryRepository
@@ -108,14 +108,14 @@ public class JdbcRepository implements EntryRepository
         }
       });
     }
-    catch (FindException e)
+    catch (LookupException e)
     {
       throw new DeleteException(id, e);
     }
   }
 
   @Override
-  public Entry find(String id) throws FindException
+  public Entry lookup(String id) throws LookupException
   {
     if (null == id || id.isEmpty())
       throw new ArgumentException("Identification missing");
@@ -131,7 +131,7 @@ public class JdbcRepository implements EntryRepository
   }
 
   @Override
-  public List<Entry> getAll()
+  public List<Entry> all()
   {
     ArrayList<Entry> result = new ArrayList<Entry>();
 
@@ -228,7 +228,7 @@ public class JdbcRepository implements EntryRepository
     }
   }
 
-  private Entry find(String id, Block block) throws FindException
+  private Entry find(String id, Block block) throws LookupException
   {
     Statement st = null;
     ResultSet rs = null;
@@ -252,7 +252,7 @@ public class JdbcRepository implements EntryRepository
       System.err.println(MessageFormat.format("Error fetching row with id {0} from {1}", id, TABLE_NAME));
       e.printStackTrace(System.err);
 
-      throw new FindException(id, e);
+      throw new LookupException(id, e);
     }
     finally
     {

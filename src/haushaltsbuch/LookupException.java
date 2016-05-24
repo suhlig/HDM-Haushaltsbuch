@@ -2,13 +2,13 @@ package haushaltsbuch;
 
 import java.text.MessageFormat;
 
-public class FindException extends Exception
+public class LookupException extends Exception
 {
   private static final long serialVersionUID = 1L;
   private final String _id;
   private final Exception _cause;
 
-  public FindException(String id, Exception cause)
+  public LookupException(String id, Exception cause)
   {
     _id = id;
     _cause = cause;

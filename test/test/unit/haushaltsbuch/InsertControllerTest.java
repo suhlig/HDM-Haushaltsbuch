@@ -15,7 +15,7 @@ import org.junit.Before;
 import org.junit.Test;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.FindException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.web.EntryMapper;
 import haushaltsbuch.web.controllers.BaseController;
@@ -44,7 +44,7 @@ public class InsertControllerTest extends InsertController
   }
 
   @Test
-  public void testInsert() throws ServletException, IOException, InsertException, FindException
+  public void testInsert() throws ServletException, IOException, InsertException, LookupException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
@@ -54,7 +54,7 @@ public class InsertControllerTest extends InsertController
     when(_repository.insert(insertEntry)).thenReturn("4711");
 
     Entry readbackEntry = mock(Entry.class);
-    when(_repository.find("4711")).thenReturn(readbackEntry);
+    when(_repository.lookup("4711")).thenReturn(readbackEntry);
 
     doPost(request, response);
 
