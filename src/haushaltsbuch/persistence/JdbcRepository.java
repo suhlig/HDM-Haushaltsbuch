@@ -12,14 +12,15 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import haushaltsbuch.ArgumentException;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
+import haushaltsbuch.FindException;
 import haushaltsbuch.InsertException;
 
 public class JdbcRepository implements EntryRepository
 {
-
   private interface Block
   {
     void call(Entry result, ResultSet rs) throws SQLException;
@@ -90,25 +91,35 @@ public class JdbcRepository implements EntryRepository
   public Entry delete(String id) throws DeleteException
   {
     if (null == id || id.isEmpty())
-      throw new DeleteException("Identification missing");
+      throw new ArgumentException("Identification missing");
 
-    return find(id, new Block()
+    try
     {
-      @Override
-      public void call(Entry result, ResultSet rs) throws SQLException
+      return find(id, new Block()
       {
-        if (result.getId().equals(id))
+        @Override
+        public void call(Entry result, ResultSet rs) throws SQLException
         {
-          rs.deleteRow();
-          System.out.println(MessageFormat.format("Deleted {0}", result.getId()));
+          if (result.getId().equals(id))
+          {
+            rs.deleteRow();
+            System.out.println(MessageFormat.format("Deleted {0}", result.getId()));
+          }
         }
-      }
-    });
+      });
+    }
+    catch (FindException e)
+    {
+      throw new DeleteException(id, e);
+    }
   }
 
   @Override
-  public Entry find(String id)
+  public Entry find(String id) throws FindException
   {
+    if (null == id || id.isEmpty())
+      throw new ArgumentException("Identification missing");
+
     Entry result = find(id, new NullBlock());
 
     if (null == result)
@@ -154,8 +165,12 @@ public class JdbcRepository implements EntryRepository
   @Override
   public String insert(Entry entry) throws InsertException
   {
+    if (null == entry)
+      throw new ArgumentException("Identification missing");
+
     final String id;
     PreparedStatement stmt = null;
+
     try
     {
       stmt = _connection.prepareStatement(MessageFormat.format(INSERT, TABLE_NAME));
@@ -213,7 +228,7 @@ public class JdbcRepository implements EntryRepository
     }
   }
 
-  private Entry find(String id, Block block)
+  private Entry find(String id, Block block) throws FindException
   {
     Statement st = null;
     ResultSet rs = null;
@@ -236,6 +251,8 @@ public class JdbcRepository implements EntryRepository
     {
       System.err.println(MessageFormat.format("Error fetching row with id {0} from {1}", id, TABLE_NAME));
       e.printStackTrace(System.err);
+
+      throw new FindException(id, e);
     }
     finally
     {

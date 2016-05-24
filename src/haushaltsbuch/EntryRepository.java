@@ -8,7 +8,7 @@ public interface EntryRepository
 
   Entry delete(String parameter) throws DeleteException;
 
-  Entry find(String id);
+  Entry find(String id) throws FindException;
 
   List<Entry> getAll();
 

@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
-import haushaltsbuch.DeleteException;
+import haushaltsbuch.ArgumentException;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.web.controllers.RootController;
 
@@ -24,7 +24,7 @@ public class RootControllerTest extends RootController
   }
 
   @Test
-  public void testEmpty() throws ServletException, IOException, DeleteException, InsertException
+  public void testEmpty() throws ServletException, IOException, InsertException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);

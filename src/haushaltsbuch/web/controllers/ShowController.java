@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
+import haushaltsbuch.FindException;
 
 @WebServlet("/show")
 public class ShowController extends BaseController
@@ -26,20 +27,31 @@ public class ShowController extends BaseController
     }
     else
     {
-      Entry entry = getRepository().find(id);
+      Entry entry;
 
-      if (null == entry)
+      try
       {
-        setError(request, "Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id);
-        setTitle(request, "Fehler");
+        entry = getRepository().find(id);
 
-        response.setStatus(404);
+        if (null == entry)
+        {
+          setError(request, "Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id);
+          setTitle(request, "Fehler");
+
+          response.setStatus(404);
+        }
+        else
+        {
+          request.setAttribute("entry", entry);
+          setTitle(request, "Eintrag");
+          setView(request, "show.jsp");
+        }
       }
-      else
+      catch (FindException e)
       {
-        request.setAttribute("entry", entry);
-        setTitle(request, "Eintrag");
-        setView(request, "show.jsp");
+        setError(request, e.getMessage());
+        setTitle(request, "Fehler beim Lesen");
+        response.setStatus(500);
       }
     }
   }

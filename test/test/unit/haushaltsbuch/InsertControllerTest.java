@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
-import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
+import haushaltsbuch.FindException;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.web.EntryMapper;
 import haushaltsbuch.web.controllers.BaseController;
@@ -44,7 +44,7 @@ public class InsertControllerTest extends InsertController
   }
 
   @Test
-  public void testInsert() throws ServletException, IOException, DeleteException, InsertException
+  public void testInsert() throws ServletException, IOException, InsertException, FindException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);

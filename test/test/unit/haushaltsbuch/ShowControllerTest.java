@@ -13,9 +13,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
-import haushaltsbuch.DeleteException;
+import haushaltsbuch.ArgumentException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
+import haushaltsbuch.FindException;
 import haushaltsbuch.web.controllers.BaseController;
 import haushaltsbuch.web.controllers.ShowController;
 
@@ -38,7 +39,7 @@ public class ShowControllerTest extends ShowController
   }
 
   @Test
-  public void testShow() throws ServletException, IOException, DeleteException
+  public void testShow() throws ServletException, IOException, FindException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
@@ -54,7 +55,7 @@ public class ShowControllerTest extends ShowController
   }
 
   @Test
-  public void testShowNotExisting() throws ServletException, IOException, DeleteException
+  public void testShowNotExisting() throws ServletException, IOException, FindException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
@@ -70,7 +71,7 @@ public class ShowControllerTest extends ShowController
   }
 
   @Test
-  public void testShowWithMissingParameter() throws ServletException, IOException, DeleteException
+  public void testShowWithMissingParameter() throws ServletException, IOException, FindException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);

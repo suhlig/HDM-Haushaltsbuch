@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
-import haushaltsbuch.DeleteException;
+import haushaltsbuch.ArgumentException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
 import haushaltsbuch.InsertException;
@@ -43,7 +43,7 @@ public class ListControllerTest extends ListController
   }
 
   @Test
-  public void testEmpty() throws ServletException, IOException, DeleteException, InsertException
+  public void testEmpty() throws ServletException, IOException, InsertException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
@@ -59,7 +59,7 @@ public class ListControllerTest extends ListController
   }
 
   @Test
-  public void testSome() throws ServletException, IOException, DeleteException, InsertException
+  public void testSome() throws ServletException, IOException, InsertException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);

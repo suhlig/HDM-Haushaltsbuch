@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
+import haushaltsbuch.FindException;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.web.EntryMapper;
 
@@ -49,6 +50,20 @@ public class InsertController extends BaseController
       setError(request, e.getMessage());
       setTitle(request, "Fehler beim Anlegen");
       setView(request, "new.jsp");
+
+      response.setStatus(500);
+    }
+    catch (FindException e)
+    {
+      e.printStackTrace(System.err);
+
+      request.setAttribute("entry", entry);
+
+      setError(request, e.getMessage());
+      setTitle(request, "Fehler beim Lesen");
+      setView(request, "new.jsp");
+
+      response.setStatus(500);
     }
   }
 

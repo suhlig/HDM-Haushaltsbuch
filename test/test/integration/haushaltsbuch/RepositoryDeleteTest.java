@@ -11,6 +11,7 @@ import org.junit.Test;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
+import haushaltsbuch.FindException;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
@@ -52,7 +53,7 @@ public class RepositoryDeleteTest
   }
 
   @Test
-  public void testDeleteExisting() throws InsertException, DeleteException
+  public void testDeleteExisting() throws InsertException, FindException, DeleteException
   {
     String id = _subject.insert(_testEntry);
     Entry inserted = _subject.find(id);
@@ -67,10 +68,13 @@ public class RepositoryDeleteTest
   }
 
   @Test
-  public void testDeleteNonExisting() throws InsertException, DeleteException
+  public void testDeleteNonExisting() throws InsertException, FindException, DeleteException
   {
     String id = UUID.randomUUID().toString();
-    assertNull(_subject.find(id));
+
+    if (null != _subject.find(id))
+      fail("An entry with id " + id + " must not exist for this test");
+
     assertNull(_subject.delete(id));
   }
 

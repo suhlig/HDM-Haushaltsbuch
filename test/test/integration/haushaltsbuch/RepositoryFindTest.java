@@ -4,14 +4,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
-import java.math.BigDecimal;
-import java.util.List;
+import static org.junit.Assert.fail;
+import java.util.UUID;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
+import haushaltsbuch.FindException;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
@@ -39,18 +41,21 @@ public class RepositoryFindTest
   }
 
   @Test
-  public void testEmpty()
+  public void testFindEmptyString() throws Exception
   {
-    List<Entry> all = _subject.getAll();
-
-    assertNotNull(all);
-    assertFalse(all.isEmpty());
-    assertEquals("must only contain the opening statement", 1, all.size());
-    assertEquals(BigDecimal.ZERO, all.get(0).getValue());
+    try
+    {
+      _subject.find("");
+      fail("Should have failed");
+    }
+    catch (Exception e)
+    {
+      // ok
+    }
   }
 
   @Test
-  public void testFind() throws InsertException
+  public void testFindExisting() throws InsertException, FindException
   {
     String id = _subject.insert(_testEntry);
 
@@ -76,12 +81,22 @@ public class RepositoryFindTest
   }
 
   @Test
-  public void testNonEmpty() throws InsertException
+  public void testFindNonExisting() throws FindException
   {
-    _subject.insert(_testEntry);
-    List<Entry> all = _subject.getAll();
+    assertNull(_subject.find(UUID.randomUUID().toString()));
+  }
 
-    assertEquals("must contain one more after the opening statement", 2, all.size());
-    assertEquals(_testEntry.getValue(), all.get(1).getValue());
+  @Test
+  public void testFindNull() throws Exception
+  {
+    try
+    {
+      _subject.find(null);
+      fail("Should have failed");
+    }
+    catch (Exception e)
+    {
+      // ok
+    }
   }
 }
