@@ -8,11 +8,12 @@ import java.util.UUID;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import haushaltsbuch.ArgumentException;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
 import test.helpers.TestEntry;
@@ -39,14 +40,14 @@ public class RepositoryDeleteTest
   }
 
   @Test
-  public void testDeleteEmptyString() throws Exception
+  public void testDeleteEmptyString() throws DeleteException
   {
     try
     {
       _subject.delete("");
       fail("Should have failed");
     }
-    catch (Exception e)
+    catch (ArgumentException e)
     {
       // ok
     }
@@ -79,14 +80,14 @@ public class RepositoryDeleteTest
   }
 
   @Test
-  public void testDeleteNull() throws Exception
+  public void testDeleteNull() throws DeleteException
   {
     try
     {
       _subject.delete(null);
       fail("Should have failed");
     }
-    catch (Exception e)
+    catch (ArgumentException e)
     {
       // ok
     }

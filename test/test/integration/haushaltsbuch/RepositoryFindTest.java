@@ -11,10 +11,11 @@ import java.util.UUID;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import haushaltsbuch.ArgumentException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
 import test.helpers.TestEntry;
@@ -41,14 +42,14 @@ public class RepositoryFindTest
   }
 
   @Test
-  public void testFindEmptyString() throws Exception
+  public void testFindEmptyString() throws LookupException
   {
     try
     {
       _subject.lookup("");
       fail("Should have failed");
     }
-    catch (Exception e)
+    catch (ArgumentException e)
     {
       // ok
     }
@@ -87,14 +88,14 @@ public class RepositoryFindTest
   }
 
   @Test
-  public void testFindNull() throws Exception
+  public void testFindNull() throws LookupException
   {
     try
     {
       _subject.lookup(null);
       fail("Should have failed");
     }
-    catch (Exception e)
+    catch (ArgumentException e)
     {
       // ok
     }
