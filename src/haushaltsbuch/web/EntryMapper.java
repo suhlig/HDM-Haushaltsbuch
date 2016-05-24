@@ -2,14 +2,17 @@ package haushaltsbuch.web;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import haushaltsbuch.Entry;
+import haushaltsbuch.web.controllers.Candidate;
 
 public class EntryMapper
 {
-  public Entry map(HttpServletRequest request)
+  public Candidate<Entry> map(HttpServletRequest request)
   {
-    return new Entry()
+    return new Candidate<Entry>()
     {
       @Override
       public String getCategory()
@@ -48,6 +51,17 @@ public class EntryMapper
       }
 
       @Override
+      public Map<String, String> getValidationErrors()
+      {
+        Map<String, String> errors = new HashMap<String, String>();
+
+        if (null == getSrcDst() || getSrcDst().isEmpty())
+          errors.put("srcDst", "Quelle oder Ziel der Buchung muß angegeben werden");
+
+        return errors;
+      }
+
+      @Override
       public BigDecimal getValue()
       {
         String value = request.getParameter("value");
@@ -56,6 +70,12 @@ public class EntryMapper
           return BigDecimal.ZERO;
         else
           return new BigDecimal(value);
+      }
+
+      @Override
+      public boolean isValid()
+      {
+        return getValidationErrors().isEmpty();
       }
     };
   }

@@ -15,14 +15,19 @@ import org.junit.Before;
 import org.junit.Test;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.web.EntryMapper;
 import haushaltsbuch.web.controllers.BaseController;
+import haushaltsbuch.web.controllers.Candidate;
 import haushaltsbuch.web.controllers.InsertController;
 
 public class InsertControllerTest extends InsertController
 {
+  public interface CandidateEntry extends Candidate<Entry>
+  {
+  }
+
   private EntryRepository _repository;
   private EntryMapper _mockEntryMapper;
 
@@ -49,11 +54,13 @@ public class InsertControllerTest extends InsertController
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
-    Entry insertEntry = mock(Entry.class);
+    Candidate<Entry> insertEntry = mock(CandidateEntry.class);
+    when(insertEntry.isValid()).thenReturn(true);
+
     when(_mockEntryMapper.map(request)).thenReturn(insertEntry);
     when(_repository.insert(insertEntry)).thenReturn("4711");
 
-    Entry readbackEntry = mock(Entry.class);
+    Entry readbackEntry = mock(CandidateEntry.class);
     when(_repository.lookup("4711")).thenReturn(readbackEntry);
 
     doPost(request, response);

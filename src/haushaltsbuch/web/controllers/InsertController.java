@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.web.EntryMapper;
 
 @WebServlet("/new")
@@ -20,7 +20,7 @@ public class InsertController extends BaseController
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    request.setAttribute("entry", _entryMapper.map(request));
+    request.setAttribute("entry", new BlankEntry());
     setTitle(request, "Neuen Eintrag hinzufügen");
     setView(request, "new.jsp");
   }
@@ -28,7 +28,22 @@ public class InsertController extends BaseController
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    Entry entry = _entryMapper.map(request);
+    Candidate<Entry> entry = _entryMapper.map(request);
+
+    if (!entry.isValid())
+    {
+      request.setAttribute("entry", entry);
+      request.setAttribute("validationErrors", entry.getValidationErrors());
+
+      System.err.println("srcDst has an error: " + entry.getValidationErrors());
+
+      setError(request, "Der Eintrag ist nicht vollständig oder enthält ungültige Angaben.");
+      setTitle(request, "Fehler beim Anlegen");
+      setView(request, "new.jsp");
+
+      return;
+    }
+
     EntryRepository repository = getRepository();
 
     try
