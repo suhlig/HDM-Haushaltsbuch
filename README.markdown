@@ -1,11 +1,19 @@
 # HDM-Haushaltsbuch
 
+## Running it
+
 1. [Install eclipse tools](https://developer.ibm.com/wasdev/getstarted/)
 1. [Add a liberty-profile server](https://developer.ibm.com/wasdev/docs/developing-applications-wdt-liberty-profile/) for local testing
 1. Import the app into Eclipse
 1. Run on Server => Bluemix
 1. Add the ElephantSQL server
-1. Deploy
+1. Deploy. The app will auto-create the tables.
+
+## Tests
+
+* There are unit- and integration tests that can be run from Eclipse
+* The integration- and acceptance tests require a local Postgres
+* Acceptance tests require ruby. See the separate [README](test/test/acceptance/README.markdown).
 
 ## Local Development
 
@@ -40,3 +48,7 @@ The entry in server.env would then be this:
 ```
 VCAP_SERVICES={"elephantsql":[{"credentials":{"uri":"postgres:///haushaltsbuch"}}]}
 ```
+
+## Design Notes
+
+* Input validation happens at two places: client-side (HTML form validation), where we are nice with the user, and at the database level, where we make sure only valid data enters the system. Right now there is no need for additional validation on the domain layer.
