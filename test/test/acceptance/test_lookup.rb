@@ -5,7 +5,7 @@ require 'helpers'
 #
 class TestNew < AcceptanceTest
   def test_lookup_existing
-    driver.navigate.to 'http://localhost:9080/hhb/lookup'
+    navigate_to '/lookup'
     candidates = driver.all(xpath: '//*[@id="known-ids"]/option')
     assert(candidates.any?)
 
@@ -24,7 +24,7 @@ class TestNew < AcceptanceTest
   end
 
   def test_lookup_non_existing
-    driver.navigate.to 'http://localhost:9080/hhb/lookup'
+    navigate_to '/lookup'
     lookup_form = driver.first(id: 'lookup')
     assert(lookup_form.displayed?)
 

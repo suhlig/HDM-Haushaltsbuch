@@ -5,7 +5,7 @@ require 'helpers'
 #
 class TestNavigation < AcceptanceTest
   def test_new
-    driver.navigate.to 'http://localhost:9080/hhb/'
+    navigate_home
     link_new = driver.first(xpath: "//a[@href='new']")
     assert(link_new.displayed?)
 
@@ -20,7 +20,7 @@ class TestNavigation < AcceptanceTest
   end
 
   def test_all
-    driver.navigate.to 'http://localhost:9080/hhb/'
+    navigate_home
     all = driver.first(xpath: "//a[@href='all']")
     assert(all.displayed?)
 
@@ -35,7 +35,7 @@ class TestNavigation < AcceptanceTest
   end
 
   def test_lookup
-    driver.navigate.to 'http://localhost:9080/hhb/'
+    navigate_home
     lookup = driver.first(xpath: "//a[@href='lookup']")
     assert(lookup.displayed?)
 
@@ -50,7 +50,7 @@ class TestNavigation < AcceptanceTest
   end
 
   def test_home
-    driver.navigate.to 'http://localhost:9080/hhb/'
+    navigate_home
     link_home = driver.first(xpath: "//a[@href='.']")
     assert(link_home.displayed?)
 

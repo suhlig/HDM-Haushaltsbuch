@@ -9,8 +9,16 @@ class AcceptanceTest < MiniTest::Test
     driver.quit unless failure
   end
 
+  def navigate_to(uri)
+    driver.navigate.to("http://localhost:9080/hhb#{uri}")
+  end
+
+  def navigate_home
+    navigate_to('')
+  end
+
   def create(fields = {})
-    driver.navigate.to 'http://localhost:9080/hhb/new'
+    navigate_to '/new'
 
     driver.first(name: 'srcDst').send_keys(value(:srcDst, fields))
     driver.first(name: 'description').send_keys(value(:description, fields))
@@ -22,7 +30,7 @@ class AcceptanceTest < MiniTest::Test
   end
 
   def lookup(id)
-    driver.navigate.to 'http://localhost:9080/hhb/lookup'
+    navigate_to '/lookup'
 
     lookup_form = driver.first(id: 'lookup')
     assert(lookup_form.displayed?)
