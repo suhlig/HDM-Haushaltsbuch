@@ -1,4 +1,4 @@
-package test.unit.haushaltsbuch;
+package test.unit.haushaltsbuch.web;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;

@@ -1,9 +1,12 @@
 package test.integration.haushaltsbuch;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import haushaltsbuch.Entry;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestDatabase;
@@ -60,6 +63,20 @@ public class RepositoryInsertTest
     {
       // ok
     }
+  }
+
+  @Test
+  public void testInsertDuplicate() throws Exception
+  {
+    String id0 = _subject.insert(_testEntry);
+    Entry clone = _testEntry.clone();
+    assertEquals(_testEntry, clone);
+
+    // succeeds because the repository must replace the supplied ID with a generated one
+    String id1 = _subject.insert(clone);
+
+    // ensure the repository-generated ids differ between the two entries
+    assertNotEquals(id0, id1);
   }
 
   @Test

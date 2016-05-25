@@ -1,11 +1,14 @@
-package test.unit.haushaltsbuch;
+package test.unit.haushaltsbuch.web.controllers;
 
-import static org.mockito.Matchers.contains;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -16,11 +19,12 @@ import org.junit.Test;
 import haushaltsbuch.ArgumentException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.LookupException;
+import haushaltsbuch.InsertException;
 import haushaltsbuch.web.controllers.BaseController;
-import haushaltsbuch.web.controllers.ShowController;
+import haushaltsbuch.web.controllers.ListController;
+import test.helpers.TestEntry;
 
-public class ShowControllerTest extends ShowController
+public class ListControllerTest extends ListController
 {
   private EntryRepository _repository;
 
@@ -39,51 +43,39 @@ public class ShowControllerTest extends ShowController
   }
 
   @Test
-  public void testShow() throws ServletException, IOException, LookupException
+  public void testEmpty() throws ServletException, IOException, InsertException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
-    when(request.getParameter("id")).thenReturn("42");
-
-    Entry shownEntry = mock(Entry.class);
-    when(_repository.lookup("42")).thenReturn(shownEntry);
+    List<Entry> all = Collections.emptyList();
+    when(_repository.all()).thenReturn(all);
 
     doGet(request, response);
 
-    verify(request).setAttribute("entry", shownEntry);
+    verify(request).setAttribute(eq("entries"), eq(all));
+    verify(request).setAttribute(eq("title"), anyString());
+    verify(request).setAttribute(eq("view"), eq("all.jsp"));
   }
 
   @Test
-  public void testShowNotExisting() throws ServletException, IOException, LookupException
+  public void testSome() throws ServletException, IOException, InsertException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
-    when(request.getParameter("id")).thenReturn("42");
-
-    when(_repository.lookup("42")).thenReturn(null);
+    List<Entry> all = asList(new TestEntry(), new TestEntry());
+    when(_repository.all()).thenReturn(all);
 
     doGet(request, response);
 
-    verify(response).setStatus(404);
-    verify(request).setAttribute(eq("error"), contains("ein Eintrag"));
+    verify(request).setAttribute(eq("entries"), eq(all));
+    verify(request).setAttribute(eq("title"), anyString());
+    verify(request).setAttribute(eq("view"), eq("all.jsp"));
   }
 
-  @Test
-  public void testShowWithMissingParameter() throws ServletException, IOException, LookupException
+  private List<Entry> asList(Entry... entries)
   {
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    HttpServletResponse response = mock(HttpServletResponse.class);
-
-    // id parameter not set
-
-    Entry deletedEntry = mock(Entry.class);
-    when(_repository.lookup("42")).thenReturn(deletedEntry);
-
-    doGet(request, response);
-
-    verify(response).setStatus(400);
-    verify(request).setAttribute(eq("error"), contains("ehlender"));
+    return Arrays.asList(entries);
   }
 }
