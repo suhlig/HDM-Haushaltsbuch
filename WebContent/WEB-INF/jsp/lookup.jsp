@@ -17,7 +17,14 @@
                oninput="setCustomValidity('')"
                pattern="^[a-z0-9]{8}-([a-z0-9]{4}-){3}[a-z0-9]{12}$"
                required
+               autofocus
+               list="known-ids"
         />
+        <datalist id="known-ids">
+          <c:forEach items="${ids}" var="id">
+            <option value="${id}"/>
+          </c:forEach>
+        </datalist>
       </td>
     </tr>
     <tr>

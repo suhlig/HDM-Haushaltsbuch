@@ -1,10 +1,13 @@
 package haushaltsbuch.web.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import haushaltsbuch.Entry;
 
 @WebServlet("/lookup")
 public class LookupController extends BaseController
@@ -16,6 +19,7 @@ public class LookupController extends BaseController
   {
     setTitle(request, "Eintrag nachschlagen");
     setView(request, "lookup.jsp");
+    request.setAttribute("ids", getIDs());
   }
 
   @Override
@@ -26,7 +30,6 @@ public class LookupController extends BaseController
     if (null == id || id.isEmpty())
     {
       setError(request, "Identifikator fehlt");
-      request.setAttribute("id", id);
       response.setStatus(400);
 
       setTitle(request, "Fehler beim Nachschlagen");
@@ -34,5 +37,16 @@ public class LookupController extends BaseController
     }
     else
       response.sendRedirect("show?id=" + id);
+  }
+
+  private List<String> getIDs() throws ServletException
+  {
+    List<Entry> all = getRepository().all();
+    List<String> result = new ArrayList<>(all.size());
+
+    for (Entry entry : all)
+      result.add(entry.getId());
+
+    return result;
   }
 }
