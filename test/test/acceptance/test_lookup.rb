@@ -1,31 +1,22 @@
-require 'minitest/autorun'
-require 'selenium-webdriver'
+require 'helpers'
 
 #
 # Test the entry lookup
 #
-class TestNew < MiniTest::Test
-  def setup
-    @driver = Selenium::WebDriver.for :chrome
-  end
-
-  def teardown
-    @driver.quit unless failure
-  end
-
+class TestNew < AcceptanceTest
   def test_lookup_existing
-    @driver.navigate.to 'http://localhost:9080/hhb/lookup'
-    candidates = @driver.all(xpath: '//*[@id="known-ids"]/option')
+    driver.navigate.to 'http://localhost:9080/hhb/lookup'
+    candidates = driver.all(xpath: '//*[@id="known-ids"]/option')
     assert(candidates.any?)
 
     picked_id = candidates.sample['value']
 
-    lookup_form = @driver.first(id: 'lookup')
+    lookup_form = driver.first(id: 'lookup')
     assert(lookup_form.displayed?)
     lookup_form.first(name: 'id').send_keys(picked_id)
     lookup_form.submit
 
-    entry = @driver.first(css: '.entry')
+    entry = driver.first(css: '.entry')
     assert(entry.displayed?)
     id = entry.first(css: '.id')
     assert(id.displayed?)
@@ -33,14 +24,14 @@ class TestNew < MiniTest::Test
   end
 
   def test_lookup_non_existing
-    @driver.navigate.to 'http://localhost:9080/hhb/lookup'
-    lookup_form = @driver.first(id: 'lookup')
+    driver.navigate.to 'http://localhost:9080/hhb/lookup'
+    lookup_form = driver.first(id: 'lookup')
     assert(lookup_form.displayed?)
 
     lookup_form.first(name: 'id').send_keys('4711')
     lookup_form.submit
 
-    error = @driver.first(xpath: '//*[@id="error"]')
+    error = driver.first(xpath: '//*[@id="error"]')
     assert(error.displayed?)
     assert_includes(error.text, 'kein Eintrag')
   end
