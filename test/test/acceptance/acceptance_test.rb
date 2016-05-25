@@ -48,4 +48,12 @@ class AcceptanceTest < MiniTest::Test
     assert(message.displayed?)
     assert_includes(message.text, 'gelöscht')
   end
+
+  def sample
+    navigate_to '/lookup'
+    candidates = driver.all(xpath: '//*[@id="known-ids"]/option')
+    assert(candidates.any?)
+
+    candidates.sample['value']
+  end
 end
