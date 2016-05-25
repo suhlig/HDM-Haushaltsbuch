@@ -1,4 +1,4 @@
-package test.unit.haushaltsbuch;
+package test.unit.haushaltsbuch.web.controllers;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;

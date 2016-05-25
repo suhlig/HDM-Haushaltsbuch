@@ -1,4 +1,4 @@
-package test.unit.haushaltsbuch;
+package test.unit.haushaltsbuch.web.controllers;
 
 import static org.mockito.Matchers.contains;
 import static org.mockito.Matchers.eq;
@@ -6,7 +6,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.io.IOException;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -14,14 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
-import haushaltsbuch.DeleteException;
+import haushaltsbuch.ArgumentException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.web.controllers.BaseController;
-import haushaltsbuch.web.controllers.DeleteController;
+import haushaltsbuch.web.controllers.ShowController;
 
-public class DeleteControllerTest extends DeleteController
+public class ShowControllerTest extends ShowController
 {
   private EntryRepository _repository;
 
@@ -40,47 +39,49 @@ public class DeleteControllerTest extends DeleteController
   }
 
   @Test
-  public void testDelete() throws ServletException, IOException, DeleteException
+  public void testShow() throws ServletException, IOException, LookupException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     when(request.getParameter("id")).thenReturn("42");
 
-    Entry deletedEntry = mock(Entry.class);
-    when(_repository.delete("42")).thenReturn(deletedEntry);
+    Entry shownEntry = mock(Entry.class);
+    when(_repository.lookup("42")).thenReturn(shownEntry);
 
-    doPost(request, response);
+    doGet(request, response);
 
-    verify(request).setAttribute("entry", deletedEntry);
-    verify(request).setAttribute(eq("message"), contains("gelöscht"));
+    verify(request).setAttribute("entry", shownEntry);
   }
 
   @Test
-  public void testDeleteNotExisting() throws ServletException, IOException, DeleteException
+  public void testShowNotExisting() throws ServletException, IOException, LookupException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     when(request.getParameter("id")).thenReturn("42");
-    when(_repository.delete("42")).thenReturn(null);
 
-    doPost(request, response);
+    when(_repository.lookup("42")).thenReturn(null);
 
-    verify(request).setAttribute(eq("error"), contains("gefunden"));
+    doGet(request, response);
+
     verify(response).setStatus(404);
+    verify(request).setAttribute(eq("error"), contains("ein Eintrag"));
   }
 
   @Test
-  public void testDeleteWithMissingParameter() throws ServletException, IOException, DeleteException
+  public void testShowWithMissingParameter() throws ServletException, IOException, LookupException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     // id parameter not set
-    when(request.getRequestDispatcher(Mockito.anyString())).thenReturn(mock(RequestDispatcher.class));
 
-    doPost(request, response);
+    Entry deletedEntry = mock(Entry.class);
+    when(_repository.lookup("42")).thenReturn(deletedEntry);
+
+    doGet(request, response);
 
     verify(response).setStatus(400);
     verify(request).setAttribute(eq("error"), contains("ehlender"));

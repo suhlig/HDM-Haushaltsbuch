@@ -2,9 +2,10 @@ package test.helpers;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import haushaltsbuch.Entry;
 import haushaltsbuch.persistence.AbstractEntry;
 
-public final class TestEntry extends AbstractEntry
+public final class TestEntry extends AbstractEntry implements Cloneable
 {
   public static final String DEFAULT_ID = "4711";
   public static final int DEFAULT_VALUE = 42;
@@ -20,6 +21,11 @@ public final class TestEntry extends AbstractEntry
   private String _paymentType = DEFAULT_PAYMENT_TYPE;
   private String _description = DEFAULT_DESCRIPTION;
   private String _category = DEFAULT_CATEGORY;
+
+  public Entry clone() throws CloneNotSupportedException
+  {
+    return (Entry) super.clone();
+  }
 
   @Override
   public String getCategory()
