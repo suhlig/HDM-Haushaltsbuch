@@ -5,16 +5,8 @@ require 'helpers'
 #
 class TestNew < AcceptanceTest
   def test_lookup_existing
-    navigate_to '/lookup'
-    candidates = driver.all(xpath: '//*[@id="known-ids"]/option')
-    assert(candidates.any?)
-
-    picked_id = candidates.sample['value']
-
-    lookup_form = driver.first(id: 'lookup')
-    assert(lookup_form.displayed?)
-    lookup_form.first(name: 'id').send_keys(picked_id)
-    lookup_form.submit
+    picked_id = sample
+    lookup(picked_id)
 
     entry = driver.first(css: '.entry')
     assert(entry.displayed?)
@@ -24,12 +16,7 @@ class TestNew < AcceptanceTest
   end
 
   def test_lookup_non_existing
-    navigate_to '/lookup'
-    lookup_form = driver.first(id: 'lookup')
-    assert(lookup_form.displayed?)
-
-    lookup_form.first(name: 'id').send_keys('4711')
-    lookup_form.submit
+    lookup('4711')
 
     error = driver.first(xpath: '//*[@id="error"]')
     assert(error.displayed?)
