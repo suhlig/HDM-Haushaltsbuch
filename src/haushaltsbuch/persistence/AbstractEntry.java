@@ -13,9 +13,6 @@ public abstract class AbstractEntry implements Entry
     if (obj == null)
       return false;
 
-    if (getClass() != obj.getClass())
-      return false;
-
     if (!(obj instanceof Entry))
       return false;
 
