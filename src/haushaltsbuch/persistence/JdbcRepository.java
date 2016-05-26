@@ -2,8 +2,6 @@ package haushaltsbuch.persistence;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,9 +10,6 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import javax.sql.DataSource;
 import haushaltsbuch.ArgumentException;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
@@ -63,17 +58,10 @@ public class JdbcRepository implements EntryRepository
   private final Connection _connection;
   private final EntryMapper _entryMapper;
 
-  public JdbcRepository(String jndiName) throws NamingException, SQLException, InsertException
+  public JdbcRepository(Connection connection) throws SQLException, InsertException
   {
+    _connection = connection;
     _entryMapper = new EntryMapper();
-    _connection = connect(jndiName);
-    primeDatabase();
-  }
-
-  public JdbcRepository(String url, String user, String password) throws ClassNotFoundException, SQLException, InsertException
-  {
-    _entryMapper = new EntryMapper();
-    _connection = connect(url, user, password);
     primeDatabase();
   }
 
@@ -107,20 +95,6 @@ public class JdbcRepository implements EntryRepository
     System.out.println(MessageFormat.format("Fetched all {0} entries", result.size()));
 
     return result;
-  }
-
-  @Override
-  public void close()
-  {
-    if (null != _connection)
-      try
-      {
-        _connection.close();
-      }
-      catch (SQLException e)
-      {
-        e.printStackTrace(System.err);
-      }
   }
 
   @Override
@@ -192,24 +166,6 @@ public class JdbcRepository implements EntryRepository
       System.out.println("Found entry with id=" + result.getId());
 
     return result;
-  }
-
-  // TODO Move the connect stuff into the initializer and pass the connection into the c'tor
-  private Connection connect(String jndiName) throws NamingException, SQLException
-  {
-    return ((DataSource) new InitialContext().lookup(jndiName)).getConnection();
-  }
-
-  private Connection connect(String url, String user, String password) throws ClassNotFoundException, SQLException
-  {
-    Class.forName("org.postgresql.Driver");
-    Connection connection = DriverManager.getConnection(url, user, password);
-
-    DatabaseMetaData metaData = connection.getMetaData();
-    System.out.println(MessageFormat.format("Successfully connected to {0} v.{1} on {2}", metaData.getDatabaseProductName(),
-        metaData.getDatabaseProductVersion(), metaData.getURL()));
-
-    return connection;
   }
 
   private void createIndex() throws SQLException
