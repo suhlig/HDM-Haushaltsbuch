@@ -12,12 +12,15 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import haushaltsbuch.ArgumentException;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
+import haushaltsbuch.LookupException;
 
 public class JdbcRepository implements EntryRepository
 {
@@ -60,17 +63,50 @@ public class JdbcRepository implements EntryRepository
   private final Connection _connection;
   private final EntryMapper _entryMapper;
 
+  public JdbcRepository(String jndiName) throws NamingException, SQLException, InsertException
+  {
+    _entryMapper = new EntryMapper();
+    _connection = connect(jndiName);
+    primeDatabase();
+  }
+
   public JdbcRepository(String url, String user, String password) throws ClassNotFoundException, SQLException, InsertException
   {
     _entryMapper = new EntryMapper();
     _connection = connect(url, user, password);
+    primeDatabase();
+  }
 
-    if (!isTableExisting())
+  @Override
+  public List<Entry> all()
+  {
+    ArrayList<Entry> result = new ArrayList<Entry>();
+
+    Statement st = null;
+    ResultSet rs = null;
+
+    try
     {
-      createTable();
-      createIndex();
-      insertOpeningBalance();
+      st = _connection.createStatement();
+      rs = st.executeQuery(MessageFormat.format(SELECT_ALL, TABLE_NAME));
+
+      while (rs.next())
+        result.add(_entryMapper.map(rs));
     }
+    catch (SQLException e)
+    {
+      System.err.println("Error fetching all rows of " + TABLE_NAME);
+      e.printStackTrace(System.err);
+    }
+    finally
+    {
+      tryClose(rs);
+      tryClose(st);
+    }
+
+    System.out.println(MessageFormat.format("Fetched all {0} entries", result.size()));
+
+    return result;
   }
 
   @Override
@@ -115,54 +151,6 @@ public class JdbcRepository implements EntryRepository
   }
 
   @Override
-  public Entry lookup(String id) throws LookupException
-  {
-    if (null == id || id.isEmpty())
-      throw new ArgumentException("Identification missing");
-
-    Entry result = find(id, new NullBlock());
-
-    if (null == result)
-      System.err.println("Could not find an entry with id=" + id);
-    else
-      System.out.println("Found entry with id=" + result.getId());
-
-    return result;
-  }
-
-  @Override
-  public List<Entry> all()
-  {
-    ArrayList<Entry> result = new ArrayList<Entry>();
-
-    Statement st = null;
-    ResultSet rs = null;
-
-    try
-    {
-      st = _connection.createStatement();
-      rs = st.executeQuery(MessageFormat.format(SELECT_ALL, TABLE_NAME));
-
-      while (rs.next())
-        result.add(_entryMapper.map(rs));
-    }
-    catch (SQLException e)
-    {
-      System.err.println("Error fetching all rows of " + TABLE_NAME);
-      e.printStackTrace(System.err);
-    }
-    finally
-    {
-      tryClose(rs);
-      tryClose(st);
-    }
-
-    System.out.println(MessageFormat.format("Fetched all {0} entries", result.size()));
-
-    return result;
-  }
-
-  @Override
   public String insert(Entry entry) throws InsertException
   {
     if (null == entry)
@@ -188,6 +176,28 @@ public class JdbcRepository implements EntryRepository
     {
       tryClose(stmt);
     }
+  }
+
+  @Override
+  public Entry lookup(String id) throws LookupException
+  {
+    if (null == id || id.isEmpty())
+      throw new ArgumentException("Identification missing");
+
+    Entry result = find(id, new NullBlock());
+
+    if (null == result)
+      System.err.println("Could not find an entry with id=" + id);
+    else
+      System.out.println("Found entry with id=" + result.getId());
+
+    return result;
+  }
+
+  // TODO Move the connect stuff into the initializer and pass the connection into the c'tor
+  private Connection connect(String jndiName) throws NamingException, SQLException
+  {
+    return ((DataSource) new InitialContext().lookup(jndiName)).getConnection();
   }
 
   private Connection connect(String url, String user, String password) throws ClassNotFoundException, SQLException
@@ -314,6 +324,16 @@ public class JdbcRepository implements EntryRepository
   private boolean isTableExisting() throws SQLException
   {
     return _connection.getMetaData().getTables(null, null, TABLE_NAME, null).next();
+  }
+
+  private void primeDatabase() throws SQLException, InsertException
+  {
+    if (!isTableExisting())
+    {
+      createTable();
+      createIndex();
+      insertOpeningBalance();
+    }
   }
 
   private void tryClose(ResultSet rs)
