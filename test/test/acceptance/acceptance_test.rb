@@ -10,7 +10,11 @@ class AcceptanceTest < MiniTest::Test
   end
 
   def navigate_to(uri)
-    driver.navigate.to("http://localhost:9080/hhb#{uri}")
+    base_url = ENV.fetch('HAUSHALTSBUCH_URL', 'http://localhost:9080/hhb')
+
+    # TODO Deal with trailing slashes in HAUSHALTSBUCH_URL
+
+    driver.navigate.to("#{base_url}#{uri}")
   end
 
   def navigate_home
