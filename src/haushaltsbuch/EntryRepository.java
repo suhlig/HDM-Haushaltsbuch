@@ -4,8 +4,6 @@ import java.util.List;
 
 public interface EntryRepository
 {
-  void close();
-
   Entry delete(String parameter) throws DeleteException;
 
   Entry lookup(String id) throws LookupException;

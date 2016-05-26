@@ -3,34 +3,25 @@ package test.integration.haushaltsbuch;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import haushaltsbuch.Entry;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.persistence.JdbcRepository;
-import test.helpers.TestDatabase;
+import test.helpers.DatabaseAssertions;
 import test.helpers.TestEntry;
 
-public class RepositoryInsertTest
+public class RepositoryInsertTest extends RepositoryTest
 {
-  private JdbcRepository _subject;
-  private TestDatabase _database;
   private TestEntry _testEntry;
+  private JdbcRepository _subject;
 
   @Before
   public void setUp() throws Exception
   {
-    _database = new TestDatabase("jdbc:postgresql:///");
-    _subject = new JdbcRepository(_database.getURL(), null, null);
+    super.setUp();
     _testEntry = new TestEntry();
-  }
-
-  @After
-  public void tearDown() throws Exception
-  {
-    _subject.close();
-    _database.tearDown();
+    _subject = getRepository();
   }
 
   @Test
@@ -114,13 +105,15 @@ public class RepositoryInsertTest
   @Test
   public void testInsertValid() throws Exception
   {
+    DatabaseAssertions dbHelper = getAssertionHelper();
+
     String superimposed_id = "4711";
-    _database.assertNotExists(superimposed_id, _subject.TABLE_NAME);
+    dbHelper.assertNotExists(superimposed_id, _subject.TABLE_NAME);
     _testEntry.setId(superimposed_id);
 
     String db_assigned_id = _subject.insert(_testEntry);
 
-    _database.assertExists(db_assigned_id, _subject.TABLE_NAME);
-    _database.assertNotExists(superimposed_id, _subject.TABLE_NAME);
+    dbHelper.assertExists(db_assigned_id, _subject.TABLE_NAME);
+    dbHelper.assertNotExists(superimposed_id, _subject.TABLE_NAME);
   }
 }
