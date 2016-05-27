@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/jndi")
+@WebServlet("jndi")
 public class JndiBrowserServlet extends HttpServlet
 {
   private static final long serialVersionUID = 1L;

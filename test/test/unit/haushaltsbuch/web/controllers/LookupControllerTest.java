@@ -56,7 +56,7 @@ public class LookupControllerTest extends LookupController
     doGet(request, response);
 
     verify(request).setAttribute(eq("title"), anyString());
-    verify(request).setAttribute(eq("view"), eq("lookup.jsp"));
+    verify(request).setAttribute(eq("view"), eq("entries/lookup.jsp"));
     verify(request).setAttribute(eq("ids"), eq(Arrays.asList(new String[] { id0, id1, id2 })));
   }
 
@@ -73,7 +73,7 @@ public class LookupControllerTest extends LookupController
 
     doPost(request, response);
 
-    verify(response).sendRedirect("show?id=42");
+    verify(response).sendRedirect("/entries?id=42");
   }
 
   @Test
@@ -88,7 +88,7 @@ public class LookupControllerTest extends LookupController
 
     verify(request).setAttribute(eq("title"), anyString());
     verify(request).setAttribute(eq("error"), eq("Identifikator fehlt"));
-    verify(request).setAttribute(eq("view"), eq("lookup.jsp"));
+    verify(request).setAttribute(eq("view"), eq("entries/lookup.jsp"));
   }
 
   private Entry mockEntry(String id0)

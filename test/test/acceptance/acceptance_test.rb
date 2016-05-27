@@ -19,7 +19,7 @@ class AcceptanceTest < MiniTest::Test
   end
 
   def create(fields = {})
-    navigate_to '/new'
+    navigate_to '/entries/new'
 
     driver.first(name: 'srcDst').send_keys(value(:srcDst, fields))
     driver.first(name: 'description').send_keys(value(:description, fields))
@@ -31,7 +31,7 @@ class AcceptanceTest < MiniTest::Test
   end
 
   def lookup(id)
-    navigate_to '/lookup'
+    navigate_to '/entries/lookup'
 
     lookup_form = driver.first(id: 'lookup')
     assert(lookup_form.displayed?)
@@ -51,7 +51,7 @@ class AcceptanceTest < MiniTest::Test
   end
 
   def sample
-    navigate_to '/lookup'
+    navigate_to '/entries/lookup'
     candidates = driver.all(xpath: '//*[@id="known-ids"]/option')
     assert(candidates.any?)
 

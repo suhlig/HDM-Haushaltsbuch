@@ -54,7 +54,7 @@ public class ListControllerTest extends ListController
 
     verify(request).setAttribute(eq("entries"), eq(all));
     verify(request).setAttribute(eq("title"), anyString());
-    verify(request).setAttribute(eq("view"), eq("entries.jsp"));
+    verify(request).setAttribute(eq("view"), eq("entries/all.jsp"));
   }
 
   @Test
@@ -70,7 +70,7 @@ public class ListControllerTest extends ListController
 
     verify(request).setAttribute(eq("entries"), eq(all));
     verify(request).setAttribute(eq("title"), anyString());
-    verify(request).setAttribute(eq("view"), eq("entries.jsp"));
+    verify(request).setAttribute(eq("view"), eq("entries/all.jsp"));
   }
 
   private List<Entry> asList(Entry... entries)

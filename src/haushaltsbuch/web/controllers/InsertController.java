@@ -7,11 +7,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.web.EntryMapper;
 
-@WebServlet("/new")
+@WebServlet("entries/new")
 public class InsertController extends BaseController
 {
   private static final long serialVersionUID = 1L;
@@ -22,7 +22,7 @@ public class InsertController extends BaseController
   {
     request.setAttribute("entry", _entryMapper.map(request));
     setTitle(request, "Neuen Eintrag hinzufügen");
-    setView(request, "new.jsp");
+    setView(request, "entries/new.jsp");
   }
 
   @Override
@@ -39,7 +39,7 @@ public class InsertController extends BaseController
       setMessage(request, "Eintrag erfolgreich angelegt.");
 
       setTitle(request, "Eintrag hinzugefügt");
-      setView(request, "show.jsp");
+      setView(request, "entries/entry.jsp");
     }
     catch (InsertException e)
     {
@@ -49,7 +49,7 @@ public class InsertController extends BaseController
 
       setError(request, e.getMessage());
       setTitle(request, "Fehler beim Anlegen");
-      setView(request, "new.jsp");
+      setView(request, "entries/new.jsp");
 
       response.setStatus(500);
     }
@@ -61,7 +61,7 @@ public class InsertController extends BaseController
 
       setError(request, e.getMessage());
       setTitle(request, "Fehler beim Lesen");
-      setView(request, "new.jsp");
+      setView(request, "entries/new.jsp");
 
       response.setStatus(500);
     }

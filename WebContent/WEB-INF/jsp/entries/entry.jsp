@@ -34,7 +34,7 @@
      <th></th>
     <td>
       <%-- http://stackoverflow.com/a/33880971 --%>
-      <form method="post" action="delete" class="inline">
+      <form method="post" action="entries/delete" class="inline">
         <input type="hidden" name="id" value="${entry.id}"/>
         <button type="submit" >Delete!</button>
       </form>
