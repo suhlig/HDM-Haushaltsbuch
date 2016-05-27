@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
-import haushaltsbuch.ArgumentException;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
 import haushaltsbuch.InsertException;
@@ -55,7 +54,7 @@ public class ListControllerTest extends ListController
 
     verify(request).setAttribute(eq("entries"), eq(all));
     verify(request).setAttribute(eq("title"), anyString());
-    verify(request).setAttribute(eq("view"), eq("all.jsp"));
+    verify(request).setAttribute(eq("view"), eq("entries.jsp"));
   }
 
   @Test
@@ -71,7 +70,7 @@ public class ListControllerTest extends ListController
 
     verify(request).setAttribute(eq("entries"), eq(all));
     verify(request).setAttribute(eq("title"), anyString());
-    verify(request).setAttribute(eq("view"), eq("all.jsp"));
+    verify(request).setAttribute(eq("view"), eq("entries.jsp"));
   }
 
   private List<Entry> asList(Entry... entries)
