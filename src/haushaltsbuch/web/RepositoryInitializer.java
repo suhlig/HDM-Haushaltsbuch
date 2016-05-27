@@ -22,7 +22,7 @@ public class RepositoryInitializer implements ServletContextListener
   private static final String JNDI_DATASOURCE_NAME = "jdbc/elephantsql";
 
   /** Fallback URL for development and test */
-  private static final String JDBC_URL = "jdbc:postgresql:///haushaltsbuch";
+  public static final String JDBC_URL = "jdbc:postgresql:///haushaltsbuch";
 
   private ServletContextRegistry _registry;
 
@@ -62,6 +62,12 @@ public class RepositoryInitializer implements ServletContextListener
     }
   }
 
+  /** required for testability */
+  protected InitialContext getInitialContext() throws NamingException
+  {
+    return new InitialContext();
+  }
+
   private Connection createConnection(String url)
   {
     try
@@ -76,7 +82,7 @@ public class RepositoryInitializer implements ServletContextListener
     }
     catch (SQLException e)
     {
-      System.err.println("Could not create a database connection: " + e.getMessage());
+      System.err.println("Error creating a database connection: " + e.getMessage());
       return null;
     }
   }
@@ -116,7 +122,7 @@ public class RepositoryInitializer implements ServletContextListener
   {
     try
     {
-      return ((DataSource) new InitialContext().lookup(name)).getConnection();
+      return ((DataSource) getInitialContext().lookup(name)).getConnection();
     }
     catch (NamingException e)
     {
