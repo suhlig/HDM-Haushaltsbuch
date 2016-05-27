@@ -43,6 +43,8 @@ public class LookupControllerTest extends LookupController
   public void testInputForm() throws ServletException, IOException, LookupException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getRequestURI()).thenReturn("/entries/lookup");
+
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     String id0 = "a";
@@ -80,6 +82,8 @@ public class LookupControllerTest extends LookupController
   public void testNoIdGiven() throws ServletException, IOException, LookupException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getRequestURI()).thenReturn("/entries/lookup");
+
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     when(_repository.lookup(anyString())).thenReturn(null);

@@ -1,6 +1,7 @@
 package haushaltsbuch.web;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashSet;
@@ -30,8 +31,15 @@ public class LayoutFilter extends BasicFilter
     Enumeration<String> attributeNames = request.getAttributeNames();
 
     while (attributeNames.hasMoreElements())
-      if (ELIGIBLE_ATTRIBUTES.contains(attributeNames.nextElement()))
+    {
+      String name = attributeNames.nextElement();
+
+      if (ELIGIBLE_ATTRIBUTES.contains(name))
+      {
+        System.out.println(MessageFormat.format("Using {0} layout: {1}", name, request.getAttribute(name)));
         return true;
+      }
+    }
 
     return false;
   }
