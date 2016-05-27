@@ -10,7 +10,7 @@ class AcceptanceTest < MiniTest::Test
   end
 
   def navigate_to(uri)
-    base_url = ENV.fetch('HAUSHALTSBUCH_URL', 'http://localhost:9080/hhb')
+    base_url = ENV.fetch('HAUSHALTSBUCH_URL', 'http://localhost:9080')
 
     # TODO Deal with trailing slashes in HAUSHALTSBUCH_URL
 
