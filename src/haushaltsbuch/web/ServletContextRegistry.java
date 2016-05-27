@@ -7,7 +7,7 @@ import haushaltsbuch.web.controllers.BaseController;
 
 public class ServletContextRegistry
 {
-  private final static String CTX_ATTR_CONNECTION = ServletContextRegistry.class.getName() + "_DB_CONNECTION";
+  public final static String CTX_ATTR_CONNECTION = ServletContextRegistry.class.getName() + "_DB_CONNECTION";
   private final ServletContext _servletContext;
 
   public ServletContextRegistry(ServletContext servletContext)

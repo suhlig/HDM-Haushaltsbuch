@@ -19,7 +19,7 @@ import haushaltsbuch.persistence.JdbcRepository;
 public class RepositoryInitializer implements ServletContextListener
 {
   /** If bound, Bluemix will make the ElephantSQL service instance available under this name */
-  private static final String JNDI_DATASOURCE_NAME = "jdbc/elephantsql";
+  protected static final String JNDI_DATASOURCE_NAME = "jdbc/elephantsql";
 
   /** Fallback URL for development and test */
   public static final String JDBC_URL = "jdbc:postgresql:///haushaltsbuch";
