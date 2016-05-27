@@ -61,9 +61,7 @@ public class JndiBrowserServlet extends HttpServlet
       while (en != null && en.hasMoreElements())
       {
         Binding binding = en.next();
-
         String path = name + (name.length() > 0 ? "/" : "") + binding.getName();
-
         Object namedObject = binding.getObject();
 
         if (namedObject instanceof Context)
