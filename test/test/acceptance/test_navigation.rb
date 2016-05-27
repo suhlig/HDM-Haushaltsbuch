@@ -21,7 +21,7 @@ class TestNavigation < AcceptanceTest
 
   def test_all
     navigate_home
-    all = driver.first(xpath: "//a[@href='all']")
+    all = driver.first(xpath: "//a[@href='entries']")
     assert(all.displayed?)
 
     all.click
@@ -31,7 +31,7 @@ class TestNavigation < AcceptanceTest
 
     active_menu_item = driver.first(css: '.navbar li .active')
     assert(active_menu_item.displayed?)
-    assert_includes(active_menu_item.attribute('href'), 'all')
+    assert_includes(active_menu_item.attribute('href'), 'entries')
   end
 
   def test_lookup
