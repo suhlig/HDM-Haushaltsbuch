@@ -7,8 +7,9 @@ See also the [cheat sheet](https://gist.github.com/kenrett/7553278).
 ## Installation
 
 ```
+brew bundle # or use an alternative method to install ruby and chrome-driver
+gem install bundler
 bundle install
-brew bundle # or use an alternative method to install chrome-driver
 ```
 
 ## Running Tests
