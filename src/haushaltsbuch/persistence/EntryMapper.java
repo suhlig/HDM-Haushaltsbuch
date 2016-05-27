@@ -1,29 +1,13 @@
 package haushaltsbuch.persistence;
 
 import java.math.BigDecimal;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
-import java.util.UUID;
 import haushaltsbuch.Entry;
 
 public class EntryMapper
 {
-  public String map(Entry entry, PreparedStatement stmt) throws SQLException
-  {
-    String id = UUID.randomUUID().toString();
-
-    stmt.setString(1, id);
-    stmt.setString(2, entry.getSrcDst());
-    stmt.setString(3, entry.getDescription());
-    stmt.setBigDecimal(4, entry.getValue());
-    stmt.setString(5, entry.getCategory());
-    stmt.setString(6, entry.getPaymentType());
-
-    return id;
-  }
-
   public Entry map(ResultSet rs) throws SQLException
   {
     String id = rs.getString("id");
