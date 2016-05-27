@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
 
-@WebServlet("/lookup")
+@WebServlet("entries/lookup")
 public class LookupController extends BaseController
 {
   private static final long serialVersionUID = 1L;
@@ -18,7 +18,7 @@ public class LookupController extends BaseController
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
     setTitle(request, "Eintrag nachschlagen");
-    setView(request, "lookup.jsp");
+    setView(request, "entries/lookup.jsp");
     request.setAttribute("ids", getIDs());
   }
 
@@ -33,10 +33,10 @@ public class LookupController extends BaseController
       response.setStatus(400);
 
       setTitle(request, "Fehler beim Nachschlagen");
-      setView(request, "lookup.jsp");
+      setView(request, "entries/lookup.jsp");
     }
     else
-      response.sendRedirect("show?id=" + id);
+      response.sendRedirect("/entries?id=" + id);
   }
 
   private List<String> getIDs() throws ServletException

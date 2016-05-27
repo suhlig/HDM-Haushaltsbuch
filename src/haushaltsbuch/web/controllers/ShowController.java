@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.Entry;
 import haushaltsbuch.LookupException;
 
-@WebServlet("/show")
+@WebServlet("entries")
 public class ShowController extends BaseController
 {
   private static final long serialVersionUID = 1L;
@@ -44,7 +44,7 @@ public class ShowController extends BaseController
         {
           request.setAttribute("entry", entry);
           setTitle(request, "Eintrag");
-          setView(request, "show.jsp");
+          setView(request, "entries/entry.jsp");
         }
       }
       catch (LookupException e)

@@ -24,9 +24,9 @@ public class MenuInitializer implements ServletContextListener
     Map<String, String> menu = new LinkedHashMap<String, String>();
 
     menu.put("Home", ".");
-    menu.put("Alle", "entries");
-    menu.put("Nachschlagen", "lookup");
-    menu.put("Neu…", "new");
+    menu.put("Einträge", "entries/all");
+    menu.put("Eintrag nachschlagen", "entries/lookup");
+    menu.put("Neuer Eintrag…", "entries/new");
 
     return menu;
   }

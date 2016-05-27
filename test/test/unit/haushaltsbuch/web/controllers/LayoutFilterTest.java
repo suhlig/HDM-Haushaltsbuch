@@ -35,7 +35,7 @@ public class LayoutFilterTest
     FilterChain chain = mock(FilterChain.class);
     RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
 
-    when(request.getRequestDispatcher("WEB-INF/jsp/layout.jsp")).thenReturn(requestDispatcher);
+    when(request.getRequestDispatcher("/WEB-INF/jsp/layout.jsp")).thenReturn(requestDispatcher);
     when(request.getAttributeNames()).thenReturn(asEnumeration("error"));
 
     _subject.doFilter(request, response, chain);
@@ -51,7 +51,7 @@ public class LayoutFilterTest
     FilterChain chain = mock(FilterChain.class);
     RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
 
-    when(request.getRequestDispatcher("WEB-INF/jsp/layout.jsp")).thenReturn(requestDispatcher);
+    when(request.getRequestDispatcher("/WEB-INF/jsp/layout.jsp")).thenReturn(requestDispatcher);
     when(request.getAttributeNames()).thenReturn(asEnumeration("message"));
 
     _subject.doFilter(request, response, chain);
@@ -67,7 +67,7 @@ public class LayoutFilterTest
     FilterChain chain = mock(FilterChain.class);
     RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
 
-    when(request.getRequestDispatcher("WEB-INF/jsp/layout.jsp")).thenReturn(requestDispatcher);
+    when(request.getRequestDispatcher("/WEB-INF/jsp/layout.jsp")).thenReturn(requestDispatcher);
     when(request.getAttributeNames()).thenReturn(asEnumeration("message", "view", "error"));
 
     _subject.doFilter(request, response, chain);
@@ -83,7 +83,7 @@ public class LayoutFilterTest
     FilterChain chain = mock(FilterChain.class);
     RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
 
-    when(request.getRequestDispatcher("WEB-INF/jsp/layout.jsp")).thenReturn(requestDispatcher);
+    when(request.getRequestDispatcher("/WEB-INF/jsp/layout.jsp")).thenReturn(requestDispatcher);
     when(request.getAttributeNames()).thenReturn(Collections.emptyEnumeration());
 
     _subject.doFilter(request, response, chain);
@@ -99,7 +99,7 @@ public class LayoutFilterTest
     FilterChain chain = mock(FilterChain.class);
     RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
 
-    when(request.getRequestDispatcher("WEB-INF/jsp/layout.jsp")).thenReturn(requestDispatcher);
+    when(request.getRequestDispatcher("/WEB-INF/jsp/layout.jsp")).thenReturn(requestDispatcher);
     when(request.getAttributeNames()).thenReturn(asEnumeration("view"));
 
     _subject.doFilter(request, response, chain);

@@ -27,12 +27,12 @@
         <td>${entry.category}</td>
         <td>${entry.paymentType}</td>
         <td>
-          <a href="show?id=${entry.id}">Details</a>
+          <a href="entries?id=${entry.id}">Details</a>
 
           <%-- http://stackoverflow.com/a/33880971 --%>
-          <form method="post" action="delete" class="inline">
+          <form method="post" action="entries/delete" class="inline">
             <%-- Just a pseudo-link to have sensible text in the status bar --%>
-            <a href="delete?id=${entry.id}">
+            <a href="entries/delete?id=${entry.id}">
               <input type="hidden" name="id" value="${entry.id}"/>
               <button type="submit" class="link-button">Delete</button>
             </a>

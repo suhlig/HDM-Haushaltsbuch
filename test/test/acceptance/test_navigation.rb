@@ -6,7 +6,7 @@ require 'helpers'
 class TestNavigation < AcceptanceTest
   def test_new
     navigate_home
-    link_new = driver.first(xpath: "//a[@href='new']")
+    link_new = driver.first(xpath: "//a[@href='entries/new']")
     assert(link_new.displayed?)
 
     link_new.click
@@ -21,7 +21,7 @@ class TestNavigation < AcceptanceTest
 
   def test_all
     navigate_home
-    all = driver.first(xpath: "//a[@href='entries']")
+    all = driver.first(xpath: "//a[@href='entries/all']")
     assert(all.displayed?)
 
     all.click
@@ -36,7 +36,7 @@ class TestNavigation < AcceptanceTest
 
   def test_lookup
     navigate_home
-    lookup = driver.first(xpath: "//a[@href='lookup']")
+    lookup = driver.first(xpath: "//a[@href='entries/lookup']")
     assert(lookup.displayed?)
 
     lookup.click

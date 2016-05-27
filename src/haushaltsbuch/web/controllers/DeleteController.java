@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import haushaltsbuch.DeleteException;
 import haushaltsbuch.Entry;
 
-@WebServlet("/delete")
+@WebServlet("entries/delete")
 public class DeleteController extends BaseController
 {
   private static final long serialVersionUID = 1L;
@@ -43,7 +43,7 @@ public class DeleteController extends BaseController
 
           setMessage(request, "Eintrag gelöscht.");
           setTitle(request, "Eintrag gelöscht");
-          setView(request, "delete.jsp");
+          setView(request, "entries/delete.jsp");
         }
       }
       catch (DeleteException e)
