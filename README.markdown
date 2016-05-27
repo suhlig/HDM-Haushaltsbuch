@@ -41,6 +41,8 @@ Add the currently logged on user as a new (password-less) PostgreSQL user:
 
 If the database URL is specified without a host component (e.g. `postgres:///haushaltsbuch`), a local domain socket will be used for the Postgres connection. This avoids having to provide a separate password for the TCP connection.
 
+The entries table auto-generates the UUID on insert. This requires the `uuid-ossp` extension to be available. It will be enabled automatically.
+
 ## Design Notes
 
 * Input validation happens at two places: client-side (HTML form validation), where we are nice with the user, and at the database level, where we make sure only valid data enters the system. Right now there is no need for additional validation on the domain layer.

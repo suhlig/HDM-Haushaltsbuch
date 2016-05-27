@@ -3,6 +3,7 @@ package test.integration.haushaltsbuch;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.fail;
+import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 import haushaltsbuch.Entry;
@@ -63,7 +64,7 @@ public class RepositoryInsertTest extends RepositoryTest
     Entry clone = _testEntry.clone();
     assertEquals(_testEntry, clone);
 
-    // succeeds because the repository must replace the supplied ID with a generated one
+    // succeeds because the repository does not pass the supplied ID to the database
     String id1 = _subject.insert(clone);
 
     // ensure the repository-generated ids differ between the two entries
@@ -107,7 +108,7 @@ public class RepositoryInsertTest extends RepositoryTest
   {
     DatabaseAssertions dbHelper = getAssertionHelper();
 
-    String superimposed_id = "4711";
+    String superimposed_id = UUID.randomUUID().toString();
     dbHelper.assertNotExists(superimposed_id, _subject.TABLE_NAME);
     _testEntry.setId(superimposed_id);
 

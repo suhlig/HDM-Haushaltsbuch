@@ -1,4 +1,5 @@
 require 'helpers'
+require 'securerandom'
 
 #
 # Test the entry lookup
@@ -16,7 +17,7 @@ class TestNew < AcceptanceTest
   end
 
   def test_lookup_non_existing
-    lookup('4711')
+    lookup(SecureRandom.uuid)
 
     error = driver.first(xpath: '//*[@id="error"]')
     assert(error.displayed?)

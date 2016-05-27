@@ -38,7 +38,7 @@ public class JdbcRepository implements EntryRepository
   private static final String CREATE_TABLE =
     // @formatter:off
 		"CREATE TABLE {0} ("
-			+ "id character varying(36) NOT NULL CHECK (char_length(id) = 36), "
+			+ "id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY, "
 			+ "created_at timestamp without time zone DEFAULT now() NOT NULL, "
 			+ "src_dest character varying(255) NOT NULL CHECK (char_length(src_dest) >= 3), "
 			+ "description character varying(255) NOT NULL CHECK (char_length(description) >= 3), "
@@ -48,12 +48,11 @@ public class JdbcRepository implements EntryRepository
 		+ ")";
 		// @formatter:on
 
-  private static final String ADD_CONSTRAINT_PKEY = "ALTER TABLE ONLY {0} ADD CONSTRAINT {0}_pkey PRIMARY KEY (id)";
   private static final String CREATE_INDEX = "CREATE UNIQUE INDEX id_idx ON {0} (id);";
 
   private static final String SELECT_BY_ID = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0} WHERE id=''{1}''";
   private static final String SELECT_ALL = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0}";
-  private static final String INSERT = "INSERT INTO {0} (id, src_dest, description, value, category, payment_type) VALUES (?, ?, ?, ?, ?, ?)";
+  private static final String INSERT = "INSERT INTO {0} (src_dest, description, value, category, payment_type) VALUES (?, ?, ?, ?, ?)";
 
   private final Connection _connection;
   private final EntryMapper _entryMapper;
@@ -135,12 +134,27 @@ public class JdbcRepository implements EntryRepository
 
     try
     {
-      stmt = _connection.prepareStatement(MessageFormat.format(INSERT, TABLE_NAME));
-      id = _entryMapper.map(entry, stmt);
-      stmt.executeUpdate();
-      System.out.println(MessageFormat.format("Inserted record with id = {0} ", id));
+      stmt = _connection.prepareStatement(MessageFormat.format(INSERT, TABLE_NAME), Statement.RETURN_GENERATED_KEYS);
 
-      return id;
+      stmt.setString(1, entry.getSrcDst());
+      stmt.setString(2, entry.getDescription());
+      stmt.setBigDecimal(3, entry.getValue());
+      stmt.setString(4, entry.getCategory());
+      stmt.setString(5, entry.getPaymentType());
+
+      stmt.executeUpdate();
+
+      ResultSet generatedKeys = stmt.getGeneratedKeys();
+
+      if (!generatedKeys.next())
+        throw new InsertException(entry, new Exception("Could not read the auto-generated key"));
+      else
+      {
+        id = generatedKeys.getString(1);
+        System.out.println(MessageFormat.format("Inserted record with id = {0} ", id));
+
+        return id;
+      }
     }
     catch (SQLException e)
     {
@@ -175,8 +189,8 @@ public class JdbcRepository implements EntryRepository
 
   private void createTable() throws SQLException
   {
+    executeUpdate("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"");
     executeUpdate(MessageFormat.format(CREATE_TABLE, TABLE_NAME));
-    executeUpdate(MessageFormat.format(ADD_CONSTRAINT_PKEY, TABLE_NAME));
   }
 
   private void executeUpdate(String sql) throws SQLException
