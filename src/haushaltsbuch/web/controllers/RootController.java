@@ -14,6 +14,6 @@ public class RootController extends BaseController
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
     setTitle(request, "Home");
-    setView(request, "index.jsp");
+    setView(request);
   }
 }

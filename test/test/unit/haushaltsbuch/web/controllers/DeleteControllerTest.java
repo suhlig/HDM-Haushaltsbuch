@@ -46,6 +46,7 @@ public class DeleteControllerTest extends DeleteController
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     when(request.getParameter("id")).thenReturn("42");
+    when(request.getRequestURI()).thenReturn("/entries/delete");
 
     Entry deletedEntry = mock(Entry.class);
     when(_repository.delete("42")).thenReturn(deletedEntry);

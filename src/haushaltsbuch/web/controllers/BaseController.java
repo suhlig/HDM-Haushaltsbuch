@@ -38,6 +38,20 @@ public abstract class BaseController extends HttpServlet
     request.setAttribute("title", MessageFormat.format(title, args));
   }
 
+  /**
+   * Infer the view name from the request URI. A request to <code>/entries/all</code>
+   * will resolve to a <code>view = entries/all.jsp</code> attribute.
+   */
+  protected void setView(HttpServletRequest request)
+  {
+    String view = request.getRequestURI().substring(1);
+
+    if (!view.endsWith(".jsp"))
+      view = view + ".jsp";
+
+    request.setAttribute("view", view);
+  }
+
   protected void setView(HttpServletRequest request, String view, Object... args)
   {
     request.setAttribute("view", MessageFormat.format(view, args));

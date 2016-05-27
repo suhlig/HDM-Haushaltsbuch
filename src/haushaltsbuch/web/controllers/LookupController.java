@@ -18,7 +18,7 @@ public class LookupController extends BaseController
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
     setTitle(request, "Eintrag nachschlagen");
-    setView(request, "entries/lookup.jsp");
+    setView(request);
     request.setAttribute("ids", getIDs());
   }
 
@@ -29,11 +29,10 @@ public class LookupController extends BaseController
 
     if (null == id || id.isEmpty())
     {
-      setError(request, "Identifikator fehlt");
-      response.setStatus(400);
-
       setTitle(request, "Fehler beim Nachschlagen");
-      setView(request, "entries/lookup.jsp");
+      setError(request, "Identifikator fehlt");
+      setView(request);
+      response.setStatus(400);
     }
     else
       response.sendRedirect("/entries?id=" + id);

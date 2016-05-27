@@ -22,7 +22,7 @@ public class InsertController extends BaseController
   {
     request.setAttribute("entry", new BlankEntry());
     setTitle(request, "Neuen Eintrag hinzufügen");
-    setView(request, "entries/new.jsp");
+    setView(request);
   }
 
   @Override
@@ -64,7 +64,7 @@ public class InsertController extends BaseController
 
       setError(request, e.getMessage());
       setTitle(request, "Fehler beim Anlegen");
-      setView(request, "entries/new.jsp");
+      setView(request);
 
       response.setStatus(500);
     }
@@ -76,7 +76,7 @@ public class InsertController extends BaseController
 
       setError(request, e.getMessage());
       setTitle(request, "Fehler beim Lesen");
-      setView(request, "entries/new.jsp");
+      setView(request);
 
       response.setStatus(500);
     }

@@ -45,6 +45,8 @@ public class ListControllerTest extends ListController
   public void testEmpty() throws ServletException, IOException, InsertException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getRequestURI()).thenReturn("/entries/all");
+
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     List<Entry> all = Collections.emptyList();
@@ -61,6 +63,8 @@ public class ListControllerTest extends ListController
   public void testSome() throws ServletException, IOException, InsertException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getRequestURI()).thenReturn("/entries/all");
+
     HttpServletResponse response = mock(HttpServletResponse.class);
 
     List<Entry> all = asList(new TestEntry(), new TestEntry());
