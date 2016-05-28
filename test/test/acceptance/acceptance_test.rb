@@ -68,6 +68,18 @@ class AcceptanceTest < MiniTest::Test
     candidates.sample['value']
   end
 
+  def create_categories(names)
+    names.map do |name|
+      create(category: name)
+    end
+  end
+
+  def delete_categories(ids)
+    ids.each do |id|
+      delete(id)
+    end
+  end
+
   private
 
   def fill(name, overrides)

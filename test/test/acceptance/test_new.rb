@@ -49,18 +49,4 @@ class TestNew < AcceptanceTest
 
     delete_categories(ids)
   end
-
-  private
-
-  def create_categories(names)
-    names.map do |name|
-      create(category: name)
-    end
-  end
-
-  def delete_categories(ids)
-    ids.each do |id|
-      delete(id)
-    end
-  end
 end
