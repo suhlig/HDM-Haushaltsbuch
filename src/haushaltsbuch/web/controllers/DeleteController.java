@@ -24,35 +24,36 @@ public class DeleteController extends BaseController
       setTitle(request, "Fehler beim Löschen");
 
       response.setStatus(400);
+
+      return;
     }
-    else
-      try
+
+    try
+    {
+      Entry entry = getRepository().delete(id);
+
+      if (null == entry)
       {
-        Entry entry = getRepository().delete(id);
-
-        if (null == entry)
-        {
-          setError(request, "Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id);
-          setTitle(request, "Fehler beim Löschen");
-
-          response.setStatus(404);
-        }
-        else
-        {
-          request.setAttribute("entry", entry);
-
-          setMessage(request, "Eintrag gelöscht.");
-          setTitle(request, "Eintrag gelöscht");
-          setView(request);
-        }
-      }
-      catch (DeleteException e)
-      {
-        e.printStackTrace(System.err);
-        setError(request, "Fehler beim Löschen von {0}: {1}", id, e.getMessage());
+        setError(request, "Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id);
         setTitle(request, "Fehler beim Löschen");
 
-        response.setStatus(500);
+        response.setStatus(404);
+
+        return;
       }
+
+      request.setAttribute("entry", entry);
+      setTitle(request, "Eintrag gelöscht");
+      setMessage(request, "Eintrag gelöscht.");
+      setView(request);
+    }
+    catch (DeleteException e)
+    {
+      e.printStackTrace(System.err);
+      setError(request, "Fehler beim Löschen von {0}: {1}", id, e.getMessage());
+      setTitle(request, "Fehler beim Löschen");
+
+      response.setStatus(500);
+    }
   }
 }

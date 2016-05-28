@@ -33,9 +33,11 @@ public class LookupController extends BaseController
       setError(request, "Identifikator fehlt");
       setView(request);
       response.setStatus(400);
+
+      return;
     }
-    else
-      response.sendRedirect("/entries?id=" + id);
+
+    response.sendRedirect("/entries?id=" + id);
   }
 
   private List<String> getIDs() throws ServletException

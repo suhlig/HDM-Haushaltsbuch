@@ -24,35 +24,35 @@ public class ShowController extends BaseController
       setTitle(request, "Fehler");
 
       response.setStatus(400);
+
+      return;
     }
-    else
+
+    Entry entry;
+
+    try
     {
-      Entry entry;
+      entry = getRepository().lookup(id);
 
-      try
+      if (null == entry)
       {
-        entry = getRepository().lookup(id);
+        setError(request, "Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id);
+        setTitle(request, "Fehler");
 
-        if (null == entry)
-        {
-          setError(request, "Es konnte kein Eintrag mit dem Identifikator {0} gefunden werden.", id);
-          setTitle(request, "Fehler");
+        response.setStatus(404);
 
-          response.setStatus(404);
-        }
-        else
-        {
-          request.setAttribute("entry", entry);
-          setTitle(request, "Eintrag");
-          setView(request, "entries/entry.jsp");
-        }
+        return;
       }
-      catch (LookupException e)
-      {
-        setError(request, e.getMessage());
-        setTitle(request, "Fehler beim Lesen");
-        response.setStatus(500);
-      }
+
+      request.setAttribute("entry", entry);
+      setTitle(request, "Eintrag");
+      setView(request, "entries/entry.jsp");
+    }
+    catch (LookupException e)
+    {
+      setError(request, e.getMessage());
+      setTitle(request, "Fehler beim Lesen");
+      response.setStatus(500);
     }
   }
 }
