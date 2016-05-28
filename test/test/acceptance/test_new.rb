@@ -32,10 +32,4 @@ class TestNew < AcceptanceTest
     lookup(id.text)
     delete
   end
-
-  private
-
-  def value(name, overrides)
-    overrides.fetch(name, "acceptance test #{name}")
-  end
 end
