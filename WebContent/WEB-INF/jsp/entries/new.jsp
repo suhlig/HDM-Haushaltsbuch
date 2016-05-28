@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 
 <form id="new" method="POST">
 <table>
@@ -62,7 +63,13 @@
            value="${entry.category}"
            title="Kategorie der Buchung"
            placeholder="z.B. Lebensmittel"
-    />
+           list="categories"
+        />
+    <datalist id="categories">
+      <c:forEach items="${categories}" var="category">
+        <option value="${category}"/>
+      </c:forEach>
+    </datalist>
   </td>
 </tr>
 <tr>

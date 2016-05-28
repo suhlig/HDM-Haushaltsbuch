@@ -1,6 +1,8 @@
 package haushaltsbuch.web.controllers;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +22,9 @@ public class InsertController extends BaseController
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
   {
-    request.setAttribute("entry", _entryMapper.map(request));
+    request.setAttribute("entry", _entryMapper.getBlankEntry());
+    request.setAttribute("categories", getCategories());
+
     setTitle(request, "Neuen Eintrag hinzufügen");
     setView(request);
   }
@@ -65,6 +69,11 @@ public class InsertController extends BaseController
 
       response.setStatus(500);
     }
+  }
+
+  protected List<String> getCategories() throws ServletException
+  {
+    return Arrays.asList(new String[] { "Lebensmittel", "Internet", "Urlaub" });
   }
 
   protected void setEntryMapper(EntryMapper entryMapper)

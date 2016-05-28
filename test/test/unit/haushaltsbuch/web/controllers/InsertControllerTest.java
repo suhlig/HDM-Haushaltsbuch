@@ -2,6 +2,7 @@ package test.unit.haushaltsbuch.web.controllers;
 
 import static org.mockito.Matchers.contains;
 import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.notNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,8 +16,8 @@ import org.junit.Before;
 import org.junit.Test;
 import haushaltsbuch.Entry;
 import haushaltsbuch.EntryRepository;
-import haushaltsbuch.LookupException;
 import haushaltsbuch.InsertException;
+import haushaltsbuch.LookupException;
 import haushaltsbuch.web.EntryMapper;
 import haushaltsbuch.web.controllers.BaseController;
 import haushaltsbuch.web.controllers.InsertController;
@@ -41,6 +42,23 @@ public class InsertControllerTest extends InsertController
 
     _mockEntryMapper = mock(EntryMapper.class);
     setEntryMapper(_mockEntryMapper);
+  }
+
+  @Test
+  public void testCategories() throws ServletException, IOException, InsertException, LookupException
+  {
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getRequestURI()).thenReturn("/entries/delete");
+
+    HttpServletResponse response = mock(HttpServletResponse.class);
+
+    Entry blankEntry = mock(Entry.class);
+    when(_mockEntryMapper.getBlankEntry()).thenReturn(blankEntry);
+
+    doGet(request, response);
+
+    verify(request).setAttribute(eq("entry"), eq(blankEntry));
+    verify(request).setAttribute(eq("categories"), notNull());
   }
 
   @Test
