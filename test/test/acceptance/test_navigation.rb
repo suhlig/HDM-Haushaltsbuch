@@ -49,6 +49,21 @@ class TestNavigation < AcceptanceTest
     assert_includes(active_menu_item.attribute('href'), 'lookup')
   end
 
+  def test_categories
+    navigate_home
+    categories = driver.first(xpath: "//a[@href='categories/all']")
+    assert(categories.displayed?)
+
+    categories.click
+
+    category_list = driver.first(xpath: '//*[@id="categories"]')
+    assert(category_list.displayed?)
+
+    active_menu_item = driver.first(css: '.navbar li .active')
+    assert(active_menu_item.displayed?)
+    assert_includes(active_menu_item.attribute('href'), 'categories/all')
+  end
+
   def test_home
     navigate_home
     link_home = driver.first(xpath: "//a[@href='.']")

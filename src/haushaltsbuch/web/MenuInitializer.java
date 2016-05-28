@@ -26,6 +26,7 @@ public class MenuInitializer implements ServletContextListener
     menu.put("Home", ".");
     menu.put("Einträge", "entries/all");
     menu.put("Eintrag nachschlagen", "entries/lookup");
+    menu.put("Kategorien", "categories/all");
     menu.put("Neuer Eintrag…", "entries/new");
 
     return menu;

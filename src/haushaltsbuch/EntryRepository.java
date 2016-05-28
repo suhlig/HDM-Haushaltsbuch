@@ -6,6 +6,8 @@ public interface EntryRepository
 {
   List<Entry> all();
 
+  List<Entry> by_category(String category);
+
   List<String> categories();
 
   Entry delete(String parameter) throws DeleteException;

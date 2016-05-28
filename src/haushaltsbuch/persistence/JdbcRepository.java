@@ -50,8 +50,9 @@ public class JdbcRepository implements EntryRepository
 
   private static final String CREATE_INDEX = "CREATE UNIQUE INDEX id_idx ON {0} (id);";
 
-  private static final String SELECT_BY_ID = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0} WHERE id=''{1}''";
   private static final String SELECT_ALL = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0}";
+  private static final String SELECT_BY_ID = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0} WHERE id=''{1}''";
+  private static final String SELECT_BY_CATEGORY = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0} WHERE category=''{1}''";
   private static final String SELECT_CATEGORIES = "SELECT category, COUNT(category) AS cat_count FROM {0} GROUP BY category ORDER BY cat_count DESC";
   private static final String INSERT = "INSERT INTO {0} (src_dest, description, value, category, payment_type) VALUES (?, ?, ?, ?, ?)";
 
@@ -93,6 +94,41 @@ public class JdbcRepository implements EntryRepository
     }
 
     System.out.println(MessageFormat.format("Fetched all {0} entries", result.size()));
+
+    return result;
+  }
+
+  @Override
+  public List<Entry> by_category(String category)
+  {
+    if (null == category || category.isEmpty())
+      throw new ArgumentException("Category name missing");
+
+    ArrayList<Entry> result = new ArrayList<Entry>();
+
+    Statement st = null;
+    ResultSet rs = null;
+
+    try
+    {
+      st = _connection.createStatement();
+      rs = st.executeQuery(MessageFormat.format(SELECT_BY_CATEGORY, TABLE_NAME, category));
+
+      while (rs.next())
+        result.add(_entryMapper.map(rs));
+    }
+    catch (SQLException e)
+    {
+      System.err.println(MessageFormat.format("Error fetching rows with category {0} from {1}", category, TABLE_NAME));
+      e.printStackTrace(System.err);
+    }
+    finally
+    {
+      tryClose(rs);
+      tryClose(st);
+    }
+
+    System.out.println(MessageFormat.format("Fetched {0} entries with category {1}", result.size(), category));
 
     return result;
   }
