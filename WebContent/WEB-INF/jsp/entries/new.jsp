@@ -16,6 +16,7 @@
            oninvalid="this.setCustomValidity('Angabe von Quelle oder Ziel ist notwendig')"
            oninput="setCustomValidity('')"
            required
+           autofocus
     />
   </td>
 </tr>
