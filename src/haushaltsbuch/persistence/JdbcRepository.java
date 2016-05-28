@@ -52,6 +52,7 @@ public class JdbcRepository implements EntryRepository
 
   private static final String SELECT_BY_ID = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0} WHERE id=''{1}''";
   private static final String SELECT_ALL = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0}";
+  private static final String SELECT_CATEGORIES = "SELECT category, COUNT(category) AS cat_count FROM {0} GROUP BY category ORDER BY cat_count DESC";
   private static final String INSERT = "INSERT INTO {0} (src_dest, description, value, category, payment_type) VALUES (?, ?, ?, ?, ?)";
 
   private final Connection _connection;
@@ -92,6 +93,36 @@ public class JdbcRepository implements EntryRepository
     }
 
     System.out.println(MessageFormat.format("Fetched all {0} entries", result.size()));
+
+    return result;
+  }
+
+  @Override
+  public List<String> categories()
+  {
+    List<String> result = new ArrayList<>();
+
+    Statement st = null;
+    ResultSet rs = null;
+
+    try
+    {
+      st = _connection.createStatement();
+      rs = st.executeQuery(MessageFormat.format(SELECT_CATEGORIES, TABLE_NAME));
+
+      while (rs.next())
+        result.add(rs.getString("category"));
+    }
+    catch (SQLException e)
+    {
+      System.err.println("Error fetching categories of " + TABLE_NAME);
+      e.printStackTrace(System.err);
+    }
+    finally
+    {
+      tryClose(rs);
+      tryClose(st);
+    }
 
     return result;
   }

@@ -1,7 +1,6 @@
 package haushaltsbuch.web.controllers;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -73,7 +72,7 @@ public class InsertController extends BaseController
 
   protected List<String> getCategories() throws ServletException
   {
-    return Arrays.asList(new String[] { "Lebensmittel", "Internet", "Urlaub" });
+    return getRepository().categories();
   }
 
   protected void setEntryMapper(EntryMapper entryMapper)
