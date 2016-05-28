@@ -17,7 +17,7 @@ import haushaltsbuch.LookupException;
 import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.TestEntry;
 
-public class RepositoryFindTest extends RepositoryTest
+public class RepositoryLookupTest extends RepositoryTest
 {
   private TestEntry _testEntry;
   private JdbcRepository _subject;
@@ -31,7 +31,7 @@ public class RepositoryFindTest extends RepositoryTest
   }
 
   @Test
-  public void testFindEmptyString() throws LookupException
+  public void testLookupEmptyString() throws LookupException
   {
     try
     {
@@ -45,7 +45,7 @@ public class RepositoryFindTest extends RepositoryTest
   }
 
   @Test
-  public void testFindExisting() throws InsertException, LookupException
+  public void testLookupExisting() throws InsertException, LookupException
   {
     String id = _subject.insert(_testEntry);
 
@@ -71,13 +71,13 @@ public class RepositoryFindTest extends RepositoryTest
   }
 
   @Test
-  public void testFindNonExisting() throws LookupException
+  public void testLookupNonExisting() throws LookupException
   {
     assertNull(_subject.lookup(UUID.randomUUID().toString()));
   }
 
   @Test
-  public void testFindNull() throws LookupException
+  public void testLookupNull() throws LookupException
   {
     try
     {

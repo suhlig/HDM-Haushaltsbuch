@@ -12,7 +12,7 @@ import haushaltsbuch.persistence.JdbcRepository;
 import test.helpers.DatabaseAssertions;
 import test.helpers.TestDatabaseFactory;
 
-public class RepositoryTest
+public abstract class RepositoryTest
 {
   private String _dbName;
   private Connection _dbmsConnection;
