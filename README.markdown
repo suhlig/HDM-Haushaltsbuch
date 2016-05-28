@@ -30,7 +30,7 @@ Add the currently logged on user as a new (password-less) PostgreSQL user:
   $ postgres -c "createuser --createdb --no-superuser --no-createrole $USER"
 
   # start postgres
-  $ PGDATA=/usr/local/var/postgres postgres
+  $ postgres -D /usr/local/var/postgres
 
   # create the user's database (prereq for tests)
   $ createdb
@@ -42,6 +42,18 @@ Add the currently logged on user as a new (password-less) PostgreSQL user:
 If the database URL is specified without a host component (e.g. `postgres:///haushaltsbuch`), a local domain socket will be used for the Postgres connection. This avoids having to provide a separate password for the TCP connection.
 
 The entries table auto-generates the UUID on insert. This requires the `uuid-ossp` extension to be available. It will be enabled automatically.
+
+### PostgreSQL Statement Logging
+
+In order to see the raw SQL statements, logging can be enabled for the local `postgres` process:
+
+  ```
+  $ psql postgres:///haushaltsbuch
+  # ALTER SYSTEM SET log_destination = 'stderr';
+  # ALTER SYSTEM SET log_statement = 'all';
+  ```
+
+Now apply the values with `pg_ctl reload -D /usr/local/var/postgres`. Logging messages will appear in the terminal window of the `postgres` process.
 
 ## Design Notes
 
