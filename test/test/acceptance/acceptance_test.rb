@@ -10,8 +10,8 @@ class AcceptanceTest < MiniTest::Test
   end
 
   def navigate_to(uri)
-    base_url = ENV.fetch('HAUSHALTSBUCH_URL', 'http://localhost:9080').chomp('/')
-    driver.navigate.to("#{base_url}#{uri}")
+    base = ENV.fetch('HAUSHALTSBUCH_URL', 'http://localhost:9080').chomp('/')
+    driver.navigate.to("#{base}#{uri}")
   end
 
   def navigate_home
@@ -21,13 +21,17 @@ class AcceptanceTest < MiniTest::Test
   def create(fields = {})
     navigate_to '/entries/new'
 
-    driver.first(name: 'srcDst').send_keys(value(:srcDst, fields))
-    driver.first(name: 'description').send_keys(value(:description, fields))
-    driver.first(name: 'value').send_keys(42)
-    driver.first(name: 'category').send_keys(value(:category, fields))
-    driver.first(name: 'paymentType').send_keys(value(:paymentType, fields))
+    fill(:srcDst, fields)
+    fill(:description, fields)
+    fill(:value, 42)
+    fill(:category, fields)
+    fill(:paymentType, fields)
 
     driver.first(id: 'new').submit
+
+    id = driver.first(xpath: '//*[@class="id"]')
+    assert(id.displayed?)
+    id.text
   end
 
   def lookup(id)
@@ -41,7 +45,13 @@ class AcceptanceTest < MiniTest::Test
     input.submit
   end
 
-  def delete
+  def delete(id = nil)
+    if id.nil?
+      # assume we are already on the entry's page
+    else
+      lookup(id)
+    end
+
     delete_button = driver.first(xpath: '//input[@name="id"]')
     delete_button.submit
 
@@ -56,5 +66,17 @@ class AcceptanceTest < MiniTest::Test
     assert(candidates.any?)
 
     candidates.sample['value']
+  end
+
+  private
+
+  def fill(name, overrides)
+    value = if overrides.respond_to?(:fetch)
+              overrides.fetch(name, "acceptance test #{name}")
+            else
+              overrides
+            end
+
+    driver.first(name: name).send_keys(value)
   end
 end
