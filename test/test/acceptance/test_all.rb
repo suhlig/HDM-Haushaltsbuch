@@ -4,6 +4,8 @@ require 'helpers'
 # Test the 'all entries' view
 #
 class TestAll < AcceptanceTest
+  include AssertionHelpers
+
   def setup
     super
     navigate_to '/entries/all'
@@ -49,16 +51,6 @@ class TestAll < AcceptanceTest
     delete_forms.each do |form|
       assert_equal('Delete', form.text)
       assert_equal('/entries/delete', URI(form['action']).path)
-    end
-  end
-
-  def assert_content(css_class, allow_empty = false)
-    cells = driver.all(xpath: "//td[@class='#{css_class}']")
-    assert(1 <= cells.size)
-
-    cells.each do |cell|
-      assert(cell.displayed?)
-      refute_empty(cell.text) unless allow_empty
     end
   end
 end
