@@ -19,14 +19,14 @@
 
   <tbody>
     <c:forEach items="${entries}" var="entry">
-      <tr>
-        <td><fmt:formatDate pattern="yyyy-MM-dd" value="${entry.entryDate}" /></td>
-        <td>${entry.srcDst}</td>
-        <td>${entry.description}</td>
-        <td>${entry.value}€</td>
-        <td>${entry.category}</td>
-        <td>${entry.paymentType}</td>
-        <td>
+      <tr id="${entry.id}" class="entry">
+        <td class="entryDate"><fmt:formatDate pattern="yyyy-MM-dd" value="${entry.entryDate}" /></td>
+        <td class="srcDst">${entry.srcDst}</td>
+        <td class="description">${entry.description}</td>
+        <td class="value">${entry.value}€</td>
+        <td class="category">${entry.category}</td>
+        <td class="paymentType">${entry.paymentType}</td>
+        <td class="actions">
           <a href="entries?id=${entry.id}">Details</a>
 
           <%-- http://stackoverflow.com/a/33880971 --%>
