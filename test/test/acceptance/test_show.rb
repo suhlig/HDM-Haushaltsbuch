@@ -4,6 +4,8 @@ require 'helpers'
 # Test the 'show entry' view
 #
 class TestShow < AcceptanceTest
+  include AssertionHelpers
+
   def setup
     super
     @id = create
