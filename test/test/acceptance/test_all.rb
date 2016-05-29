@@ -64,13 +64,4 @@ class TestAll < AcceptanceTest
       assert_category_link(link)
     end
   end
-
-  def assert_category_link(link)
-    category = link.text
-    refute_empty(category)
-
-    url = URI(link['href'])
-    assert_equal('/entries/by-category', url.path)
-    assert_equal("name=#{URI.escape(category)}", url.query)
-  end
 end
