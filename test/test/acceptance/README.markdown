@@ -2,7 +2,7 @@
 
 Uses [ruby bindings](https://github.com/SeleniumHQ/selenium/wiki/Ruby-Bindings) to [Selenium](https://seleniumhq.github.io)'s [https://sites.google.com/a/chromium.org/chromedriver/](chrome-driver).
 
-See also the [cheat sheet](https://gist.github.com/kenrett/7553278).
+See also the [cheat sheet](https://gist.github.com/kenrett/7553278). If all fails, use the [source](https://github.com/SeleniumHQ/selenium/tree/master/rb).
 
 ## Installation
 
