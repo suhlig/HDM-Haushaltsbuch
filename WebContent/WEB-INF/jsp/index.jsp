@@ -3,5 +3,5 @@
 <p>Demo app für den Bluemix-Workshop bei der HDM Stuttgart</p>
 
 <p>
-  <a href="https://github.com/suhlig/HDM-Haushaltsbuch">Source code</a>
+  Feature branch <a href="https://github.com/suhlig/HDM-Haushaltsbuch/tree/ImplementCategories">source code</a>
 </p>
