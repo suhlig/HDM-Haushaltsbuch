@@ -1,6 +1,6 @@
 # HDM-Haushaltsbuch
 
-The app is deployed to [haushaltsbuch.eu-gb.mybluemix.net](http://haushaltsbuch.eu-gb.mybluemix.net/).
+This feature branch is deployed to [haushaltsbuch-categories.eu-gb.mybluemix.net](http://haushaltsbuch-categories.eu-gb.mybluemix.net/).
 
 ## Run
 
@@ -11,15 +11,6 @@ The app is deployed to [haushaltsbuch.eu-gb.mybluemix.net](http://haushaltsbuch.
 1. Run on Server => Bluemix (the database tables will be auto-created)
 
 Addiional information about the Eclipse tools is available at the Bluemix [https://console.ng.bluemix.net/docs/manageapps/eclipsetools/eclipsetools.html](documentation) site.
-
-## Exercises
-
-Using TDD, implement the following features:
-
-1. Show a list of all categories at `/categories/all`
-1. Show all entries of a certain category at  `/entries/by-category`
-
-For each feature, add unit, integration and acceptance tests.
 
 ## Tests
 
