@@ -24,7 +24,7 @@
   </tr>
   <tr>
     <th>Kategorie</th>
-    <td class="category">${entry.category}</td>
+    <td class="category"><a href="entries/by-category?name=${entry.category}">${entry.category}</a></td>
   </tr>
   <tr>
     <th>Zahlungstyp</th>
@@ -41,4 +41,3 @@
     </td>
   </tr>
 </table>
-

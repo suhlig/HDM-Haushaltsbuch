@@ -30,6 +30,8 @@ class TestShow < AcceptanceTest
 
   def test_category
     assert_content('category', true)
+    link = driver.first(xpath: "//td[@class='category']/a")
+    assert_category_link(link)
   end
 
   def test_delete
@@ -37,17 +39,5 @@ class TestShow < AcceptanceTest
 
     assert_equal('Delete!', form.text)
     assert_equal('/entries/delete', URI(form['action']).path)
-  end
-
-  private
-
-  def assert_content(css_class, allow_empty = false)
-    cells = driver.all(xpath: "//td[@class='#{css_class}']")
-    assert(1 <= cells.size)
-
-    cells.each do |cell|
-      assert(cell.displayed?)
-      refute_empty(cell.text) unless allow_empty
-    end
   end
 end
