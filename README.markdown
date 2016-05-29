@@ -1,13 +1,21 @@
 # HDM-Haushaltsbuch
 
-## Running it
+## Run
 
 1. [Install eclipse tools](https://developer.ibm.com/wasdev/getstarted/)
 1. [Add a liberty-profile server](https://developer.ibm.com/wasdev/docs/developing-applications-wdt-liberty-profile/) for local testing
 1. Import the app into Eclipse
-1. Run on Server => Bluemix
-1. Add the ElephantSQL server
-1. Deploy. The app will auto-create the tables.
+1. Add a 'turtle'-sized ElephantSQL service instance
+1. Run on Server => Bluemix (the database tables will be auto-created)
+
+## Exercises
+
+Using TDD, implement the following features:
+
+1. Show a list of all categories at `/categories/all`
+1. Show all entries of a certain category at  `/entries/by-category`
+
+For each feature, add unit, integration and acceptance tests.
 
 ## Tests
 
