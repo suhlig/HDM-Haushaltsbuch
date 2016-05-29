@@ -42,7 +42,7 @@ public class InsertController extends BaseController
       setMessage(request, "Eintrag erfolgreich angelegt.");
 
       setTitle(request, "Eintrag hinzugefügt");
-      setView(request, "entries/entry.jsp");
+      setView(request, "entries/show.jsp");
     }
     catch (InsertException e)
     {
