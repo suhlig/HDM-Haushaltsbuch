@@ -9,9 +9,10 @@ class AcceptanceTest < MiniTest::Test
     driver.quit unless failure
   end
 
-  def navigate_to(uri)
+  def navigate_to(path)
     base = ENV.fetch('HAUSHALTSBUCH_URL', 'http://localhost:9080').chomp('/')
-    driver.navigate.to("#{base}#{uri}")
+    url = "#{base}#{path}"
+    driver.navigate.to(url)
   end
 
   def navigate_home
