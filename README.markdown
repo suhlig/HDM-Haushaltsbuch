@@ -1,5 +1,7 @@
 # HDM-Haushaltsbuch
 
+The app is deployed to [haushaltsbuch.eu-gb.mybluemix.net](http://haushaltsbuch.eu-gb.mybluemix.net/).
+
 ## Run
 
 1. [Install eclipse tools](https://developer.ibm.com/wasdev/getstarted/)
