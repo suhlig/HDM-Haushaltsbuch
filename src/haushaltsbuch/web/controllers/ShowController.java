@@ -46,7 +46,7 @@ public class ShowController extends BaseController
 
       request.setAttribute("entry", entry);
       setTitle(request, "Eintrag");
-      setView(request, "entries/entry.jsp");
+      setView(request, "entries/show.jsp");
     }
     catch (LookupException e)
     {
