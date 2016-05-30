@@ -44,8 +44,12 @@ public class ListControllerTest extends ListController
   @Test
   public void testEmpty() throws ServletException, IOException, InsertException
   {
+    ServletContext servletContext = mock(ServletContext.class);
+    when(servletContext.getContextPath()).thenReturn("/unit-test");
+
     HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getRequestURI()).thenReturn("/entries/all");
+    when(request.getServletContext()).thenReturn(servletContext);
+    when(request.getRequestURI()).thenReturn("/unit-test/entries/all");
 
     HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -62,8 +66,12 @@ public class ListControllerTest extends ListController
   @Test
   public void testSome() throws ServletException, IOException, InsertException
   {
+    ServletContext servletContext = mock(ServletContext.class);
+    when(servletContext.getContextPath()).thenReturn("/unit-test");
+
     HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getRequestURI()).thenReturn("/entries/all");
+    when(request.getServletContext()).thenReturn(servletContext);
+    when(request.getRequestURI()).thenReturn("/unit-test/entries/all");
 
     HttpServletResponse response = mock(HttpServletResponse.class);
 
