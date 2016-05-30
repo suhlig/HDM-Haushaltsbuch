@@ -3,9 +3,9 @@
 <%@ taglib uri='http://java.sun.com/jsp/jstl/core' prefix='c'%>
 <html lang="de">
   <head>
+    <base href="<c:url value="/"/>"/>
     <title>Haushaltsbuch - ${title}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <base href="<c:url value="/"/>"/>
     <link rel="stylesheet" href="normalize-4.1.1.css">
     <link rel="stylesheet" href="main.css">
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
