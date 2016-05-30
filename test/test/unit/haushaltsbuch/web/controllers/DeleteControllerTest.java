@@ -42,14 +42,18 @@ public class DeleteControllerTest extends DeleteController
   @Test
   public void testDelete() throws ServletException, IOException, DeleteException
   {
-    HttpServletRequest request = mock(HttpServletRequest.class);
-    HttpServletResponse response = mock(HttpServletResponse.class);
+    ServletContext servletContext = mock(ServletContext.class);
+    when(servletContext.getContextPath()).thenReturn("/unit-test");
 
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getServletContext()).thenReturn(servletContext);
     when(request.getParameter("id")).thenReturn("42");
     when(request.getRequestURI()).thenReturn("/entries/delete");
 
     Entry deletedEntry = mock(Entry.class);
     when(_repository.delete("42")).thenReturn(deletedEntry);
+
+    HttpServletResponse response = mock(HttpServletResponse.class);
 
     doPost(request, response);
 

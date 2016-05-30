@@ -42,8 +42,12 @@ public class LookupControllerTest extends LookupController
   @Test
   public void testInputForm() throws ServletException, IOException, LookupException
   {
+    ServletContext servletContext = mock(ServletContext.class);
+    when(servletContext.getContextPath()).thenReturn("/unit-test");
+
     HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getRequestURI()).thenReturn("/entries/lookup");
+    when(request.getServletContext()).thenReturn(servletContext);
+    when(request.getRequestURI()).thenReturn("/unit-test/entries/lookup");
 
     HttpServletResponse response = mock(HttpServletResponse.class);
 
@@ -65,7 +69,11 @@ public class LookupControllerTest extends LookupController
   @Test
   public void testLookup() throws ServletException, IOException, LookupException
   {
+    ServletContext servletContext = mock(ServletContext.class);
+    when(servletContext.getContextPath()).thenReturn("/unit-test");
+
     HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getServletContext()).thenReturn(servletContext);
     when(request.getParameter("id")).thenReturn("42");
 
     HttpServletResponse response = mock(HttpServletResponse.class);
@@ -75,14 +83,18 @@ public class LookupControllerTest extends LookupController
 
     doPost(request, response);
 
-    verify(response).sendRedirect("/entries?id=42");
+    verify(response).sendRedirect("/unit-test/entries?id=42");
   }
 
   @Test
   public void testNoIdGiven() throws ServletException, IOException, LookupException
   {
+    ServletContext servletContext = mock(ServletContext.class);
+    when(servletContext.getContextPath()).thenReturn("/unit-test");
+
     HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getRequestURI()).thenReturn("/entries/lookup");
+    when(request.getServletContext()).thenReturn(servletContext);
+    when(request.getRequestURI()).thenReturn("/unit-test/entries/lookup");
 
     HttpServletResponse response = mock(HttpServletResponse.class);
 

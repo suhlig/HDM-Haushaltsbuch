@@ -47,7 +47,11 @@ public class InsertControllerTest extends InsertController
   @Test
   public void testCategories() throws ServletException, IOException, InsertException, LookupException
   {
+    ServletContext servletContext = mock(ServletContext.class);
+    when(servletContext.getContextPath()).thenReturn("/unit-test");
+
     HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getServletContext()).thenReturn(servletContext);
     when(request.getRequestURI()).thenReturn("/entries/delete");
 
     HttpServletResponse response = mock(HttpServletResponse.class);

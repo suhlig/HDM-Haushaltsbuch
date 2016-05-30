@@ -7,6 +7,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.io.IOException;
 import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,8 +27,12 @@ public class RootControllerTest extends RootController
   @Test
   public void testEmpty() throws ServletException, IOException, InsertException
   {
+    ServletContext servletContext = mock(ServletContext.class);
+    when(servletContext.getContextPath()).thenReturn("/unit-test");
+
     HttpServletRequest request = mock(HttpServletRequest.class);
-    when(request.getRequestURI()).thenReturn("/index.jsp");
+    when(request.getServletContext()).thenReturn(servletContext);
+    when(request.getRequestURI()).thenReturn("/unit-test/index.jsp");
 
     HttpServletResponse response = mock(HttpServletResponse.class);
 
