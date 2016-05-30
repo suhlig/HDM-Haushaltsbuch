@@ -38,6 +38,6 @@ class TestShow < AcceptanceTest
     form = driver.first(xpath: "//td[@class='actions']/form")
 
     assert_equal('Delete!', form.text)
-    assert_equal('/entries/delete', URI(form['action']).path)
+    assert(URI(form['action']).path.end_with?('/entries/delete'))
   end
 end

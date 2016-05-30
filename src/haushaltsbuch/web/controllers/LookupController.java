@@ -37,7 +37,7 @@ public class LookupController extends BaseController
       return;
     }
 
-    response.sendRedirect("/entries?id=" + id);
+    response.sendRedirect(request.getServletContext().getContextPath() + "/entries?id=" + id);
   }
 
   private List<String> getIDs() throws ServletException

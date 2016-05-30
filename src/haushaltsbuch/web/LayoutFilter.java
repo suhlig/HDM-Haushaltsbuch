@@ -18,6 +18,7 @@ public class LayoutFilter extends BasicFilter
   private static final String[] ELIGIBLE_ATTRIBUTE_NAMES = new String[] { "view", "error", "message" };
   private final static Set<String> ELIGIBLE_ATTRIBUTES = new HashSet<String>(Arrays.asList(ELIGIBLE_ATTRIBUTE_NAMES));
 
+  @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException
   {
     chain.doFilter(request, response);
