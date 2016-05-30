@@ -6,7 +6,7 @@ require 'helpers'
 class TestCategories < AcceptanceTest
   def setup
     super
-    @categories = ['testcat one', 'testcat two', 'testcat three']
+    @categories = ['testcat one', 'testcat two', 'testcat three', '']
     @ids = create_categories(@categories)
   end
 
@@ -19,6 +19,7 @@ class TestCategories < AcceptanceTest
     navigate_to '/categories/all'
 
     @categories.each do |name|
+      next if name.empty?
       category = driver.first(xpath: "//ul/li/a[text() = '#{name}']")
       assert(category.displayed?)
     end

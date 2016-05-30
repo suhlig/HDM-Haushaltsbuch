@@ -17,6 +17,7 @@ public class RepositoryInsertTest extends RepositoryTest
   private TestEntry _testEntry;
   private JdbcRepository _subject;
 
+  @Override
   @Before
   public void setUp() throws Exception
   {

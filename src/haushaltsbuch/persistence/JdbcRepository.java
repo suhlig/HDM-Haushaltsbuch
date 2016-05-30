@@ -147,7 +147,12 @@ public class JdbcRepository implements EntryRepository
       rs = st.executeQuery(MessageFormat.format(SELECT_CATEGORIES, TABLE_NAME));
 
       while (rs.next())
-        result.add(rs.getString("category"));
+      {
+        String category = rs.getString("category");
+
+        if (null != category && !category.isEmpty())
+          result.add(category);
+      }
     }
     catch (SQLException e)
     {
