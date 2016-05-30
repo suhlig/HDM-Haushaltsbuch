@@ -24,7 +24,11 @@
         <td class="srcDst">${entry.srcDst}</td>
         <td class="description">${entry.description}</td>
         <td class="value">${entry.value}€</td>
-        <td class="category"><a href="entries/by-category?name=${entry.category}">${entry.category}</a></td>
+        <td class="category">
+          <c:if test="${not empty entry.category}">
+            <a href="entries/by-category?name=${entry.category}">${entry.category}</a>
+          </c:if>
+        </td>
         <td class="paymentType">${entry.paymentType}</td>
         <td class="actions">
           <a href="entries?id=${entry.id}">Details</a>

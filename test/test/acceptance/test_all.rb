@@ -57,10 +57,10 @@ class TestAll < AcceptanceTest
   end
 
   def assert_category_links
-    details_links = driver.all(xpath: "//td[@class='category']/a")
-    assert(1 <= details_links.size)
+    category_cells = driver.all(xpath: "//td[@class='category']/a")
+    assert(1 <= category_cells.size)
 
-    details_links.each do |link|
+    category_cells.each do |link|
       assert_category_link(link)
     end
   end
