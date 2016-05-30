@@ -40,7 +40,7 @@ class TestAll < AcceptanceTest
 
     details_links.each do |link|
       assert_equal('Details', link.text)
-      assert_equal('/entries', URI(link['href']).path)
+      assert(URI(link['href']).path.end_with?('/entries'))
     end
   end
 
@@ -50,7 +50,7 @@ class TestAll < AcceptanceTest
 
     delete_forms.each do |form|
       assert_equal('Delete', form.text)
-      assert_equal('/entries/delete', URI(form['action']).path)
+      assert(URI(form['action']).path.end_with?('/entries/delete'))
     end
   end
 end

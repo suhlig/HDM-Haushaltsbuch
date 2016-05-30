@@ -49,11 +49,16 @@ public abstract class BaseController extends HttpServlet
     if (!view.endsWith(".jsp"))
       view = view + ".jsp";
 
-    request.setAttribute("view", view);
+    request.setAttribute("view", withoutContextPath(view, request));
   }
 
   protected void setView(HttpServletRequest request, String view, Object... args)
   {
     request.setAttribute("view", MessageFormat.format(view, args));
+  }
+
+  private String withoutContextPath(String view, HttpServletRequest request)
+  {
+    return view.substring(request.getServletContext().getContextPath().length());
   }
 }
