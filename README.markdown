@@ -20,6 +20,10 @@ Addiional information about the Eclipse tools is available at the Bluemix [https
 
 ## Local Development
 
+### Context Root
+
+The application specifies the context root itself as `/`, which can be changed in `WEB-INF/ibm-web-ext.xml`. It *should* override the setting in the server's `server.xml`, but in case it doesn't the `contextRoot` attribute of the `webApplication` element should be removed from `server.xml`.
+
 ### Database connection
 
 Bluemix provides the datasource for a bound service in JDNI. We could configure the local dev server in the same way, but to make development even simpler, we take a shortcut and [manually initialize the PostgreSQL JDBC driver](https://jdbc.postgresql.org/documentation/94/use.html) when testing locally. The code does this automatically; there are no manual steps to be taken.
