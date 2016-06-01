@@ -1,7 +1,13 @@
 package test.unit.haushaltsbuch.web;
 
+import static org.mockito.Matchers.contains;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
 import static org.mockito.Mockito.when;
+import java.io.PrintStream;
+import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -15,16 +21,15 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 import haushaltsbuch.web.RepositoryInitializer;
+import haushaltsbuch.web.ServletContextRegistry;
 
-public class RepositoryInitializerWithoutDriverTest
+public class RepositoryInitializerWithoutDriverTest extends RepositoryInitializer
 {
-  private RepositoryInitializer _subject;
   private List<Driver> _deregistered;
 
   @Before
   public void setUp() throws Exception
   {
-    _subject = new RepositoryInitializer();
     _deregistered = deRegister(RepositoryInitializer.JDBC_URL);
   }
 
@@ -35,13 +40,50 @@ public class RepositoryInitializerWithoutDriverTest
   }
 
   @Test
+  public void testConnectionCloseFails() throws SQLException
+  {
+    Connection connection = mock(Connection.class);
+    doThrow(SQLException.class).when(connection).close();
+
+    ServletContextRegistry servletContextRegistry = mock(ServletContextRegistry.class);
+    when(servletContextRegistry.getConnection()).thenReturn(connection);
+
+    setServletContextRegistry(servletContextRegistry);
+
+    PrintStream sysErr = mock(PrintStream.class);
+    System.setErr(sysErr);
+
+    ServletContextEvent event = Mockito.mock(ServletContextEvent.class);
+
+    contextDestroyed(event);
+
+    verify(sysErr).println(contains("Error"));
+  }
+
+  @Test
+  public void testConnectionIsClosed() throws SQLException
+  {
+    Connection connection = mock(Connection.class);
+
+    ServletContextRegistry servletContextRegistry = mock(ServletContextRegistry.class);
+    when(servletContextRegistry.getConnection()).thenReturn(connection);
+    setServletContextRegistry(servletContextRegistry);
+
+    ServletContextEvent event = Mockito.mock(ServletContextEvent.class);
+
+    contextDestroyed(event);
+
+    verify(connection).close();
+  }
+
+  @Test
   public void testDriverNotFound() throws SQLException
   {
     ServletContextEvent event = Mockito.mock(ServletContextEvent.class);
     ServletContext ctx = Mockito.mock(ServletContext.class);
     when(event.getServletContext()).thenReturn(ctx);
 
-    _subject.contextInitialized(event);
+    contextInitialized(event);
 
     verifyZeroInteractions(ctx);
   }

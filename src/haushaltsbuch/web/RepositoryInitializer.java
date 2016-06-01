@@ -68,6 +68,12 @@ public class RepositoryInitializer implements ServletContextListener
     return new InitialContext();
   }
 
+  /** required for testability */
+  protected void setServletContextRegistry(ServletContextRegistry registry)
+  {
+    _registry = registry;
+  }
+
   private Connection createConnection(String url)
   {
     try

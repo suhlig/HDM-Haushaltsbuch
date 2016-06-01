@@ -77,6 +77,28 @@ public class DeleteControllerTest extends DeleteController
   }
 
   @Test
+  public void testDeleteThrows() throws ServletException, IOException, DeleteException
+  {
+    ServletContext servletContext = mock(ServletContext.class);
+    when(servletContext.getContextPath()).thenReturn("/unit-test");
+
+    HttpServletRequest request = mock(HttpServletRequest.class);
+    when(request.getServletContext()).thenReturn(servletContext);
+    when(request.getParameter("id")).thenReturn("42");
+    when(request.getRequestURI()).thenReturn("/entries/delete");
+
+    mock(Entry.class);
+    when(_repository.delete("11")).thenThrow(DeleteException.class);
+
+    HttpServletResponse response = mock(HttpServletResponse.class);
+
+    doPost(request, response);
+
+    verify(response).setStatus(404);
+    verify(request).setAttribute(eq("error"), contains("kein Eintrag"));
+  }
+
+  @Test
   public void testDeleteWithMissingParameter() throws ServletException, IOException, DeleteException
   {
     HttpServletRequest request = mock(HttpServletRequest.class);
