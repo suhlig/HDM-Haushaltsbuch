@@ -38,15 +38,31 @@ public class JdbcRepository implements EntryRepository
   private static final String CREATE_TABLE =
     // @formatter:off
 		"CREATE TABLE {0} ("
-			+ "id uuid DEFAULT uuid_generate_v4() PRIMARY KEY, "
-			+ "created_at timestamp without time zone DEFAULT now() NOT NULL, "
-			+ "src_dest character varying(255) NOT NULL CHECK (char_length(src_dest) >= 3), "
-			+ "description character varying(255) NOT NULL CHECK (char_length(description) >= 3), "
-			+ "value bigint NOT NULL, "
-			+ "category character varying(255) NOT NULL, "
-			+ "payment_type character varying(255) NOT NULL CHECK (char_length(payment_type) >= 3)"
+  		+ "id uuid DEFAULT uuid_generate_v4() PRIMARY KEY, "
+  		+ "created_at timestamp without time zone DEFAULT now() NOT NULL, "
+  		+ "src_dest character varying(255) NOT NULL CHECK (char_length(src_dest) >= 3), "
+  		+ "description character varying(255) NOT NULL CHECK (char_length(description) >= 3), "
+  		+ "value bigint NOT NULL, "
+  		+ "category character varying(255) NOT NULL, "
+  		+ "payment_type character varying(255) NOT NULL CHECK (char_length(payment_type) >= 3)"
 		+ ")";
 		// @formatter:on
+
+  private static final String CREATE_NOTIFIER =
+    // @formatter:off
+    "CREATE OR REPLACE FUNCTION entry_notifier() RETURNS trigger as $$"
+    + "BEGIN"
+    + "  PERFORM pg_notify('entry_updates', row_to_json(NEW));"
+    + "  RETURN NEW;"
+    + "END;"
+    + "$$ LANGUAGE plpgsql";
+    // @formatter:on
+
+  private static final String CREATE_TRIGGER =
+    // @formatter:off
+    "CREATE TRIGGER entry_upsert_trigger AFTER INSERT OR UPDATE ON {0} "
+      + "  FOR EACH ROW EXECUTE PROCEDURE entry_notifier()";
+    // @formatter:on
 
   private static final String CREATE_INDEX = "CREATE UNIQUE INDEX id_idx ON {0} (id);";
 
@@ -187,10 +203,20 @@ public class JdbcRepository implements EntryRepository
     executeUpdate(MessageFormat.format(CREATE_INDEX, TABLE_NAME));
   }
 
+  private void createNotifier() throws SQLException
+  {
+    executeUpdate(MessageFormat.format(CREATE_NOTIFIER, TABLE_NAME));
+  }
+
   private void createTable() throws SQLException
   {
     executeUpdate("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"");
     executeUpdate(MessageFormat.format(CREATE_TABLE, TABLE_NAME));
+  }
+
+  private void createTrigger() throws SQLException
+  {
+    executeUpdate(MessageFormat.format(CREATE_TRIGGER, TABLE_NAME));
   }
 
   private void executeUpdate(String sql) throws SQLException
@@ -302,6 +328,8 @@ public class JdbcRepository implements EntryRepository
     {
       createTable();
       createIndex();
+      createNotifier();
+      createTrigger();
       insertOpeningBalance();
     }
   }
