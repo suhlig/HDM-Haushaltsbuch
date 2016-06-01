@@ -38,7 +38,7 @@ public class JdbcRepository implements EntryRepository
   private static final String CREATE_TABLE =
     // @formatter:off
 		"CREATE TABLE {0} ("
-			+ "id uuid NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY, "
+			+ "id uuid DEFAULT uuid_generate_v4() PRIMARY KEY, "
 			+ "created_at timestamp without time zone DEFAULT now() NOT NULL, "
 			+ "src_dest character varying(255) NOT NULL CHECK (char_length(src_dest) >= 3), "
 			+ "description character varying(255) NOT NULL CHECK (char_length(description) >= 3), "
