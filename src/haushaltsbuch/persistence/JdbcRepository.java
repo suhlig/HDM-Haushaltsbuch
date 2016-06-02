@@ -48,8 +48,6 @@ public class JdbcRepository implements EntryRepository
 		+ ")";
 		// @formatter:on
 
-  private static final String CREATE_INDEX = "CREATE UNIQUE INDEX id_idx ON {0} (id);";
-
   private static final String SELECT_BY_ID = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0} WHERE id=''{1}''";
   private static final String SELECT_ALL = "SELECT id, created_at, src_dest, description, value, category, payment_type FROM {0}";
   private static final String INSERT = "INSERT INTO {0} (src_dest, description, value, category, payment_type) VALUES (?, ?, ?, ?, ?)";
@@ -182,11 +180,6 @@ public class JdbcRepository implements EntryRepository
     return result;
   }
 
-  private void createIndex() throws SQLException
-  {
-    executeUpdate(MessageFormat.format(CREATE_INDEX, TABLE_NAME));
-  }
-
   private void createTable() throws SQLException
   {
     executeUpdate("CREATE EXTENSION IF NOT EXISTS \"uuid-ossp\"");
@@ -301,7 +294,6 @@ public class JdbcRepository implements EntryRepository
     if (!isTableExisting())
     {
       createTable();
-      createIndex();
       insertOpeningBalance();
     }
   }
