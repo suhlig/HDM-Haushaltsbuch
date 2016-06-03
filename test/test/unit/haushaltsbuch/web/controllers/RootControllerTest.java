@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.junit.Before;
 import org.junit.Test;
 import haushaltsbuch.InsertException;
-import haushaltsbuch.web.controllers.RootController;
+import haushaltsbuch.web.controllers.HtmlController;
 
-public class RootControllerTest extends RootController
+public class RootControllerTest extends HtmlController
 {
   @Before
   public void setUp() throws Exception
