@@ -29,5 +29,7 @@
     </c:if>
 
     <jsp:include page="${view}"></jsp:include>
+    <script src="notify.js"></script>
+    <script src="notify-entry.js"></script>
   </body>
 </html>

@@ -1,0 +1,18 @@
+{
+  "name": "hdm-haushaltsbuch",
+  "version": "1.0.0",
+  "description": "Demo app for a Bluemix workshop at HDM Stuttgart",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/suhlig/HDM-Haushaltsbuch.git"
+  },
+  "author": "Steffen Uhlig",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/suhlig/HDM-Haushaltsbuch/issues"
+  },
+  "homepage": "https://github.com/suhlig/HDM-Haushaltsbuch#readme",
+  "dependencies": {
+    "notifyjs": "^2.0.2"
+  }
+}
