@@ -16,11 +16,12 @@ public class ContentTypeFilter extends BasicFilter
     if (null == request.getCharacterEncoding())
       request.setCharacterEncoding("UTF-8");
 
+    chain.doFilter(request, response);
+
     if (null == response.getContentType())
       response.setContentType("text/html; charset=utf-8");
 
     response.setLocale(Locale.GERMANY);
 
-    chain.doFilter(request, response);
   }
 }
