@@ -74,3 +74,11 @@ Now apply the values with `pg_ctl reload -D /usr/local/var/postgres`. Logging me
 ## Design Notes
 
 * Input validation happens at two places: client-side (HTML form validation), where we are nice with the user, and at the database level, where we make sure only valid data enters the system. Right now there is no need for additional validation on the domain layer.
+
+## Contributing
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md).
+
+# License
+
+HDM-Haushaltsbuch is Copyright© 2016 Steffen Uhlig. It is free software, and may be redistributed under the terms specified in the [LICENSE](LICENSE) file.
