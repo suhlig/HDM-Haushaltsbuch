@@ -1,9 +1,11 @@
 ---
 applications:
-- name: HDM-Haushaltsbuch
+- name: Haushaltsbuch Web
   memory: 512M
-  host: haushaltsbuch
-  domain: eu-gb.mybluemix.net
+  host: www
+  domain: hhb.eu-gb.mybluemix.net
   instances: 1
   services:
   - elephantsql
+  env:
+    SSE_URL: //events.hhb.eu-gb.mybluemix.net/stream

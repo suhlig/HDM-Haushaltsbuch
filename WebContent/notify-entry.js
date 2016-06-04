@@ -52,18 +52,21 @@ EventSource.prototype.byIndex = function(i){
 };
 
 function initEventSource(attempt = 0) {
-  var es = new EventSource("http://localhost:4567/stream");
+  var es = new EventSource(SSE_URL);
   console.info('Attempt #' + attempt + ' connecting to ' + es.url);
 
   es.onerror = function(e) {
-    if (es.readyState != EventSource.CONNECTING) {
-      console.warn('EventSource error; state is ' + es.byIndex(es.readyState));
-    } else {
-      es.close();
-      backoff = Math.pow(2, attempt++);
-      console.log('Error establishing EventSource connection to ' + es.url + '; trying again in ' + backoff + ' seconds');
-      setTimeout(initEventSource, 1000 * backoff, attempt);
-    }
+    es.close();
+    backoff = Math.pow(2, attempt++);
+    console.log('Error establishing EventSource connection to '
+      + es.url
+      + '; current status is: '
+      + es.byIndex(es.readyState)
+      + '. Trying again in '
+      + backoff + ' seconds'
+    );
+
+    setTimeout(initEventSource, 1000 * backoff, attempt);
   };
 
   es.onopen = function(e) {

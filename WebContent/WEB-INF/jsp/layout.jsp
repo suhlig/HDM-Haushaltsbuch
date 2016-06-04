@@ -30,6 +30,9 @@
 
     <jsp:include page="${view}"></jsp:include>
     <script src="notify.js"></script>
+    <script type="text/javascript">
+      var SSE_URL = "${SSE_URL}";
+    </script>
     <script src="notify-entry.js"></script>
   </body>
 </html>
