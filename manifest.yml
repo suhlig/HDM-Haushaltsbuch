@@ -1,6 +1,6 @@
 ---
 applications:
-- name: Haushaltsbuch Web
+- name: HHB Web
   memory: 512M
   host: www
   domain: hhb.eu-gb.mybluemix.net
