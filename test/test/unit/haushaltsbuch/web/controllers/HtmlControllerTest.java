@@ -16,7 +16,7 @@ import org.junit.Test;
 import haushaltsbuch.InsertException;
 import haushaltsbuch.web.controllers.HtmlController;
 
-public class RootControllerTest extends HtmlController
+public class HtmlControllerTest extends HtmlController
 {
   @Before
   public void setUp() throws Exception
