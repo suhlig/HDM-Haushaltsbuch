@@ -10,7 +10,7 @@ The app is deployed to [www.hhb.eu-gb.mybluemix.net](http://www.hhb.eu-gb.myblue
 1. Add a 'turtle'-sized ElephantSQL service instance
 1. Run on Server => Bluemix (the database tables will be auto-created)
 
-Addiional information about the Eclipse tools is available at the Bluemix [https://console.ng.bluemix.net/docs/manageapps/eclipsetools/eclipsetools.html](documentation) site.
+Additional Information about the Eclipse tools is available at the Bluemix [documentation](https://console.ng.bluemix.net/docs/manageapps/eclipsetools/eclipsetools.html) site.
 
 ## Exercises
 
