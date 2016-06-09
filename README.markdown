@@ -1,6 +1,6 @@
 # HDM-Haushaltsbuch
 
-The app is deployed to [haushaltsbuch.eu-gb.mybluemix.net](http://haushaltsbuch.eu-gb.mybluemix.net/).
+The app is deployed to [www.hhb.eu-gb.mybluemix.net](http://www.hhb.eu-gb.mybluemix.net/).
 
 ## Run
 

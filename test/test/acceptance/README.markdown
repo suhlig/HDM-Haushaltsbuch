@@ -21,5 +21,5 @@ bundle exec rake
 By default, the acceptance tests will run against a local Liberty server. If you want to run against another instance, configure the `HAUSHALTSBUCH_URL` environment variable, for instance:
 
 ```
-HAUSHALTSBUCH_URL=http://haushaltsbuch.eu-gb.mybluemix.net bundle exec rake
+HAUSHALTSBUCH_URL=http://www.hhb.eu-gb.mybluemix.net bundle exec rake
 ```
