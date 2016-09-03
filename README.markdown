@@ -71,6 +71,10 @@ In order to see the raw SQL statements, logging can be enabled for the local `po
 
 Now apply the values with `pg_ctl reload -D /usr/local/var/postgres`. Logging messages will appear in the terminal window of the `postgres` process.
 
+### Troubleshooting
+
+* If Eclipse complains about `Can not find the tag library descriptor for "http://java.sun.com/jsp/jstl/core"`, simply right-click the project and choose "Validate".
+
 ## Design Notes
 
 * Input validation happens at two places: client-side (HTML form validation), where we are nice with the user, and at the database level, where we make sure only valid data enters the system. Right now there is no need for additional validation on the domain layer.
