@@ -67,9 +67,10 @@ In order to see the raw SQL statements, logging can be enabled for the local `po
   $ psql postgres:///haushaltsbuch
   # ALTER SYSTEM SET log_destination = 'stderr';
   # ALTER SYSTEM SET log_statement = 'all';
+  # SELECT pg_reload_conf();
   ```
 
-Now apply the values with `pg_ctl reload -D /usr/local/var/postgres`. Logging messages will appear in the terminal window of the `postgres` process.
+The last statement will apply the values. Alternatively,  restart with `pg_ctl reload -D /usr/local/var/postgres`.
 
 ### Troubleshooting
 
